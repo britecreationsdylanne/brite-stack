@@ -46,7 +46,7 @@ export function ToolCard({ tool, isFavorite, onToggleFavorite }: ToolCardProps) 
   return (
     <div
       onClick={handleClick}
-      className={`relative bg-[#272D3F] rounded-[20px] p-7 transition-all duration-300 shadow-[0_8px_30px_rgba(39,45,63,0.3)] min-h-[180px] ${
+      className={`relative bg-[#272D3F] rounded-[20px] md:rounded-[24px] p-6 md:p-8 transition-all duration-300 shadow-[0_8px_30px_rgba(39,45,63,0.3)] min-h-[200px] md:min-h-[220px] ${
         tool.comingSoon
           ? 'opacity-70 cursor-not-allowed border-2 border-dashed border-[#31D7CA]/30'
           : 'cursor-pointer hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(39,45,63,0.5)]'
@@ -55,11 +55,11 @@ export function ToolCard({ tool, isFavorite, onToggleFavorite }: ToolCardProps) 
       {/* Favorite Button */}
       <button
         onClick={handleFavoriteClick}
-        className="absolute top-5 right-5 w-9 h-9 rounded-[10px] bg-white/10 flex items-center justify-center hover:bg-[#D4AF37]/20 transition-all z-10"
+        className="absolute top-5 right-5 md:top-6 md:right-6 w-10 h-10 rounded-[12px] bg-white/10 flex items-center justify-center hover:bg-[#D4AF37]/20 transition-all z-10"
         title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
       >
         <Star
-          size={18}
+          size={20}
           className={isFavorite ? 'text-[#D4AF37]' : 'text-[#D4AF37]/50 hover:text-[#D4AF37]'}
           fill={isFavorite ? '#D4AF37' : 'none'}
         />
@@ -67,7 +67,7 @@ export function ToolCard({ tool, isFavorite, onToggleFavorite }: ToolCardProps) 
 
       {/* Coming Soon Badge */}
       {tool.comingSoon && (
-        <div className="absolute top-5 left-5 px-3 py-1.5 bg-[#31D7CA]/20 text-[#31D7CA] text-xs font-semibold rounded-lg">
+        <div className="absolute top-5 left-5 md:top-6 md:left-6 px-3 py-1.5 bg-[#31D7CA]/20 text-[#31D7CA] text-xs font-semibold rounded-lg">
           Coming Soon
         </div>
       )}
@@ -75,14 +75,15 @@ export function ToolCard({ tool, isFavorite, onToggleFavorite }: ToolCardProps) 
       {/* Icon with gradient background */}
       <div
         style={{ background: iconGradient }}
-        className="w-14 h-14 rounded-[14px] flex items-center justify-center mb-[18px] shadow-md"
+        className="w-14 h-14 md:w-16 md:h-16 rounded-[14px] md:rounded-[16px] flex items-center justify-center mb-5 shadow-md"
       >
-        <IconComponent size={28} className="text-white" />
+        <IconComponent size={28} className="text-white md:hidden" />
+        <IconComponent size={32} className="text-white hidden md:block" />
       </div>
 
       {/* Content */}
-      <h3 className="text-lg font-bold text-white mb-2 pr-10">{tool.name}</h3>
-      <p className="text-sm text-[#A9C1CB] leading-relaxed">{tool.description}</p>
+      <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3 pr-12">{tool.name}</h3>
+      <p className="text-sm md:text-[15px] text-[#A9C1CB] leading-relaxed">{tool.description}</p>
     </div>
   );
 }
