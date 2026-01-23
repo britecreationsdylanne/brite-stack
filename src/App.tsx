@@ -46,14 +46,14 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden relative">
+    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden relative">
       <TechBackground />
 
-      <div className="relative z-10">
+      <div className="relative z-10 w-full">
         <Header user={user} onLogout={logout} />
 
-        <main className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-8 md:py-12">
-          <div className="max-w-6xl mx-auto">
+        <main className="w-full max-w-[100vw] px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-8 md:py-12 box-border">
+          <div className="w-full max-w-5xl mx-auto">
             {/* Hero Section - BriteStack centered */}
             <div className="text-center mb-10 md:mb-14">
               <div className="flex items-center justify-center gap-4 md:gap-5 mb-4 md:mb-5">
