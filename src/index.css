@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* BriteCo Primary Colors */
+  --color-navy: #272D3F;
+  --color-muted-teal: #7DA3AF;
+  --color-teal: #008182;
+  --color-bright-teal: #31D7CA;
+
+  /* BriteCo Secondary Colors */
+  --color-slate: #466F88;
+  --color-light-teal: #A9C1CB;
+  --color-light-gray: #E1E7EF;
+  --color-off-white: #F4F7FC;
+  --color-orange: #FC883A;
+
+  /* BriteCo Auxiliary Colors */
+  --color-red: #D73D4F;
+  --color-white: #FFFFFF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', system-ui, sans-serif;
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
