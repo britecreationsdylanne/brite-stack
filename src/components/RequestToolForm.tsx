@@ -26,7 +26,7 @@ export function RequestToolForm() {
   };
 
   return (
-    <div className="bg-[#272D3F] rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-[0_10px_40px_rgba(39,45,63,0.4)] max-w-3xl mx-auto">
+    <div style={{ background: '#272D3F', borderRadius: '24px', padding: '45px', boxShadow: '0 10px 40px rgba(39, 45, 63, 0.4)' }}>
       <div className="flex items-center gap-3 md:gap-4 mb-2.5">
         <div className="w-12 h-12 md:w-[52px] md:h-[52px] bg-gradient-to-br from-[#31D7CA] to-[#008182] rounded-[12px] md:rounded-[14px] flex items-center justify-center flex-shrink-0">
           <Plus size={24} className="text-white md:hidden" />

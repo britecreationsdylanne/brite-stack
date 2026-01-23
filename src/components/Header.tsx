@@ -8,7 +8,7 @@ interface HeaderProps {
 
 export function Header({ user, onLogout }: HeaderProps) {
   return (
-    <header className="flex items-center justify-end px-6 sm:px-8 md:px-10 lg:px-12 py-5">
+    <header style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', padding: '20px 50px' }}>
       <div className="flex items-center gap-5">
         <div className="flex items-center gap-3">
           {user.photoURL ? (
