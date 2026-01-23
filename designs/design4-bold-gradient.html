@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design 4 - Bold with Accent Gradients</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #272D3F;
+      min-height: 100vh;
+      color: white;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: #1a1f2e;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+    }
+    .logo-text h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .logo-text h1 span:first-child { color: white; }
+    .logo-text h1 span:last-child { color: #31D7CA; }
+    .logo-text p {
+      font-size: 13px;
+      color: #FC883A;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .user-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(70, 111, 136, 0.3);
+      padding: 6px 16px 6px 6px;
+      border-radius: 30px;
+    }
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #31D7CA, #008182);
+    }
+    .user-name {
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .logout-btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: 2px solid #FC883A;
+      border-radius: 10px;
+      color: #FC883A;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .logout-btn:hover {
+      background: #FC883A;
+      color: white;
+    }
+
+    /* Main */
+    main {
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 60px 50px;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #31D7CA, #008182);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    .hero h2 {
+      font-size: 52px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+    .hero h2 span {
+      background: linear-gradient(135deg, #31D7CA 0%, #FC883A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      color: #7DA3AF;
+      font-size: 18px;
+    }
+
+    /* Search */
+    .search-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 50px;
+    }
+    .search-wrapper {
+      position: relative;
+      width: 420px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 16px 24px 16px 52px;
+      border-radius: 14px;
+      border: none;
+      font-size: 15px;
+      background: #1a1f2e;
+      color: white;
+      transition: all 0.3s;
+    }
+    .search-input::placeholder { color: #7DA3AF; }
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(49, 215, 202, 0.3);
+    }
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7DA3AF;
+    }
+    .fav-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #FC883A, #FF6B35);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 4px 15px rgba(252, 136, 58, 0.4);
+      transition: all 0.3s;
+    }
+    .fav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(252, 136, 58, 0.5);
+    }
+
+    /* Grid */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+
+    /* Bold Cards */
+    .tool-card {
+      background: #1a1f2e;
+      border-radius: 20px;
+      padding: 28px;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent);
+    }
+    .tool-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-1 { --accent: linear-gradient(90deg, #FC883A, #FF6B35); }
+    .card-2 { --accent: linear-gradient(90deg, #31D7CA, #008182); }
+    .card-3 { --accent: linear-gradient(90deg, #E91E8C, #C41873); }
+    .card-4 { --accent: linear-gradient(90deg, #7DA3AF, #466F88); }
+    .card-5 { --accent: linear-gradient(90deg, #A9C1CB, #7DA3AF); }
+    .card-6 { --accent: linear-gradient(90deg, #FF6B35, #D73D4F); }
+    .card-7 { --accent: linear-gradient(90deg, #008182, #006666); }
+
+    .card-icon-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+    }
+    .card-icon svg { width: 28px; height: 28px; color: white; }
+
+    .star-btn {
+      background: rgba(212, 175, 55, 0.1);
+      border: none;
+      cursor: pointer;
+      color: #D4AF37;
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .star-btn:hover {
+      background: rgba(212, 175, 55, 0.2);
+    }
+    .star-btn.active {
+      background: #D4AF37;
+      color: #1a1f2e;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: #7DA3AF;
+      line-height: 1.6;
+    }
+
+    .card-coming-soon {
+      opacity: 0.5;
+    }
+    .card-coming-soon::after {
+      content: 'COMING SOON';
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background: #466F88;
+      color: white;
+      padding: 4px 40px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      transform: rotate(45deg);
+    }
+    .card-coming-soon:hover {
+      transform: none;
+      cursor: not-allowed;
+    }
+
+    /* Request Form */
+    .request-form {
+      background: #1a1f2e;
+      border-radius: 24px;
+      padding: 50px;
+      position: relative;
+      overflow: hidden;
+    }
+    .request-form::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #31D7CA, #FC883A);
+    }
+    .form-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .form-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #31D7CA, #008182);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .form-header h3 {
+      font-size: 26px;
+      font-weight: 700;
+      color: white;
+    }
+    .form-desc {
+      color: #7DA3AF;
+      font-size: 16px;
+      margin-bottom: 35px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .form-group {
+      margin-bottom: 0;
+    }
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid #272D3F;
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: inherit;
+      background: #272D3F;
+      color: white;
+      transition: all 0.2s;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #7DA3AF; }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #31D7CA;
+    }
+    .form-group textarea {
+      resize: none;
+      height: 120px;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      background: linear-gradient(135deg, #FC883A, #FF6B35);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(252, 136, 58, 0.4);
+      transition: all 0.3s;
+      margin-top: 20px;
+    }
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(252, 136, 58, 0.5);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #7DA3AF;
+      font-size: 14px;
+      border-top: 1px solid rgba(70, 111, 136, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <svg class="logo-icon" viewBox="0 0 100 100" fill="none">
+        <path d="M50 5L90 45L50 95L10 45L50 5Z" fill="#31D7CA"/>
+        <path d="M50 5L90 45L50 55L10 45L50 5Z" fill="#008182"/>
+      </svg>
+      <div class="logo-text">
+        <h1><span>brite</span><span>co</span></h1>
+        <p>AI Tools</p>
+      </div>
+    </div>
+    <div class="user-section">
+      <div class="user-info">
+        <div class="user-avatar"></div>
+        <span class="user-name">User Name</span>
+      </div>
+      <button class="logout-btn">Sign Out</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <span class="hero-badge">Internal Tools Portal</span>
+      <h2>Find the tools <span>you need</span></h2>
+      <p>Built to make your world more efficient</p>
+    </div>
+
+    <div class="search-container">
+      <div class="search-wrapper">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" class="search-input" placeholder="Search tools...">
+      </div>
+      <button class="fav-btn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="tool-grid">
+      <div class="tool-card card-1">
+        <div class="card-icon-wrap">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+              <path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01"/>
+            </svg>
+          </div>
+          <button class="star-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </button>
+        </div>
+        <h3 class="card-title">Commercial Wizard</h3>
+        <p class="card-desc">Generate commercial insurance quotes and proposals</p>
+      </div>
+
+      <div class="tool-card card-2">
+        <div class="card-icon-wrap">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <button class="star-btn active">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </button>
+        </div>
+        <h3 class="card-title">BriteCo Brief</h3>
+        <p class="card-desc">Create concise briefs and summaries</p>
+      </div>
+
+      <div class="tool-card card-3">
+        <div class="card-icon-wrap">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <button class="star-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </button>
+        </div>
+        <h3 class="card-title">Planner Pulse</h3>
+        <p class="card-desc">Support wedding planners with insurance solutions</p>
+      </div>
+
+      <div class="tool-card card-4">
+        <div class="card-icon-wrap">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <button class="star-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </button>
+        </div>
+        <h3 class="card-title">Venue Voice</h3>
+        <p class="card-desc">Customize venue insurance communications</p>
+      </div>
+
+      <div class="tool-card card-5 card-coming-soon">
+        <div class="card-icon-wrap">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <button class="star-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </button>
+        </div>
+        <h3 class="card-title">Stay in the Loupe</h3>
+        <p class="card-desc">Jewelry industry insights and updates</p>
+      </div>
+
+      <div class="tool-card card-6">
+        <div class="card-icon-wrap">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <button class="star-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </button>
+        </div>
+        <h3 class="card-title">Ad Generator</h3>
+        <p class="card-desc">Create targeted ad campaigns</p>
+      </div>
+
+      <div class="tool-card card-7">
+        <div class="card-icon-wrap">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="23 7 16 12 23 17 23 7"/>
+              <rect x="1" y="5" width="15" height="14" rx="2"/>
+            </svg>
+          </div>
+          <button class="star-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </button>
+        </div>
+        <h3 class="card-title">Video Ad Generator</h3>
+        <p class="card-desc">Generate bite-sized video ads</p>
+      </div>
+    </div>
+
+    <div class="request-form">
+      <div class="form-header">
+        <div class="form-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+          </svg>
+        </div>
+        <h3>Request a Tool</h3>
+      </div>
+      <p class="form-desc">Have an idea for a new AI tool? Let us know!</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Tool Name</label>
+          <input type="text" placeholder="e.g., Policy Summarizer">
+        </div>
+        <div class="form-group">
+          <label>Your Email</label>
+          <input type="email" placeholder="you@brite.co">
+        </div>
+        <div class="form-group full">
+          <label>Description / Use Case</label>
+          <textarea placeholder="Describe what this tool would do and how it would help..."></textarea>
+        </div>
+      </div>
+      <button class="submit-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        Submit Request
+      </button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 BriteCo. All rights reserved.</p>
+  </footer>
+</body>
+</html>

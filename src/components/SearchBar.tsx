@@ -14,30 +14,30 @@ export function SearchBar({
   onToggleFavorites,
 }: SearchBarProps) {
   return (
-    <div className="flex items-center justify-center gap-3 w-full max-w-xl mx-auto">
+    <div className="flex items-center justify-center gap-3 w-full max-w-[500px] mx-auto">
       <div className="flex-1 relative">
         <Search
           size={20}
-          className="absolute left-5 top-1/2 -translate-y-1/2 text-[#7DA3AF]"
+          className="absolute left-5 top-1/2 -translate-y-1/2 text-[#31D7CA]"
         />
         <input
           type="text"
           placeholder="Search tools..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full pl-12 pr-5 py-3.5 bg-white text-[#272D3F] rounded-full shadow-md border-2 border-[#E1E7EF] focus:border-[#31D7CA] focus:outline-none transition-all placeholder:text-[#A9C1CB] text-base"
+          className="w-full pl-14 pr-6 py-[18px] bg-[#272D3F] text-white rounded-2xl shadow-[0_8px_30px_rgba(39,45,63,0.3)] border-none focus:outline-none focus:-translate-y-0.5 focus:shadow-[0_12px_40px_rgba(39,45,63,0.4)] transition-all placeholder:text-[#7DA3AF] text-base"
         />
       </div>
       <button
         onClick={onToggleFavorites}
-        className={`p-3.5 rounded-full transition-all shadow-md ${
+        className={`w-[58px] h-[58px] rounded-2xl flex items-center justify-center transition-all shadow-[0_8px_30px_rgba(39,45,63,0.3)] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(39,45,63,0.4)] ${
           showFavoritesOnly
             ? 'bg-[#FC883A] text-white'
-            : 'bg-white text-[#D4AF37] border-2 border-[#E1E7EF] hover:border-[#D4AF37]'
+            : 'bg-[#272D3F] text-[#D4AF37]'
         }`}
         title={showFavoritesOnly ? 'Show all tools' : 'Show favorites only'}
       >
-        <Star size={22} fill={showFavoritesOnly ? 'currentColor' : '#D4AF37'} />
+        <Star size={24} fill={showFavoritesOnly ? 'currentColor' : '#D4AF37'} />
       </button>
     </div>
   );

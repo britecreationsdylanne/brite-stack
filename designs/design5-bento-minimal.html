@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design 5 - Bento Minimal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #1a1f2e;
+      min-height: 100vh;
+      color: white;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 80px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+    }
+    .logo-text h1 {
+      font-size: 26px;
+      font-weight: 600;
+    }
+    .logo-text h1 span:first-child { color: white; }
+    .logo-text h1 span:last-child { color: #31D7CA; }
+    .user-section {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #31D7CA, #008182);
+    }
+    .logout-btn {
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.05);
+      border: none;
+      border-radius: 10px;
+      color: #A9C1CB;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    /* Main */
+    main {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 40px 80px 60px;
+    }
+
+    /* Hero */
+    .hero {
+      margin-bottom: 50px;
+    }
+    .hero h2 {
+      font-size: 56px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.1;
+    }
+    .hero h2 span {
+      color: #31D7CA;
+    }
+    .hero p {
+      color: #7DA3AF;
+      font-size: 18px;
+    }
+
+    /* Search */
+    .search-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      max-width: 400px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 14px 20px 14px 48px;
+      border-radius: 12px;
+      border: none;
+      font-size: 15px;
+      background: rgba(255,255,255,0.05);
+      color: white;
+      transition: all 0.2s;
+    }
+    .search-input::placeholder { color: #7DA3AF; }
+    .search-input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.08);
+    }
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7DA3AF;
+    }
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+    }
+    .filter-pill {
+      padding: 10px 18px;
+      border-radius: 20px;
+      border: none;
+      background: rgba(255,255,255,0.05);
+      color: #7DA3AF;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-pill:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    .filter-pill.active {
+      background: #31D7CA;
+      color: #1a1f2e;
+    }
+
+    /* Bento Grid */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, auto);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    /* Cards */
+    .tool-card {
+      background: rgba(255,255,255,0.03);
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .tool-card:hover {
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-4px);
+    }
+
+    /* Featured card - large */
+    .card-featured {
+      grid-column: span 2;
+      grid-row: span 2;
+      padding: 32px;
+      background: linear-gradient(135deg, rgba(252, 136, 58, 0.15), rgba(255, 107, 53, 0.05));
+      border: 1px solid rgba(252, 136, 58, 0.2);
+    }
+    .card-featured .card-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      margin-bottom: 24px;
+    }
+    .card-featured .card-title {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+    .card-featured .card-desc {
+      font-size: 16px;
+      margin-bottom: auto;
+    }
+    .card-featured .card-action {
+      margin-top: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #FC883A;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .card-icon svg { width: 24px; height: 24px; color: white; }
+
+    .icon-orange { background: #FC883A; }
+    .icon-teal { background: #31D7CA; }
+    .icon-pink { background: #E91E8C; }
+    .icon-slate { background: #466F88; }
+    .icon-muted { background: #7DA3AF; }
+    .icon-red { background: #FF6B35; }
+    .icon-dark-teal { background: #008182; }
+
+    .star-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #D4AF37;
+      opacity: 0.3;
+      transition: all 0.2s;
+    }
+    .star-btn:hover { opacity: 1; }
+    .star-btn.active { opacity: 1; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 6px;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: #7DA3AF;
+      line-height: 1.5;
+    }
+
+    .card-coming-soon {
+      opacity: 0.4;
+      border: 1px dashed #466F88;
+    }
+    .card-coming-soon:hover {
+      transform: none;
+      cursor: not-allowed;
+    }
+    .coming-soon-tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: #466F88;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Request Form - inline */
+    .request-card {
+      grid-column: span 2;
+      background: rgba(49, 215, 202, 0.08);
+      border: 1px solid rgba(49, 215, 202, 0.2);
+      padding: 28px;
+    }
+    .request-card .form-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+    }
+    .request-card h4 {
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 6px;
+    }
+    .request-card p {
+      font-size: 13px;
+      color: #7DA3AF;
+      margin-bottom: 16px;
+    }
+    .request-card input {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: none;
+      font-size: 14px;
+      background: rgba(255,255,255,0.05);
+      color: white;
+    }
+    .request-card input::placeholder { color: #7DA3AF; }
+    .request-card input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.08);
+    }
+    .request-card button {
+      padding: 12px 24px;
+      background: #31D7CA;
+      border: none;
+      border-radius: 10px;
+      color: #1a1f2e;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .request-card button:hover {
+      background: #2bc4b8;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px 80px;
+      color: #466F88;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <svg class="logo-icon" viewBox="0 0 100 100" fill="none">
+        <path d="M50 5L90 45L50 95L10 45L50 5Z" fill="#31D7CA"/>
+        <path d="M50 5L90 45L50 55L10 45L50 5Z" fill="#008182"/>
+      </svg>
+      <div class="logo-text">
+        <h1><span>brite</span><span>co</span></h1>
+      </div>
+    </div>
+    <div class="user-section">
+      <div class="user-avatar"></div>
+      <span style="color: #A9C1CB; font-size: 14px;">User Name</span>
+      <button class="logout-btn">Sign Out</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h2>Find the tools<br><span>you need</span></h2>
+      <p>Built to make your world more efficient</p>
+    </div>
+
+    <div class="search-row">
+      <div class="search-wrapper">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" class="search-input" placeholder="Search tools...">
+      </div>
+      <div class="filter-pills">
+        <button class="filter-pill active">All</button>
+        <button class="filter-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#D4AF37" stroke="#D4AF37" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          Favorites
+        </button>
+        <button class="filter-pill">Marketing</button>
+        <button class="filter-pill">Operations</button>
+      </div>
+    </div>
+
+    <div class="bento-grid">
+      <!-- Featured Card -->
+      <div class="tool-card card-featured">
+        <button class="star-btn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-orange" style="width: 72px; height: 72px;">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="2" width="16" height="20" rx="2"/>
+            <path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Commercial Wizard</h3>
+        <p class="card-desc">Generate commercial insurance quotes and proposals with AI-powered automation</p>
+        <span class="card-action">
+          Open Tool
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+      </div>
+
+      <!-- Regular Cards -->
+      <div class="tool-card">
+        <button class="star-btn active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <h3 class="card-title">BriteCo Brief</h3>
+        <p class="card-desc">Create concise briefs and summaries</p>
+      </div>
+
+      <div class="tool-card">
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-pink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Planner Pulse</h3>
+        <p class="card-desc">Support wedding planners with insurance</p>
+      </div>
+
+      <div class="tool-card">
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-slate">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Venue Voice</h3>
+        <p class="card-desc">Customize venue communications</p>
+      </div>
+
+      <div class="tool-card card-coming-soon">
+        <span class="coming-soon-tag">Coming Soon</span>
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-muted">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Stay in the Loupe</h3>
+        <p class="card-desc">Jewelry industry insights</p>
+      </div>
+
+      <!-- Request Form Card -->
+      <div class="tool-card request-card">
+        <h4>Request a New Tool</h4>
+        <p>Have an idea? Let us know what you need</p>
+        <div class="form-row">
+          <input type="text" placeholder="Tool name or idea...">
+          <button>Submit</button>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Ad Generator</h3>
+        <p class="card-desc">Create targeted ad campaigns</p>
+      </div>
+
+      <div class="tool-card">
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-dark-teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="23 7 16 12 23 17 23 7"/>
+            <rect x="1" y="5" width="15" height="14" rx="2"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Video Ad Generator</h3>
+        <p class="card-desc">Generate bite-sized video ads</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 BriteCo. All rights reserved.</p>
+  </footer>
+</body>
+</html>

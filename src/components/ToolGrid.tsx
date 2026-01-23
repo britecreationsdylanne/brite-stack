@@ -12,11 +12,11 @@ export function ToolGrid({ tools, isFavorite, onToggleFavorite }: ToolGridProps)
   if (tools.length === 0) {
     return (
       <div className="text-center py-16">
-        <div className="w-16 h-16 bg-[#466F88] rounded-full flex items-center justify-center mx-auto mb-4">
-          <Search size={32} className="text-[#A9C1CB]" />
+        <div className="w-16 h-16 bg-[#272D3F] rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_8px_30px_rgba(39,45,63,0.3)]">
+          <Search size={32} className="text-[#31D7CA]" />
         </div>
-        <p className="text-[#A9C1CB] text-xl font-medium">No tools found</p>
-        <p className="text-[#7DA3AF] text-sm mt-2">Try adjusting your search or filters</p>
+        <p className="text-[#272D3F] text-xl font-medium">No tools found</p>
+        <p className="text-[#272D3F]/70 text-sm mt-2">Try adjusting your search or filters</p>
       </div>
     );
   }

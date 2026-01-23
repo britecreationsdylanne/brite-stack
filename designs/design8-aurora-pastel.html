@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design 8 - Aurora Pastel Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      color: white;
+      background: #0d1321;
+      overflow-x: hidden;
+    }
+
+    /* Aurora Background */
+    .aurora-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .aurora-bg::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(ellipse 40% 30% at 30% 30%, rgba(49, 215, 202, 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 25% at 70% 20%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse 30% 40% at 80% 70%, rgba(252, 136, 58, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse 45% 35% at 20% 80%, rgba(59, 130, 246, 0.12) 0%, transparent 50%);
+      animation: aurora 20s ease-in-out infinite alternate;
+    }
+    @keyframes aurora {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(2%, 2%) rotate(3deg); }
+    }
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-image:
+        radial-gradient(1px 1px at 100px 50px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 200px 150px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1.5px 1.5px at 300px 80px, rgba(49, 215, 202, 0.9), transparent),
+        radial-gradient(1px 1px at 400px 200px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 500px 100px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1.5px 1.5px at 600px 250px, rgba(252, 136, 58, 0.7), transparent),
+        radial-gradient(1px 1px at 700px 50px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 800px 180px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 150px 300px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1.5px 1.5px at 350px 350px, rgba(139, 92, 246, 0.6), transparent),
+        radial-gradient(1px 1px at 550px 400px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 750px 320px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 250px 450px, rgba(49, 215, 202, 0.5), transparent),
+        radial-gradient(1px 1px at 650px 480px, rgba(255,255,255,0.6), transparent);
+      background-size: 900px 550px;
+    }
+
+    /* Header */
+    .header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: rgba(13, 19, 33, 0.7);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(49, 215, 202, 0.15);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #31D7CA, #008182);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(49, 215, 202, 0.5);
+      position: relative;
+    }
+    .logo-icon::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, rgba(49, 215, 202, 0.5), transparent);
+      z-index: -1;
+      filter: blur(8px);
+    }
+    .logo-icon svg {
+      width: 28px;
+      height: 28px;
+      color: white;
+    }
+    .logo h1 {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .logo h1 span:first-child { color: white; }
+    .logo h1 span:last-child { color: #31D7CA; }
+    .user-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .user-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid rgba(49, 215, 202, 0.5);
+      background: linear-gradient(135deg, #31D7CA, #008182);
+    }
+    .logout-btn {
+      padding: 10px 22px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #A9C1CB;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .logout-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(49, 215, 202, 0.5);
+      color: white;
+    }
+
+    /* Main */
+    main {
+      position: relative;
+      z-index: 10;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 55px 50px;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .hero h2 {
+      font-size: 50px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      line-height: 1.1;
+    }
+    .hero h2 span { color: #31D7CA; }
+    .hero p {
+      color: #A9C1CB;
+      font-size: 18px;
+    }
+
+    /* Search */
+    .search-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 50px;
+    }
+    .search-input {
+      width: 460px;
+      padding: 16px 24px 16px 54px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      color: white;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%237DA3AF' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 22px center;
+      transition: all 0.2s;
+    }
+    .search-input::placeholder { color: #7DA3AF; }
+    .search-input:focus {
+      outline: none;
+      border-color: rgba(49, 215, 202, 0.5);
+      background-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 25px rgba(49, 215, 202, 0.15);
+    }
+    .fav-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      background: rgba(212, 175, 55, 0.08);
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #D4AF37;
+      transition: all 0.2s;
+    }
+    .fav-btn:hover {
+      background: rgba(212, 175, 55, 0.2);
+      border-color: #D4AF37;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    }
+
+    /* Grid */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-bottom: 55px;
+    }
+
+    /* Pastel Colored Cards */
+    .tool-card {
+      border-radius: 22px;
+      padding: 28px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+    .tool-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .card-1 { background: linear-gradient(145deg, #FFF5E6, #FFE8CC); }
+    .card-2 { background: linear-gradient(145deg, #E6FAF9, #CCFAF5); }
+    .card-3 { background: linear-gradient(145deg, #FCE8F2, #F9D4E6); }
+    .card-4 { background: linear-gradient(145deg, #E8EEF9, #D6E0F5); }
+    .card-5 { background: linear-gradient(145deg, #F0F4F8, #E1E7EF); border: 2px dashed #A9C1CB; opacity: 0.7; }
+    .card-6 { background: linear-gradient(145deg, #FFEDE6, #FFD9C7); }
+    .card-7 { background: linear-gradient(145deg, #E6F5F0, #CCEBE0); }
+
+    .card-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+    .card-icon svg { width: 28px; height: 28px; color: white; }
+
+    .icon-1 { background: linear-gradient(135deg, #FC883A, #F97316); }
+    .icon-2 { background: linear-gradient(135deg, #31D7CA, #14B8A6); }
+    .icon-3 { background: linear-gradient(135deg, #E91E8C, #DB2777); }
+    .icon-4 { background: linear-gradient(135deg, #466F88, #3B5F77); }
+    .icon-5 { background: linear-gradient(135deg, #94A3B8, #7DA3AF); }
+    .icon-6 { background: linear-gradient(135deg, #FF6B35, #EA580C); }
+    .icon-7 { background: linear-gradient(135deg, #008182, #0D9488); }
+
+    .card-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    .star-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(255, 255, 255, 0.6);
+      border: none;
+      cursor: pointer;
+      color: #D4AF37;
+      opacity: 0.5;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .star-btn:hover {
+      opacity: 1;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .deco-star {
+      position: absolute;
+      color: #D4AF37;
+      opacity: 0.5;
+    }
+    .deco-star-1 { top: 14px; right: 60px; font-size: 12px; }
+    .deco-star-2 { top: 26px; right: 52px; font-size: 8px; opacity: 0.3; }
+    .deco-star-3 { bottom: 16px; left: 16px; font-size: 6px; opacity: 0.25; }
+
+    .coming-soon {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: #475569;
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* Request Form */
+    .request-form {
+      background: linear-gradient(145deg, #F8FAFC, #F1F5F9);
+      border-radius: 24px;
+      padding: 42px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+    .form-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    .form-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #31D7CA, #14B8A6);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(49, 215, 202, 0.3);
+    }
+    .form-header h3 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .form-desc {
+      color: #64748b;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+    .form-group {
+      margin-bottom: 22px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid #E2E8F0;
+      border-radius: 14px;
+      font-size: 15px;
+      font-family: inherit;
+      background: white;
+      color: #1e293b;
+      transition: all 0.2s;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #94a3b8; }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #31D7CA;
+      box-shadow: 0 0 0 3px rgba(49, 215, 202, 0.1);
+    }
+    .form-group textarea {
+      resize: none;
+      height: 120px;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 34px;
+      background: linear-gradient(135deg, #FC883A, #F97316);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(252, 136, 58, 0.35);
+      transition: all 0.2s;
+    }
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(252, 136, 58, 0.45);
+    }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 30px;
+      color: #7DA3AF;
+      font-size: 14px;
+      border-top: 1px solid rgba(125, 163, 175, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora-bg"></div>
+  <div class="stars"></div>
+
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polygon points="12 6 14 10 18 10 15 13 16 17 12 15 8 17 9 13 6 10 10 10 12 6"/>
+        </svg>
+      </div>
+      <h1><span>Brite</span><span>Stack</span></h1>
+    </div>
+    <div class="user-section">
+      <div class="user-avatar"></div>
+      <span style="color: #A9C1CB; font-size: 14px;">User Name</span>
+      <button class="logout-btn">Sign Out</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h2>Find the tools <span>you need</span></h2>
+      <p>Built to make your world more efficient</p>
+    </div>
+
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Search tools...">
+      <button class="fav-btn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#D4AF37" stroke="#D4AF37" stroke-width="2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="tool-grid">
+      <div class="tool-card card-1">
+        <span class="deco-star deco-star-1">&#9733;</span>
+        <span class="deco-star deco-star-2">&#9733;</span>
+        <span class="deco-star deco-star-3">&#9733;</span>
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="2" width="16" height="20" rx="2"/>
+            <path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Commercial Wizard</h3>
+        <p class="card-desc">Generate commercial insurance quotes and proposals</p>
+      </div>
+
+      <div class="tool-card card-2">
+        <span class="deco-star deco-star-1">&#9733;</span>
+        <span class="deco-star deco-star-2">&#9733;</span>
+        <span class="deco-star deco-star-3">&#9733;</span>
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <h3 class="card-title">BriteCo Brief</h3>
+        <p class="card-desc">Create concise briefs and summaries</p>
+      </div>
+
+      <div class="tool-card card-3">
+        <span class="deco-star deco-star-1">&#9733;</span>
+        <span class="deco-star deco-star-2">&#9733;</span>
+        <span class="deco-star deco-star-3">&#9733;</span>
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Planner Pulse</h3>
+        <p class="card-desc">Support wedding planners with insurance solutions</p>
+      </div>
+
+      <div class="tool-card card-4">
+        <span class="deco-star deco-star-1">&#9733;</span>
+        <span class="deco-star deco-star-2">&#9733;</span>
+        <span class="deco-star deco-star-3">&#9733;</span>
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-4">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Venue Voice</h3>
+        <p class="card-desc">Customize venue insurance communications</p>
+      </div>
+
+      <div class="tool-card card-5">
+        <span class="coming-soon">Coming Soon</span>
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-5">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Stay in the Loupe</h3>
+        <p class="card-desc">Jewelry industry insights and updates</p>
+      </div>
+
+      <div class="tool-card card-6">
+        <span class="deco-star deco-star-1">&#9733;</span>
+        <span class="deco-star deco-star-2">&#9733;</span>
+        <span class="deco-star deco-star-3">&#9733;</span>
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-6">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Ad Generator</h3>
+        <p class="card-desc">Create targeted ad campaigns</p>
+      </div>
+
+      <div class="tool-card card-7">
+        <span class="deco-star deco-star-1">&#9733;</span>
+        <span class="deco-star deco-star-2">&#9733;</span>
+        <span class="deco-star deco-star-3">&#9733;</span>
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-7">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="23 7 16 12 23 17 23 7"/>
+            <rect x="1" y="5" width="15" height="14" rx="2"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Video Ad Generator</h3>
+        <p class="card-desc">Generate bite-sized video ads</p>
+      </div>
+    </div>
+
+    <div class="request-form">
+      <div class="form-header">
+        <div class="form-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+        </div>
+        <h3>Request a Tool</h3>
+      </div>
+      <p class="form-desc">Have an idea for a new AI tool? Let us know!</p>
+      <div class="form-group">
+        <label>Tool Name</label>
+        <input type="text" placeholder="e.g., Policy Summarizer">
+      </div>
+      <div class="form-group">
+        <label>Description / Use Case</label>
+        <textarea placeholder="Describe what this tool would do and how it would help..."></textarea>
+      </div>
+      <button class="submit-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        Submit Request
+      </button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 BriteCo. All rights reserved.</p>
+  </footer>
+</body>
+</html>

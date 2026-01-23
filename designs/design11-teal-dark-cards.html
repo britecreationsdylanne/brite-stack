@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design 11 - Teal Background Dark Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      color: white;
+      background: #31D7CA;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated Background Elements */
+    .bg-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Floating circles */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.15;
+      animation: float 20s infinite ease-in-out;
+    }
+    .circle-1 { width: 400px; height: 400px; background: #272D3F; top: -100px; left: -100px; animation-delay: 0s; }
+    .circle-2 { width: 300px; height: 300px; background: #008182; top: 20%; right: -80px; animation-delay: -5s; }
+    .circle-3 { width: 250px; height: 250px; background: #272D3F; bottom: 10%; left: 10%; animation-delay: -10s; }
+    .circle-4 { width: 350px; height: 350px; background: #008182; bottom: -100px; right: 20%; animation-delay: -15s; }
+    .circle-5 { width: 200px; height: 200px; background: #272D3F; top: 40%; left: 30%; animation-delay: -8s; }
+    .circle-6 { width: 180px; height: 180px; background: #008182; top: 60%; right: 35%; animation-delay: -12s; }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(20px, -30px) scale(1.05); }
+      50% { transform: translate(-15px, 20px) scale(0.95); }
+      75% { transform: translate(25px, 15px) scale(1.02); }
+    }
+
+    /* Grid pattern overlay */
+    .grid-pattern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Glowing dots */
+    .glow-dots {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+    .dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      animation: pulse 3s infinite ease-in-out;
+    }
+    .dot:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+    .dot:nth-child(2) { top: 25%; left: 85%; animation-delay: -0.5s; }
+    .dot:nth-child(3) { top: 45%; left: 5%; animation-delay: -1s; }
+    .dot:nth-child(4) { top: 60%; left: 92%; animation-delay: -1.5s; }
+    .dot:nth-child(5) { top: 80%; left: 15%; animation-delay: -2s; }
+    .dot:nth-child(6) { top: 35%; left: 50%; animation-delay: -2.5s; }
+    .dot:nth-child(7) { top: 70%; left: 75%; animation-delay: -1.2s; }
+    .dot:nth-child(8) { top: 10%; left: 60%; animation-delay: -0.8s; }
+    .dot:nth-child(9) { top: 90%; left: 45%; animation-delay: -1.8s; }
+    .dot:nth-child(10) { top: 50%; left: 25%; animation-delay: -2.2s; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    /* Diagonal lines */
+    .diagonal-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.05;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 100px,
+        #272D3F 100px,
+        #272D3F 102px
+      );
+    }
+
+    /* Header - minimal */
+    .header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 20px 50px;
+    }
+    .user-section {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: #272D3F;
+    }
+    .user-name {
+      color: #272D3F;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .logout-btn {
+      padding: 10px 20px;
+      background: #272D3F;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .logout-btn:hover {
+      background: #1a1f2e;
+      transform: translateY(-2px);
+    }
+
+    /* Main */
+    main {
+      position: relative;
+      z-index: 10;
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 30px 50px 60px;
+    }
+
+    /* Hero - Main BriteStack header */
+    .hero {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .hero-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .hero-icon {
+      width: 80px;
+      height: 80px;
+      background: #272D3F;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 40px rgba(39, 45, 63, 0.4);
+    }
+    .hero-icon svg {
+      width: 50px;
+      height: 50px;
+      color: #31D7CA;
+    }
+    .hero h1 {
+      font-size: 64px;
+      font-weight: 800;
+      color: #272D3F;
+      letter-spacing: -2px;
+    }
+    .hero-subtitle {
+      color: #272D3F;
+      font-size: 20px;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+
+    /* Search */
+    .search-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 50px;
+    }
+    .search-input {
+      width: 450px;
+      padding: 18px 24px 18px 56px;
+      border-radius: 16px;
+      border: none;
+      font-size: 16px;
+      background: #272D3F;
+      color: white;
+      box-shadow: 0 8px 30px rgba(39, 45, 63, 0.3);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2331D7CA' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 20px center;
+      transition: all 0.3s;
+    }
+    .search-input::placeholder { color: #7DA3AF; }
+    .search-input:focus {
+      outline: none;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(39, 45, 63, 0.4);
+    }
+    .fav-btn {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      border: none;
+      background: #272D3F;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #D4AF37;
+      box-shadow: 0 8px 30px rgba(39, 45, 63, 0.3);
+      transition: all 0.3s;
+    }
+    .fav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(39, 45, 63, 0.4);
+    }
+
+    /* Grid - 3 columns, 9 cards */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    /* Dark Navy Cards */
+    .tool-card {
+      background: #272D3F;
+      border-radius: 20px;
+      padding: 28px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 30px rgba(39, 45, 63, 0.3);
+      min-height: 180px;
+    }
+    .tool-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(39, 45, 63, 0.5);
+    }
+
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .card-icon svg { width: 28px; height: 28px; color: white; }
+
+    .icon-1 { background: linear-gradient(135deg, #FC883A, #F97316); }
+    .icon-2 { background: linear-gradient(135deg, #31D7CA, #14B8A6); }
+    .icon-3 { background: linear-gradient(135deg, #E91E8C, #DB2777); }
+    .icon-4 { background: linear-gradient(135deg, #3B82F6, #2563EB); }
+    .icon-5 { background: linear-gradient(135deg, #8B5CF6, #7C3AED); }
+    .icon-6 { background: linear-gradient(135deg, #EF4444, #DC2626); }
+    .icon-7 { background: linear-gradient(135deg, #10B981, #059669); }
+    .icon-8 { background: linear-gradient(135deg, #F59E0B, #D97706); }
+    .icon-9 { background: linear-gradient(135deg, #6366F1, #4F46E5); }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: #A9C1CB;
+      line-height: 1.5;
+    }
+
+    .star-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      cursor: pointer;
+      color: #D4AF37;
+      opacity: 0.5;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .star-btn:hover {
+      opacity: 1;
+      background: rgba(212, 175, 55, 0.2);
+    }
+
+    .coming-soon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(49, 215, 202, 0.2);
+      color: #31D7CA;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .placeholder-card {
+      border: 2px dashed rgba(49, 215, 202, 0.3);
+      background: rgba(39, 45, 63, 0.7);
+    }
+    .placeholder-card:hover {
+      transform: none;
+      cursor: default;
+    }
+    .placeholder-text {
+      color: #7DA3AF;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* Request Form */
+    .request-form {
+      background: #272D3F;
+      border-radius: 24px;
+      padding: 45px;
+      box-shadow: 0 10px 40px rgba(39, 45, 63, 0.4);
+    }
+    .form-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    .form-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #31D7CA, #008182);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .form-header h3 {
+      font-size: 26px;
+      font-weight: 700;
+      color: white;
+    }
+    .form-desc {
+      color: #A9C1CB;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+    .form-group {
+      margin-bottom: 22px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #31D7CA;
+      margin-bottom: 10px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid rgba(49, 215, 202, 0.2);
+      border-radius: 14px;
+      font-size: 15px;
+      font-family: inherit;
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      transition: all 0.2s;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #7DA3AF; }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #31D7CA;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .form-group textarea {
+      resize: none;
+      height: 120px;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      background: linear-gradient(135deg, #FC883A, #F97316);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(252, 136, 58, 0.4);
+      transition: all 0.3s;
+    }
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(252, 136, 58, 0.5);
+    }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 30px;
+      color: #272D3F;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Elements -->
+  <div class="bg-elements">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+    <div class="circle circle-4"></div>
+    <div class="circle circle-5"></div>
+    <div class="circle circle-6"></div>
+  </div>
+  <div class="diagonal-lines"></div>
+  <div class="grid-pattern"></div>
+  <div class="glow-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <!-- Header - just user info -->
+  <header class="header">
+    <div class="user-section">
+      <div class="user-avatar"></div>
+      <span class="user-name">User Name</span>
+      <button class="logout-btn">Sign Out</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero - BriteStack centered -->
+    <div class="hero">
+      <div class="hero-logo">
+        <div class="hero-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h1>BriteStack</h1>
+      </div>
+      <p class="hero-subtitle">Find the tools you need. Built to make your world more efficient.</p>
+    </div>
+
+    <!-- Search -->
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Search tools...">
+      <button class="fav-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Tool Grid - 9 cards -->
+    <div class="tool-grid">
+      <div class="tool-card">
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="2" width="16" height="20" rx="2"/>
+            <path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Commercial Wizard</h3>
+        <p class="card-desc">Generate commercial insurance quotes and proposals</p>
+      </div>
+
+      <div class="tool-card">
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <h3 class="card-title">BriteCo Brief</h3>
+        <p class="card-desc">Create concise briefs and summaries</p>
+      </div>
+
+      <div class="tool-card">
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Planner Pulse</h3>
+        <p class="card-desc">Support wedding planners with insurance solutions</p>
+      </div>
+
+      <div class="tool-card">
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-4">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Venue Voice</h3>
+        <p class="card-desc">Customize venue insurance communications</p>
+      </div>
+
+      <div class="tool-card">
+        <span class="coming-soon">Coming Soon</span>
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-5">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Stay in the Loupe</h3>
+        <p class="card-desc">Jewelry industry insights and updates</p>
+      </div>
+
+      <div class="tool-card">
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-6">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Ad Generator</h3>
+        <p class="card-desc">Create targeted ad campaigns</p>
+      </div>
+
+      <div class="tool-card">
+        <button class="star-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
+        <div class="card-icon icon-7">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="23 7 16 12 23 17 23 7"/>
+            <rect x="1" y="5" width="15" height="14" rx="2"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Video Ad Generator</h3>
+        <p class="card-desc">Generate bite-sized video ads</p>
+      </div>
+
+      <!-- Placeholder Card 1 -->
+      <div class="tool-card placeholder-card">
+        <div class="card-icon icon-8">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+          </svg>
+        </div>
+        <p class="placeholder-text">New Tool Coming Soon</p>
+      </div>
+
+      <!-- Placeholder Card 2 -->
+      <div class="tool-card placeholder-card">
+        <div class="card-icon icon-9">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+          </svg>
+        </div>
+        <p class="placeholder-text">New Tool Coming Soon</p>
+      </div>
+    </div>
+
+    <!-- Request Form -->
+    <div class="request-form">
+      <div class="form-header">
+        <div class="form-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+        </div>
+        <h3>Request a Tool</h3>
+      </div>
+      <p class="form-desc">Have an idea for a new AI tool? Let us know!</p>
+      <div class="form-group">
+        <label>Tool Name</label>
+        <input type="text" placeholder="e.g., Policy Summarizer">
+      </div>
+      <div class="form-group">
+        <label>Description / Use Case</label>
+        <textarea placeholder="Describe what this tool would do and how it would help..."></textarea>
+      </div>
+      <button class="submit-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        Submit Request
+      </button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 BriteCo. All rights reserved.</p>
+  </footer>
+</body>
+</html>

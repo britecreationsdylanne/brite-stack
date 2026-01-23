@@ -11,15 +11,15 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   video: Video,
 };
 
-// Colorful backgrounds for each tool - using hex values for inline styles
-const colorMap: Record<string, { bg: string; iconBg: string }> = {
-  'commercial-wizard': { bg: '#FFF5E6', iconBg: '#FC883A' },
-  'briteco-brief': { bg: '#E6F7F7', iconBg: '#31D7CA' },
-  'planner-pulse': { bg: '#FDE8F0', iconBg: '#E91E8C' },
-  'venue-voice': { bg: '#E8EEF9', iconBg: '#466F88' },
-  'stay-in-the-loupe': { bg: '#F4F7FC', iconBg: '#7DA3AF' },
-  'ad-generator': { bg: '#FFF0E6', iconBg: '#FF6B35' },
-  'video-ad-generator': { bg: '#E8F4E8', iconBg: '#008182' },
+// Icon gradient backgrounds for design 13 - dark navy cards with colorful icon backgrounds
+const iconGradients: Record<string, string> = {
+  'commercial-wizard': 'linear-gradient(135deg, #FC883A, #F97316)',
+  'briteco-brief': 'linear-gradient(135deg, #31D7CA, #14B8A6)',
+  'planner-pulse': 'linear-gradient(135deg, #E91E8C, #DB2777)',
+  'venue-voice': 'linear-gradient(135deg, #3B82F6, #2563EB)',
+  'stay-in-the-loupe': 'linear-gradient(135deg, #8B5CF6, #7C3AED)',
+  'ad-generator': 'linear-gradient(135deg, #EF4444, #DC2626)',
+  'video-ad-generator': 'linear-gradient(135deg, #10B981, #059669)',
 };
 
 interface ToolCardProps {
@@ -30,7 +30,7 @@ interface ToolCardProps {
 
 export function ToolCard({ tool, isFavorite, onToggleFavorite }: ToolCardProps) {
   const IconComponent = iconMap[tool.icon] || FileText;
-  const colors = colorMap[tool.id] || { bg: '#F4F7FC', iconBg: '#008182' };
+  const iconGradient = iconGradients[tool.id] || 'linear-gradient(135deg, #008182, #006666)';
 
   const handleClick = () => {
     if (!tool.comingSoon) {
@@ -46,55 +46,43 @@ export function ToolCard({ tool, isFavorite, onToggleFavorite }: ToolCardProps) 
   return (
     <div
       onClick={handleClick}
-      style={{ backgroundColor: colors.bg }}
-      className={`relative rounded-2xl p-6 transition-all duration-200 shadow-lg hover:shadow-xl ${
+      className={`relative bg-[#272D3F] rounded-[20px] p-7 transition-all duration-300 shadow-[0_8px_30px_rgba(39,45,63,0.3)] min-h-[180px] ${
         tool.comingSoon
-          ? 'opacity-70 cursor-not-allowed border-2 border-dashed border-[#A9C1CB]'
-          : 'cursor-pointer hover:-translate-y-1'
+          ? 'opacity-70 cursor-not-allowed border-2 border-dashed border-[#31D7CA]/30'
+          : 'cursor-pointer hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(39,45,63,0.5)]'
       }`}
     >
-      {/* Decorative Stars */}
-      <div className="absolute top-3 right-14 text-[#D4AF37] opacity-60">
-        <Star size={10} fill="currentColor" />
-      </div>
-      <div className="absolute top-6 right-10 text-[#D4AF37] opacity-40">
-        <Star size={8} fill="currentColor" />
-      </div>
-      <div className="absolute bottom-4 left-4 text-[#D4AF37] opacity-30">
-        <Star size={6} fill="currentColor" />
-      </div>
-
       {/* Favorite Button */}
       <button
         onClick={handleFavoriteClick}
-        className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-white/50 transition-colors z-10"
+        className="absolute top-5 right-5 w-9 h-9 rounded-[10px] bg-white/10 flex items-center justify-center hover:bg-[#D4AF37]/20 transition-all z-10"
         title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
       >
         <Star
-          size={20}
-          className={isFavorite ? 'text-[#D4AF37]' : 'text-[#D4AF37]/40 hover:text-[#D4AF37]'}
+          size={18}
+          className={isFavorite ? 'text-[#D4AF37]' : 'text-[#D4AF37]/50 hover:text-[#D4AF37]'}
           fill={isFavorite ? '#D4AF37' : 'none'}
         />
       </button>
 
-      {/* Icon with colored background */}
+      {/* Coming Soon Badge */}
+      {tool.comingSoon && (
+        <div className="absolute top-5 left-5 px-3 py-1.5 bg-[#31D7CA]/20 text-[#31D7CA] text-xs font-semibold rounded-lg">
+          Coming Soon
+        </div>
+      )}
+
+      {/* Icon with gradient background */}
       <div
-        style={{ backgroundColor: colors.iconBg }}
-        className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 shadow-md"
+        style={{ background: iconGradient }}
+        className="w-14 h-14 rounded-[14px] flex items-center justify-center mb-[18px] shadow-md"
       >
         <IconComponent size={28} className="text-white" />
       </div>
 
       {/* Content */}
-      <h3 className="text-lg font-bold text-[#272D3F] mb-2 pr-6">{tool.name}</h3>
-      <p className="text-sm text-[#466F88] leading-relaxed">{tool.description}</p>
-
-      {/* Coming Soon Badge */}
-      {tool.comingSoon && (
-        <div className="absolute top-4 left-4 px-3 py-1 bg-[#466F88] text-white text-xs font-semibold rounded-full">
-          Coming Soon
-        </div>
-      )}
+      <h3 className="text-lg font-bold text-white mb-2 pr-10">{tool.name}</h3>
+      <p className="text-sm text-[#A9C1CB] leading-relaxed">{tool.description}</p>
     </div>
   );
 }

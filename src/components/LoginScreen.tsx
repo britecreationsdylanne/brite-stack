@@ -1,3 +1,5 @@
+import { TechBackground } from './TechBackground';
+
 interface LoginScreenProps {
   onSignIn: () => void;
   loading?: boolean;
@@ -5,46 +7,36 @@ interface LoginScreenProps {
 
 export function LoginScreen({ onSignIn, loading }: LoginScreenProps) {
   return (
-    <div className="min-h-screen bg-[#272D3F] flex items-center justify-center p-6">
-      <div className="bg-[#F4F7FC] rounded-3xl p-10 md:p-14 max-w-lg w-full text-center shadow-2xl">
+    <div className="min-h-screen flex items-center justify-center p-6 relative">
+      <TechBackground />
+
+      <div className="relative z-10 bg-[#272D3F] rounded-3xl p-10 md:p-14 max-w-lg w-full text-center shadow-[0_10px_40px_rgba(39,45,63,0.4)]">
         {/* Logo */}
-        <div className="flex items-center justify-center gap-4 mb-8">
-          <svg
-            width="60"
-            height="60"
-            viewBox="0 0 100 100"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M50 5L90 45L50 95L10 45L50 5Z"
-              fill="#31D7CA"
-            />
-            <path
-              d="M50 5L90 45L50 55L10 45L50 5Z"
-              fill="#008182"
-            />
-          </svg>
-          <div className="text-left">
-            <h1 className="text-3xl font-semibold tracking-tight">
-              <span className="text-[#272D3F]">brite</span>
-              <span className="text-[#7DA3AF]">co</span>
-            </h1>
-            <p className="text-base text-[#008182] font-medium">AI Tools</p>
+        <div className="flex items-center justify-center gap-5 mb-8">
+          {/* Techy Icon */}
+          <div className="w-16 h-16 bg-[#31D7CA]/20 rounded-2xl flex items-center justify-center border border-[#31D7CA]/30">
+            <svg className="w-10 h-10 text-[#31D7CA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
           </div>
+          <h1 className="text-4xl font-extrabold text-white tracking-tight">
+            BriteStack
+          </h1>
         </div>
 
-        <h2 className="text-2xl font-semibold text-[#272D3F] mb-3">
+        <h2 className="text-2xl font-semibold text-white mb-3">
           Welcome Back
         </h2>
-        <p className="text-[#466F88] mb-10 text-lg">
+        <p className="text-[#A9C1CB] mb-10 text-lg">
           Sign in to access your AI tools
         </p>
 
         <button
           onClick={onSignIn}
           disabled={loading}
-          className="flex items-center justify-center gap-4 w-full px-8 py-4 bg-white border-2 border-[#E1E7EF] rounded-xl hover:bg-white hover:border-[#31D7CA] hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-4 w-full px-8 py-4 bg-white rounded-xl hover:bg-[#F4F7FC] hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {/* Google Icon */}
           <svg width="24" height="24" viewBox="0 0 24 24">
