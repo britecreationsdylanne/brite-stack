@@ -150,7 +150,7 @@ body {
 }
 @keyframes pulseMove {
   0% { transform: translateX(-100%); }
-  100% { transform: translateX(100vw); }
+  100% { transform: translateX(calc(100vw - 100%)); }
 }
 .pulse-line-1 { top: 12%; width: 100px; animation-delay: 0s; }
 .pulse-line-2 { top: 28%; width: 80px; animation-delay: -1s; }
