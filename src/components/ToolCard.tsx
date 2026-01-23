@@ -11,15 +11,15 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   video: Video,
 };
 
-// Colorful backgrounds for each tool
+// Colorful backgrounds for each tool - using hex values for inline styles
 const colorMap: Record<string, { bg: string; iconBg: string }> = {
-  'commercial-wizard': { bg: 'bg-[#FFF5E6]', iconBg: 'bg-[#FC883A]' },
-  'briteco-brief': { bg: 'bg-[#E6F7F7]', iconBg: 'bg-[#31D7CA]' },
-  'planner-pulse': { bg: 'bg-[#FDE8F0]', iconBg: 'bg-[#E91E8C]' },
-  'venue-voice': { bg: 'bg-[#E8EEF9]', iconBg: 'bg-[#466F88]' },
-  'stay-in-the-loupe': { bg: 'bg-[#F4F7FC]', iconBg: 'bg-[#7DA3AF]' },
-  'ad-generator': { bg: 'bg-[#FFF0E6]', iconBg: 'bg-[#FF6B35]' },
-  'video-ad-generator': { bg: 'bg-[#E8F4E8]', iconBg: 'bg-[#008182]' },
+  'commercial-wizard': { bg: '#FFF5E6', iconBg: '#FC883A' },
+  'briteco-brief': { bg: '#E6F7F7', iconBg: '#31D7CA' },
+  'planner-pulse': { bg: '#FDE8F0', iconBg: '#E91E8C' },
+  'venue-voice': { bg: '#E8EEF9', iconBg: '#466F88' },
+  'stay-in-the-loupe': { bg: '#F4F7FC', iconBg: '#7DA3AF' },
+  'ad-generator': { bg: '#FFF0E6', iconBg: '#FF6B35' },
+  'video-ad-generator': { bg: '#E8F4E8', iconBg: '#008182' },
 };
 
 interface ToolCardProps {
@@ -30,7 +30,7 @@ interface ToolCardProps {
 
 export function ToolCard({ tool, isFavorite, onToggleFavorite }: ToolCardProps) {
   const IconComponent = iconMap[tool.icon] || FileText;
-  const colors = colorMap[tool.id] || { bg: 'bg-[#F4F7FC]', iconBg: 'bg-[#008182]' };
+  const colors = colorMap[tool.id] || { bg: '#F4F7FC', iconBg: '#008182' };
 
   const handleClick = () => {
     if (!tool.comingSoon) {
@@ -46,7 +46,8 @@ export function ToolCard({ tool, isFavorite, onToggleFavorite }: ToolCardProps) 
   return (
     <div
       onClick={handleClick}
-      className={`relative ${colors.bg} rounded-2xl p-6 transition-all duration-200 shadow-lg hover:shadow-xl ${
+      style={{ backgroundColor: colors.bg }}
+      className={`relative rounded-2xl p-6 transition-all duration-200 shadow-lg hover:shadow-xl ${
         tool.comingSoon
           ? 'opacity-70 cursor-not-allowed border-2 border-dashed border-[#A9C1CB]'
           : 'cursor-pointer hover:-translate-y-1'
@@ -77,7 +78,10 @@ export function ToolCard({ tool, isFavorite, onToggleFavorite }: ToolCardProps) 
       </button>
 
       {/* Icon with colored background */}
-      <div className={`w-14 h-14 ${colors.iconBg} rounded-xl flex items-center justify-center mb-4 shadow-md`}>
+      <div
+        style={{ backgroundColor: colors.iconBg }}
+        className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 shadow-md"
+      >
         <IconComponent size={28} className="text-white" />
       </div>
 

@@ -44,10 +44,10 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#272D3F]">
+    <div className="min-h-screen bg-[#272D3F] overflow-x-hidden">
       <Header user={user} onLogout={logout} />
 
-      <main className="px-8 md:px-12 lg:px-16 py-12 max-w-6xl mx-auto">
+      <main className="px-6 sm:px-8 md:px-12 lg:px-16 py-12 max-w-5xl mx-auto box-border">
         {/* Hero Section */}
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
