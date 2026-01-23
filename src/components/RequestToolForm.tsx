@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle, Lightbulb } from 'lucide-react';
 
 export function RequestToolForm() {
   const [toolName, setToolName] = useState('');
@@ -26,21 +26,26 @@ export function RequestToolForm() {
   };
 
   return (
-    <div className="bg-[#466F88] rounded-xl p-6 md:p-8">
-      <h2 className="text-xl font-semibold text-white mb-2">Request a Tool</h2>
-      <p className="text-[#A9C1CB] mb-6">
+    <div className="bg-[#F4F7FC] rounded-2xl p-8 md:p-10">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="w-12 h-12 bg-[#31D7CA] rounded-xl flex items-center justify-center">
+          <Lightbulb size={24} className="text-white" />
+        </div>
+        <h2 className="text-2xl font-semibold text-[#272D3F]">Request a Tool</h2>
+      </div>
+      <p className="text-[#466F88] mb-8 text-lg">
         Have an idea for a new AI tool? Let us know!
       </p>
 
       {submitted ? (
-        <div className="flex items-center gap-3 text-[#31D7CA]">
+        <div className="flex items-center gap-3 text-[#008182] bg-[#E1E7EF] p-4 rounded-xl">
           <CheckCircle size={24} />
-          <span>Your email client should open. Thanks for your suggestion!</span>
+          <span className="font-medium">Your email client should open. Thanks for your suggestion!</span>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="toolName" className="block text-sm text-[#E1E7EF] mb-2">
+            <label htmlFor="toolName" className="block text-sm font-medium text-[#272D3F] mb-2">
               Tool Name
             </label>
             <input
@@ -50,12 +55,12 @@ export function RequestToolForm() {
               onChange={(e) => setToolName(e.target.value)}
               required
               placeholder="e.g., Policy Summarizer"
-              className="w-full px-4 py-3 bg-[#272D3F] text-white rounded-lg border-2 border-transparent focus:border-[#31D7CA] focus:outline-none transition-colors placeholder:text-[#7DA3AF]"
+              className="w-full px-5 py-4 bg-white text-[#272D3F] rounded-xl border-2 border-[#E1E7EF] focus:border-[#31D7CA] focus:outline-none transition-colors placeholder:text-[#A9C1CB]"
             />
           </div>
 
           <div>
-            <label htmlFor="description" className="block text-sm text-[#E1E7EF] mb-2">
+            <label htmlFor="description" className="block text-sm font-medium text-[#272D3F] mb-2">
               Description / Use Case
             </label>
             <textarea
@@ -63,15 +68,15 @@ export function RequestToolForm() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
-              rows={3}
+              rows={4}
               placeholder="Describe what this tool would do and how it would help..."
-              className="w-full px-4 py-3 bg-[#272D3F] text-white rounded-lg border-2 border-transparent focus:border-[#31D7CA] focus:outline-none transition-colors placeholder:text-[#7DA3AF] resize-none"
+              className="w-full px-5 py-4 bg-white text-[#272D3F] rounded-xl border-2 border-[#E1E7EF] focus:border-[#31D7CA] focus:outline-none transition-colors placeholder:text-[#A9C1CB] resize-none"
             />
           </div>
 
           <button
             type="submit"
-            className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 bg-[#FC883A] text-white font-semibold uppercase tracking-wide rounded-lg hover:bg-[#e07a35] transition-colors"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 bg-[#FC883A] text-white font-semibold uppercase tracking-wide rounded-xl hover:bg-[#e07a35] transition-colors shadow-lg hover:shadow-xl"
           >
             <Send size={18} />
             Submit Request

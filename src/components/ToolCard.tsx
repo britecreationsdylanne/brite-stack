@@ -34,39 +34,37 @@ export function ToolCard({ tool, isFavorite, onToggleFavorite }: ToolCardProps) 
   return (
     <div
       onClick={handleClick}
-      className={`relative bg-white rounded-xl p-6 shadow-md transition-all duration-200 ${
+      className={`relative bg-[#F4F7FC] rounded-2xl p-6 transition-all duration-200 min-h-[180px] ${
         tool.comingSoon
-          ? 'opacity-70 cursor-not-allowed border-2 border-dashed border-[#A9C1CB]'
-          : 'cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:border-[#31D7CA] border-2 border-transparent'
+          ? 'opacity-60 cursor-not-allowed border-2 border-dashed border-[#A9C1CB]'
+          : 'cursor-pointer hover:shadow-xl hover:-translate-y-1 hover:bg-white border-2 border-transparent hover:border-[#31D7CA]'
       }`}
     >
       {/* Favorite Button */}
       <button
         onClick={handleFavoriteClick}
-        className="absolute top-4 right-4 p-1 rounded-full hover:bg-[#E1E7EF] transition-colors"
+        className="absolute top-5 right-5 p-2 rounded-full hover:bg-[#E1E7EF] transition-colors z-10"
         title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
       >
         <Star
-          size={20}
-          className={isFavorite ? 'text-[#FC883A] fill-[#FC883A]' : 'text-[#A9C1CB]'}
+          size={22}
+          className={isFavorite ? 'text-[#FC883A] fill-[#FC883A]' : 'text-[#A9C1CB] hover:text-[#7DA3AF]'}
         />
       </button>
 
       {/* Icon */}
-      <div className="w-14 h-14 bg-[#E1E7EF] rounded-xl flex items-center justify-center mb-4">
-        <IconComponent size={28} className="text-[#008182]" />
+      <div className="w-16 h-16 bg-[#E1E7EF] rounded-2xl flex items-center justify-center mb-5">
+        <IconComponent size={32} className="text-[#008182]" />
       </div>
 
       {/* Content */}
-      <h3 className="text-lg font-semibold text-[#272D3F] mb-2">{tool.name}</h3>
-      <p className="text-sm text-[#466F88]">{tool.description}</p>
+      <h3 className="text-lg font-semibold text-[#272D3F] mb-2 pr-8">{tool.name}</h3>
+      <p className="text-sm text-[#466F88] leading-relaxed">{tool.description}</p>
 
       {/* Coming Soon Badge */}
       {tool.comingSoon && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/50 rounded-xl">
-          <span className="px-4 py-2 bg-[#466F88] text-white text-sm font-semibold rounded-lg">
-            Coming Soon
-          </span>
+        <div className="absolute top-5 left-5 px-3 py-1 bg-[#466F88] text-white text-xs font-semibold rounded-full">
+          Coming Soon
         </div>
       )}
     </div>

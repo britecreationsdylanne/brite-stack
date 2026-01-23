@@ -30,7 +30,10 @@ function App() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#272D3F] flex items-center justify-center">
-        <div className="text-[#31D7CA] text-lg">Loading...</div>
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 border-4 border-[#31D7CA] border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-[#31D7CA] text-lg font-medium">Loading...</span>
+        </div>
       </div>
     );
   }
@@ -44,19 +47,19 @@ function App() {
     <div className="min-h-screen bg-[#272D3F]">
       <Header user={user} onLogout={logout} />
 
-      <main className="px-4 md:px-6 py-8 max-w-7xl mx-auto">
+      <main className="px-6 lg:px-10 py-10 max-w-7xl mx-auto">
         {/* Hero Section */}
-        <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4">
             Find the tools <span className="text-[#31D7CA]">you need</span>
           </h2>
-          <p className="text-[#A9C1CB]">
+          <p className="text-[#A9C1CB] text-lg">
             Built to make your world more efficient
           </p>
         </div>
 
         {/* Search Bar */}
-        <div className="mb-10">
+        <div className="mb-12">
           <SearchBar
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
@@ -66,7 +69,7 @@ function App() {
         </div>
 
         {/* Tool Grid */}
-        <div className="mb-12">
+        <div className="mb-16">
           <ToolGrid
             tools={filteredTools}
             isFavorite={isFavorite}
@@ -79,7 +82,7 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="text-center py-6 text-[#7DA3AF] text-sm">
+      <footer className="text-center py-8 text-[#7DA3AF] text-sm border-t border-[#466F88]/30">
         <p>&copy; {new Date().getFullYear()} BriteCo. All rights reserved.</p>
       </footer>
     </div>
