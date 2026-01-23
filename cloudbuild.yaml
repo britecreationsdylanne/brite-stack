@@ -16,15 +16,10 @@ steps:
       - '--build-arg'
       - 'VITE_FIREBASE_APP_ID=${_VITE_FIREBASE_APP_ID}'
       - '-t'
-      - 'gcr.io/$PROJECT_ID/brite-stack:$COMMIT_SHA'
-      - '-t'
       - 'gcr.io/$PROJECT_ID/brite-stack:latest'
       - '.'
 
   # Push to Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/brite-stack:$COMMIT_SHA']
-
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/brite-stack:latest']
 
@@ -36,7 +31,7 @@ steps:
       - 'deploy'
       - 'brite-stack'
       - '--image'
-      - 'gcr.io/$PROJECT_ID/brite-stack:$COMMIT_SHA'
+      - 'gcr.io/$PROJECT_ID/brite-stack:latest'
       - '--region'
       - 'us-central1'
       - '--platform'
@@ -44,7 +39,6 @@ steps:
       - '--allow-unauthenticated'
 
 images:
-  - 'gcr.io/$PROJECT_ID/brite-stack:$COMMIT_SHA'
   - 'gcr.io/$PROJECT_ID/brite-stack:latest'
 
 substitutions:
