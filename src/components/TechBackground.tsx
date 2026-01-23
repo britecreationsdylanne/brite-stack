@@ -1,6 +1,6 @@
 export function TechBackground() {
   return (
-    <>
+    <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
       {/* Main background gradient */}
       <div className="tech-bg" />
       <div className="grid-overlay" />
@@ -144,6 +144,6 @@ export function TechBackground() {
         <div className="particle particle-11" />
         <div className="particle particle-12" />
       </div>
-    </>
+    </div>
   );
 }
