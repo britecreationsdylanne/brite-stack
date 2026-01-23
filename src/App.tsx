@@ -47,10 +47,10 @@ function App() {
     <div className="min-h-screen bg-[#272D3F]">
       <Header user={user} onLogout={logout} />
 
-      <main className="px-6 lg:px-10 py-10 max-w-7xl mx-auto">
+      <main className="px-8 md:px-12 lg:px-16 py-12 max-w-6xl mx-auto">
         {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
             Find the tools <span className="text-[#31D7CA]">you need</span>
           </h2>
           <p className="text-[#A9C1CB] text-lg">
@@ -59,7 +59,7 @@ function App() {
         </div>
 
         {/* Search Bar */}
-        <div className="mb-12">
+        <div className="mb-10">
           <SearchBar
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}

@@ -14,10 +14,10 @@ export function SearchBar({
   onToggleFavorites,
 }: SearchBarProps) {
   return (
-    <div className="flex items-center gap-4 w-full max-w-2xl mx-auto">
+    <div className="flex items-center justify-center gap-3 w-full max-w-xl mx-auto">
       <div className="flex-1 relative">
         <Search
-          size={22}
+          size={20}
           className="absolute left-5 top-1/2 -translate-y-1/2 text-[#7DA3AF]"
         />
         <input
@@ -25,19 +25,19 @@ export function SearchBar({
           placeholder="Search tools..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full pl-14 pr-5 py-4 bg-[#F4F7FC] text-[#272D3F] rounded-xl border-2 border-transparent focus:border-[#31D7CA] focus:bg-white focus:outline-none transition-all placeholder:text-[#A9C1CB] text-lg"
+          className="w-full pl-12 pr-5 py-3.5 bg-white text-[#272D3F] rounded-full shadow-md border-2 border-[#E1E7EF] focus:border-[#31D7CA] focus:outline-none transition-all placeholder:text-[#A9C1CB] text-base"
         />
       </div>
       <button
         onClick={onToggleFavorites}
-        className={`p-4 rounded-xl transition-all ${
+        className={`p-3.5 rounded-full transition-all shadow-md ${
           showFavoritesOnly
-            ? 'bg-[#FC883A] text-white shadow-lg'
-            : 'bg-[#F4F7FC] text-[#7DA3AF] hover:bg-[#E1E7EF] hover:text-[#FC883A]'
+            ? 'bg-[#FC883A] text-white'
+            : 'bg-white text-[#D4AF37] border-2 border-[#E1E7EF] hover:border-[#D4AF37]'
         }`}
         title={showFavoritesOnly ? 'Show all tools' : 'Show favorites only'}
       >
-        <Star size={24} fill={showFavoritesOnly ? 'currentColor' : 'none'} />
+        <Star size={22} fill={showFavoritesOnly ? 'currentColor' : '#D4AF37'} />
       </button>
     </div>
   );
