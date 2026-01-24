@@ -10,7 +10,7 @@ import { LoginScreen } from './components/LoginScreen';
 import { TechBackground } from './components/TechBackground';
 
 function App() {
-  const { user, loading, signInWithGoogle, logout } = useAuth();
+  const { user, loading, signInWithGoogle } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
   const [searchQuery, setSearchQuery] = useState('');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);

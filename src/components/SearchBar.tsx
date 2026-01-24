@@ -1,4 +1,4 @@
-import { Search, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 
 interface SearchBarProps {
   searchQuery: string;

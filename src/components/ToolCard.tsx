@@ -1,7 +1,7 @@
 import { Star, Building, FileText, CalendarHeart, Home, Gem, Megaphone, Video, Plus } from 'lucide-react';
 import type { Tool } from '../data/tools';
 
-const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string; color?: string }>> = {
   building: Building,
   'file-text': FileText,
   'calendar-heart': CalendarHeart,
