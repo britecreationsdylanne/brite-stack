@@ -25,59 +25,99 @@ export function RequestToolForm() {
     setTimeout(() => setSubmitted(false), 3000);
   };
 
+  const inputStyle: React.CSSProperties = {
+    width: '100%',
+    padding: '16px 20px',
+    border: '2px solid rgba(49, 215, 202, 0.2)',
+    borderRadius: '14px',
+    fontSize: '15px',
+    fontFamily: 'inherit',
+    background: 'rgba(255, 255, 255, 0.05)',
+    color: 'white',
+    outline: 'none',
+  };
+
   return (
     <div style={{ background: '#272D3F', borderRadius: '24px', padding: '45px', boxShadow: '0 10px 40px rgba(39, 45, 63, 0.4)' }}>
-      <div className="flex items-center gap-3 md:gap-4 mb-2.5">
-        <div className="w-12 h-12 md:w-[52px] md:h-[52px] bg-gradient-to-br from-[#31D7CA] to-[#008182] rounded-[12px] md:rounded-[14px] flex items-center justify-center flex-shrink-0">
-          <Plus size={24} className="text-white md:hidden" />
-          <Plus size={26} className="text-white hidden md:block" />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '10px' }}>
+        <div style={{
+          width: '52px',
+          height: '52px',
+          background: 'linear-gradient(135deg, #31D7CA, #008182)',
+          borderRadius: '14px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <Plus size={26} color="white" />
         </div>
-        <h2 className="text-xl md:text-[26px] font-bold text-white">Request a Tool</h2>
+        <h3 style={{ fontSize: '26px', fontWeight: 700, color: 'white', margin: 0 }}>Request a Tool</h3>
       </div>
-      <p className="text-[#A9C1CB] mb-6 md:mb-[30px] text-sm md:text-base">
+      <p style={{ color: '#A9C1CB', fontSize: '16px', marginBottom: '30px' }}>
         Have an idea for a new AI tool? Let us know!
       </p>
 
       {submitted ? (
-        <div className="flex items-center gap-3 text-[#31D7CA] bg-[#31D7CA]/10 p-4 rounded-xl border border-[#31D7CA]/20">
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          color: '#31D7CA',
+          background: 'rgba(49, 215, 202, 0.1)',
+          padding: '16px',
+          borderRadius: '12px',
+          border: '1px solid rgba(49, 215, 202, 0.2)',
+        }}>
           <CheckCircle size={24} />
-          <span className="font-medium">Your email client should open. Thanks for your suggestion!</span>
+          <span style={{ fontWeight: 500 }}>Your email client should open. Thanks for your suggestion!</span>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-[22px]">
-          <div>
-            <label htmlFor="toolName" className="block text-sm font-semibold text-[#31D7CA] mb-2.5">
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: '22px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, color: '#31D7CA', marginBottom: '10px' }}>
               Tool Name
             </label>
             <input
               type="text"
-              id="toolName"
               value={toolName}
               onChange={(e) => setToolName(e.target.value)}
               required
               placeholder="e.g., Policy Summarizer"
-              className="w-full px-5 py-4 bg-white/5 text-white rounded-[14px] border-2 border-[#31D7CA]/20 focus:border-[#31D7CA] focus:bg-white/[0.08] focus:outline-none transition-all placeholder:text-[#7DA3AF]"
+              style={inputStyle}
             />
           </div>
 
-          <div>
-            <label htmlFor="description" className="block text-sm font-semibold text-[#31D7CA] mb-2.5">
+          <div style={{ marginBottom: '22px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, color: '#31D7CA', marginBottom: '10px' }}>
               Description / Use Case
             </label>
             <textarea
-              id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
-              rows={4}
               placeholder="Describe what this tool would do and how it would help..."
-              className="w-full px-5 py-4 bg-white/5 text-white rounded-[14px] border-2 border-[#31D7CA]/20 focus:border-[#31D7CA] focus:bg-white/[0.08] focus:outline-none transition-all placeholder:text-[#7DA3AF] resize-none h-[120px]"
+              style={{ ...inputStyle, resize: 'none', height: '120px' }}
             />
           </div>
 
           <button
             type="submit"
-            className="inline-flex items-center gap-2.5 px-9 py-4 bg-gradient-to-br from-[#FC883A] to-[#F97316] text-white font-bold uppercase tracking-wide text-sm rounded-[14px] hover:-translate-y-0.5 transition-all shadow-[0_8px_25px_rgba(252,136,58,0.4)] hover:shadow-[0_12px_35px_rgba(252,136,58,0.5)]"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '16px 36px',
+              background: 'linear-gradient(135deg, #FC883A, #F97316)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '14px',
+              fontSize: '14px',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px',
+              cursor: 'pointer',
+              boxShadow: '0 8px 25px rgba(252, 136, 58, 0.4)',
+            }}
           >
             <Send size={18} />
             Submit Request

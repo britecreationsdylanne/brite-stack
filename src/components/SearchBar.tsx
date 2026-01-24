@@ -14,30 +14,45 @@ export function SearchBar({
   onToggleFavorites,
 }: SearchBarProps) {
   return (
-    <div className="flex items-center justify-center gap-3 md:gap-4 w-full max-w-[600px] mx-auto">
-      <div className="flex-1 relative">
-        <Search
-          size={20}
-          className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 text-[#31D7CA]"
-        />
-        <input
-          type="text"
-          placeholder="Search tools..."
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full pl-12 md:pl-14 pr-5 md:pr-6 py-4 md:py-[18px] bg-[#272D3F] text-white rounded-xl md:rounded-2xl shadow-[0_8px_30px_rgba(39,45,63,0.3)] border-none focus:outline-none focus:-translate-y-0.5 focus:shadow-[0_12px_40px_rgba(39,45,63,0.4)] transition-all placeholder:text-[#7DA3AF] text-base"
-        />
-      </div>
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
+      <input
+        type="text"
+        placeholder="Search tools..."
+        value={searchQuery}
+        onChange={(e) => onSearchChange(e.target.value)}
+        style={{
+          width: '450px',
+          padding: '18px 24px 18px 56px',
+          borderRadius: '16px',
+          border: 'none',
+          fontSize: '16px',
+          background: '#272D3F',
+          color: 'white',
+          boxShadow: '0 8px 30px rgba(39, 45, 63, 0.3)',
+          backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2331D7CA' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E\")",
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: '20px center',
+          outline: 'none',
+        }}
+      />
       <button
         onClick={onToggleFavorites}
-        className={`w-14 h-14 md:w-[60px] md:h-[60px] rounded-xl md:rounded-2xl flex items-center justify-center transition-all shadow-[0_8px_30px_rgba(39,45,63,0.3)] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(39,45,63,0.4)] flex-shrink-0 ${
-          showFavoritesOnly
-            ? 'bg-[#FC883A] text-white'
-            : 'bg-[#272D3F] text-[#D4AF37]'
-        }`}
+        style={{
+          width: '58px',
+          height: '58px',
+          borderRadius: '16px',
+          border: 'none',
+          background: showFavoritesOnly ? '#FC883A' : '#272D3F',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: showFavoritesOnly ? 'white' : '#D4AF37',
+          boxShadow: '0 8px 30px rgba(39, 45, 63, 0.3)',
+        }}
         title={showFavoritesOnly ? 'Show all tools' : 'Show favorites only'}
       >
-        <Star size={24} fill={showFavoritesOnly ? 'currentColor' : '#D4AF37'} />
+        <Star size={20} fill={showFavoritesOnly ? 'currentColor' : '#D4AF37'} />
       </button>
     </div>
   );

@@ -50,7 +50,7 @@ function App() {
       <TechBackground />
 
       <div className="relative z-10">
-        <Header user={user} onLogout={logout} />
+        <Header user={user} />
 
         <main style={{ maxWidth: '1150px', margin: '0 auto', padding: '30px 50px 60px' }}>
           {/* Hero Section - BriteStack centered */}

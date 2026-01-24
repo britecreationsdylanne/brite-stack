@@ -1,4 +1,4 @@
-import { Star, Building, FileText, CalendarHeart, Home, Gem, Megaphone, Video } from 'lucide-react';
+import { Star, Building, FileText, CalendarHeart, Home, Gem, Megaphone, Video, Plus } from 'lucide-react';
 import type { Tool } from '../data/tools';
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
@@ -9,6 +9,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   gem: Gem,
   megaphone: Megaphone,
   video: Video,
+  plus: Plus,
 };
 
 // Icon gradient backgrounds for design 13 - dark navy cards with colorful icon backgrounds
@@ -43,47 +44,98 @@ export function ToolCard({ tool, isFavorite, onToggleFavorite }: ToolCardProps) 
     onToggleFavorite();
   };
 
+  const cardStyle: React.CSSProperties = {
+    background: '#272D3F',
+    borderRadius: '20px',
+    padding: '32px 28px',
+    position: 'relative',
+    cursor: tool.comingSoon ? 'not-allowed' : 'pointer',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 8px 30px rgba(39, 45, 63, 0.3)',
+    minHeight: '180px',
+    opacity: tool.comingSoon ? 0.7 : 1,
+    border: tool.comingSoon ? '2px dashed rgba(49, 215, 202, 0.3)' : 'none',
+  };
+
   return (
     <div
       onClick={handleClick}
-      className={`relative bg-[#272D3F] rounded-[20px] md:rounded-[24px] p-6 md:p-8 transition-all duration-300 shadow-[0_8px_30px_rgba(39,45,63,0.3)] min-h-[200px] md:min-h-[220px] ${
-        tool.comingSoon
-          ? 'opacity-70 cursor-not-allowed border-2 border-dashed border-[#31D7CA]/30'
-          : 'cursor-pointer hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(39,45,63,0.5)]'
-      }`}
+      style={cardStyle}
+      onMouseEnter={(e) => {
+        if (!tool.comingSoon) {
+          e.currentTarget.style.transform = 'translateY(-8px)';
+          e.currentTarget.style.boxShadow = '0 20px 50px rgba(39, 45, 63, 0.5)';
+        }
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = '0 8px 30px rgba(39, 45, 63, 0.3)';
+      }}
     >
       {/* Favorite Button */}
       <button
         onClick={handleFavoriteClick}
-        className="absolute top-5 right-5 md:top-6 md:right-6 w-10 h-10 rounded-[12px] bg-white/10 flex items-center justify-center hover:bg-[#D4AF37]/20 transition-all z-10"
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          background: 'rgba(255, 255, 255, 0.1)',
+          border: 'none',
+          cursor: 'pointer',
+          color: '#D4AF37',
+          opacity: isFavorite ? 1 : 0.5,
+          width: '36px',
+          height: '36px',
+          borderRadius: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
         title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
       >
         <Star
-          size={20}
-          className={isFavorite ? 'text-[#D4AF37]' : 'text-[#D4AF37]/50 hover:text-[#D4AF37]'}
+          size={18}
           fill={isFavorite ? '#D4AF37' : 'none'}
+          stroke="#D4AF37"
         />
       </button>
 
       {/* Coming Soon Badge */}
       {tool.comingSoon && (
-        <div className="absolute top-5 left-5 md:top-6 md:left-6 px-3 py-1.5 bg-[#31D7CA]/20 text-[#31D7CA] text-xs font-semibold rounded-lg">
+        <div style={{
+          position: 'absolute',
+          top: '20px',
+          left: '20px',
+          background: 'rgba(49, 215, 202, 0.2)',
+          color: '#31D7CA',
+          padding: '5px 12px',
+          borderRadius: '8px',
+          fontSize: '11px',
+          fontWeight: 600,
+        }}>
           Coming Soon
         </div>
       )}
 
       {/* Icon with gradient background */}
       <div
-        style={{ background: iconGradient }}
-        className="w-14 h-14 md:w-16 md:h-16 rounded-[14px] md:rounded-[16px] flex items-center justify-center mb-5 shadow-md"
+        style={{
+          background: iconGradient,
+          width: '56px',
+          height: '56px',
+          borderRadius: '14px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '18px',
+        }}
       >
-        <IconComponent size={28} className="text-white md:hidden" />
-        <IconComponent size={32} className="text-white hidden md:block" />
+        <IconComponent size={28} color="white" />
       </div>
 
       {/* Content */}
-      <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3 pr-12">{tool.name}</h3>
-      <p className="text-sm md:text-[15px] text-[#A9C1CB] leading-relaxed">{tool.description}</p>
+      <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'white', marginBottom: '8px' }}>{tool.name}</h3>
+      <p style={{ fontSize: '14px', color: '#A9C1CB', lineHeight: 1.5 }}>{tool.description}</p>
     </div>
   );
 }
