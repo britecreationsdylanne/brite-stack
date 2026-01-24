@@ -4,14 +4,8 @@ const sgMail = require('@sendgrid/mail');
 
 const app = express();
 
-// Enable CORS for your frontend
-app.use(cors({
-  origin: [
-    'https://brite-stack-k55slnsccq-uc.a.run.app',
-    'http://localhost:5173',
-    'http://localhost:3000'
-  ]
-}));
+// Enable CORS for all origins (Cloud Run handles auth)
+app.use(cors());
 
 app.use(express.json());
 
