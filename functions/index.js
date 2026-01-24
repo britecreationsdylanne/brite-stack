@@ -14,7 +14,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 app.post('/send-tool-request', async (req, res) => {
   try {
-    const { toolName, description, userName, userEmail } = req.body;
+    const { toolName, description, requesterName, userName, userEmail } = req.body;
 
     // Validate required fields
     if (!toolName || !description || !userEmail) {
@@ -24,7 +24,7 @@ app.post('/send-tool-request', async (req, res) => {
       });
     }
 
-    const displayName = userName || 'A BriteStack user';
+    const displayName = requesterName || userName || 'A BriteStack user';
 
     const msg = {
       to: 'dylanne.crugnale@brite.co',
