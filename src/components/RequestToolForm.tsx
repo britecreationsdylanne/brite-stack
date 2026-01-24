@@ -7,6 +7,7 @@ interface RequestToolFormProps {
 }
 
 export function RequestToolForm({ userEmail, userName }: RequestToolFormProps) {
+  const [requesterName, setRequesterName] = useState('');
   const [toolName, setToolName] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -26,6 +27,7 @@ export function RequestToolForm({ userEmail, userName }: RequestToolFormProps) {
         body: JSON.stringify({
           toolName,
           description,
+          requesterName: requesterName || userName || 'A BriteStack user',
           userName: userName || 'A BriteStack user',
           userEmail: userEmail || 'unknown@brite.co',
         }),
@@ -35,6 +37,7 @@ export function RequestToolForm({ userEmail, userName }: RequestToolFormProps) {
 
       if (response.ok && data.success) {
         setStatus('success');
+        setRequesterName('');
         setToolName('');
         setDescription('');
       } else {
@@ -145,6 +148,24 @@ export function RequestToolForm({ userEmail, userName }: RequestToolFormProps) {
       )}
 
       <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: '22px' }}>
+          <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, color: '#31D7CA', marginBottom: '10px' }}>
+            Your Name
+          </label>
+          <input
+            type="text"
+            value={requesterName}
+            onChange={(e) => setRequesterName(e.target.value)}
+            required
+            disabled={status === 'loading'}
+            placeholder="Enter your name"
+            style={{
+              ...inputStyle,
+              opacity: status === 'loading' ? 0.6 : 1,
+            }}
+          />
+        </div>
+
         <div style={{ marginBottom: '22px' }}>
           <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, color: '#31D7CA', marginBottom: '10px' }}>
             Tool Name
