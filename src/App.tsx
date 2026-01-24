@@ -93,7 +93,7 @@ function App() {
           </div>
 
           {/* Request Tool Form */}
-          <RequestToolForm />
+          <RequestToolForm userEmail={user.email || undefined} userName={user.displayName || undefined} />
         </main>
 
         {/* Footer */}
