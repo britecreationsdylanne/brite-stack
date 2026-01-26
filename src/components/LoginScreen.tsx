@@ -1,5 +1,3 @@
-import { TechBackground } from './TechBackground';
-
 interface LoginScreenProps {
   onSignIn: () => void;
   loading?: boolean;
@@ -7,38 +5,34 @@ interface LoginScreenProps {
 
 export function LoginScreen({ onSignIn, loading }: LoginScreenProps) {
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 relative">
-      <TechBackground />
-
-      <div className="relative z-10 bg-[#272D3F] rounded-[32px] px-14 py-16 md:px-20 md:py-20 max-w-xl w-full text-center shadow-[0_10px_40px_rgba(39,45,63,0.4)]">
-        {/* Logo */}
+    <div className="min-h-screen flex items-center justify-center p-6 bg-[#1a1a2e]">
+      <div className="bg-[#1a1a2e] rounded-[32px] px-14 py-16 max-w-[500px] w-[90%] text-center shadow-[0_10px_40px_rgba(26,26,46,0.4)] border border-[rgba(49,215,202,0.2)]">
+        {/* Logo and Title */}
         <div className="flex items-center justify-center gap-6 mb-12">
-          {/* Techy Icon */}
-          <div className="w-20 h-20 bg-[#31D7CA]/20 rounded-2xl flex items-center justify-center border border-[#31D7CA]/30">
+          <div className="w-20 h-20 bg-[rgba(49,215,202,0.2)] rounded-2xl flex items-center justify-center border border-[rgba(49,215,202,0.3)]">
             <svg className="w-12 h-12 text-[#31D7CA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M12 2L2 7l10 5 10-5-10-5z"/>
               <path d="M2 17l10 5 10-5"/>
               <path d="M2 12l10 5 10-5"/>
             </svg>
           </div>
-          <h1 className="text-5xl font-extrabold text-white tracking-tight">
+          <h1 className="text-[2.5rem] font-extrabold text-white tracking-tight">
             BriteStack
           </h1>
         </div>
 
-        <h2 className="text-3xl font-semibold text-white mb-4">
+        <h2 className="text-[1.75rem] font-semibold text-white mb-4">
           Welcome Back
         </h2>
-        <p className="text-[#A9C1CB] mb-14 text-xl">
+        <p className="text-[#a0aec0] mb-12 text-xl">
           Sign in to access your AI tools
         </p>
 
         <button
           onClick={onSignIn}
           disabled={loading}
-          className="flex items-center justify-center gap-5 w-full px-10 py-5 bg-white rounded-2xl hover:bg-[#F4F7FC] hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-5 w-full px-8 py-5 bg-white rounded-2xl hover:bg-[#F4F7FC] hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {/* Google Icon */}
           <svg width="28" height="28" viewBox="0 0 24 24">
             <path
               fill="#4285F4"
@@ -57,12 +51,12 @@ export function LoginScreen({ onSignIn, loading }: LoginScreenProps) {
               d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
             />
           </svg>
-          <span className="text-[#272D3F] font-semibold text-xl">
+          <span className="text-[#1a1a2e] font-semibold text-xl">
             {loading ? 'Signing in...' : 'Sign in with Google'}
           </span>
         </button>
 
-        <p className="mt-10 text-base text-[#7DA3AF]">
+        <p className="mt-10 text-base text-[#718096]">
           Use your BriteCo Google account to sign in
         </p>
       </div>
