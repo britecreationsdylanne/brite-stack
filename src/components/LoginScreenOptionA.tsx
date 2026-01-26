@@ -1,4 +1,6 @@
-// OPTION A: Bright Teal Gradient with Navy Card (like other BriteCo apps)
+// OPTION A: TechBackground with Navy Card (matches main app)
+
+import { TechBackground } from './TechBackground';
 
 interface LoginScreenProps {
   onSignIn: () => void;
@@ -14,9 +16,10 @@ export function LoginScreenOptionA({ onSignIn, loading }: LoginScreenProps) {
         alignItems: 'center',
         justifyContent: 'center',
         padding: '24px',
-        background: 'linear-gradient(135deg, #018181 0%, #31D7CA 50%, #018181 100%)',
+        position: 'relative',
       }}
     >
+      <TechBackground />
       <div
         style={{
           background: '#272D3F',
@@ -26,6 +29,8 @@ export function LoginScreenOptionA({ onSignIn, loading }: LoginScreenProps) {
           width: '100%',
           textAlign: 'center',
           boxShadow: '0 25px 80px rgba(0,0,0,0.4)',
+          position: 'relative',
+          zIndex: 10,
         }}
       >
         {/* Logo */}

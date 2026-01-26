@@ -37,7 +37,7 @@ export function LoginPreview() {
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-black/80 backdrop-blur-sm px-6 py-3 rounded-xl border border-white/10">
         <p className="text-white text-sm font-medium">
           {activeDesign === 'current' && 'Current Design (Dark)'}
-          {activeDesign === 'A' && 'Option A: Bright Teal Gradient + Navy Card'}
+          {activeDesign === 'A' && 'Option A: TechBackground + Navy Card (matches app)'}
           {activeDesign === 'B' && 'Option B: Solid Teal + White Card'}
           {activeDesign === 'C' && 'Option C: Full Teal Gradient + Floating White Card'}
         </p>
