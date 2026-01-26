@@ -1,5 +1,4 @@
-// OPTION A: Stacked Centered (like Brief Generator)
-// Icon centered on top, title below, more vertical spacing
+// OPTION A: Bright Teal Gradient with Navy Card (like other BriteCo apps)
 
 interface LoginScreenProps {
   onSignIn: () => void;
@@ -8,37 +7,107 @@ interface LoginScreenProps {
 
 export function LoginScreenOptionA({ onSignIn, loading }: LoginScreenProps) {
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-[#1a1a2e]">
-      <div className="bg-[#1a1a2e] rounded-[32px] px-16 py-20 max-w-[480px] w-[90%] text-center border border-[rgba(49,215,202,0.15)]">
-        {/* Icon centered on top */}
-        <div className="flex justify-center mb-6">
-          <div className="w-[88px] h-[88px] bg-[rgba(49,215,202,0.12)] rounded-2xl flex items-center justify-center border border-[rgba(49,215,202,0.2)]">
-            <svg className="w-12 h-12 text-[#31D7CA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-              <path d="M2 17l10 5 10-5"/>
-              <path d="M2 12l10 5 10-5"/>
-            </svg>
-          </div>
+    <div
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '24px',
+        background: 'linear-gradient(135deg, #018181 0%, #31D7CA 50%, #018181 100%)',
+      }}
+    >
+      <div
+        style={{
+          background: '#272D3F',
+          borderRadius: '24px',
+          padding: '60px 50px',
+          maxWidth: '480px',
+          width: '100%',
+          textAlign: 'center',
+          boxShadow: '0 25px 80px rgba(0,0,0,0.4)',
+        }}
+      >
+        {/* Logo */}
+        <div
+          style={{
+            width: '80px',
+            height: '80px',
+            background: 'linear-gradient(135deg, #31D7CA 0%, #018181 100%)',
+            borderRadius: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 24px',
+            boxShadow: '0 10px 30px rgba(49, 215, 202, 0.3)',
+          }}
+        >
+          <svg style={{ width: '48px', height: '48px', color: 'white' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
         </div>
 
-        {/* Title below icon */}
-        <h1 className="text-[2.5rem] font-extrabold italic text-white leading-tight mb-12">
-          Brite<br/>Stack
+        {/* Title */}
+        <h1
+          style={{
+            fontSize: '42px',
+            fontWeight: 800,
+            color: 'white',
+            marginBottom: '8px',
+            letterSpacing: '-1px',
+          }}
+        >
+          BriteStack
         </h1>
-
-        {/* Welcome text */}
-        <h2 className="text-[1.5rem] font-semibold text-white mb-3">
-          Welcome Back
-        </h2>
-        <p className="text-[#a0aec0] mb-12 text-lg">
-          Sign in to access your AI tools
+        <p
+          style={{
+            color: '#31D7CA',
+            fontSize: '14px',
+            fontWeight: 600,
+            letterSpacing: '3px',
+            textTransform: 'uppercase',
+            marginBottom: '40px',
+          }}
+        >
+          AI Tools Hub
         </p>
 
-        {/* Sign in button */}
+        {/* Subtitle */}
+        <p
+          style={{
+            color: '#A9C1CB',
+            fontSize: '18px',
+            marginBottom: '32px',
+            lineHeight: 1.5,
+          }}
+        >
+          Sign in with your BriteCo account to access your AI toolkit
+        </p>
+
+        {/* Google Sign In Button */}
         <button
           onClick={onSignIn}
           disabled={loading}
-          className="flex items-center justify-center gap-4 w-full px-8 py-4 bg-white rounded-xl hover:bg-gray-50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-white/10"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '14px',
+            width: '100%',
+            padding: '18px 24px',
+            background: 'white',
+            border: 'none',
+            borderRadius: '14px',
+            fontSize: '17px',
+            fontWeight: 600,
+            color: '#272D3F',
+            cursor: loading ? 'not-allowed' : 'pointer',
+            opacity: loading ? 0.7 : 1,
+            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+            transition: 'transform 0.2s, box-shadow 0.2s',
+          }}
         >
           <svg width="24" height="24" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -46,13 +115,18 @@ export function LoginScreenOptionA({ onSignIn, loading }: LoginScreenProps) {
             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
           </svg>
-          <span className="text-[#1a1a2e] font-semibold text-lg">
-            {loading ? 'Signing in...' : 'Sign in with Google'}
-          </span>
+          {loading ? 'Signing in...' : 'Sign in with Google'}
         </button>
 
-        <p className="mt-10 text-sm text-[#718096]">
-          Use your BriteCo Google account to sign in
+        {/* Footer */}
+        <p
+          style={{
+            color: '#6B7C8A',
+            fontSize: '13px',
+            marginTop: '24px',
+          }}
+        >
+          @brite.co accounts only
         </p>
       </div>
     </div>
