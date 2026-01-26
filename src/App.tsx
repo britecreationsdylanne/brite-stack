@@ -8,8 +8,16 @@ import { ToolGrid } from './components/ToolGrid';
 import { RequestToolForm } from './components/RequestToolForm';
 import { LoginScreen } from './components/LoginScreen';
 import { TechBackground } from './components/TechBackground';
+import { LoginPreview } from './components/LoginPreview';
+
+// Set to true to preview login designs, false for normal operation
+const PREVIEW_LOGIN_DESIGNS = false;
 
 function App() {
+  // Show design preview if enabled
+  if (PREVIEW_LOGIN_DESIGNS) {
+    return <LoginPreview />;
+  }
   const { user, loading, signInWithGoogle } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
   const [searchQuery, setSearchQuery] = useState('');
@@ -93,7 +101,7 @@ function App() {
           </div>
 
           {/* Request Tool Form */}
-          <RequestToolForm userEmail={user.email || undefined} userName={user.displayName || undefined} />
+          <RequestToolForm userEmail={user.email || undefined} userName={user.name || undefined} />
         </main>
 
         {/* Footer */}

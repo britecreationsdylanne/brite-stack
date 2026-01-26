@@ -6,18 +6,6 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
-      - '--build-arg'
-      - 'VITE_FIREBASE_API_KEY=${_VITE_FIREBASE_API_KEY}'
-      - '--build-arg'
-      - 'VITE_FIREBASE_AUTH_DOMAIN=${_VITE_FIREBASE_AUTH_DOMAIN}'
-      - '--build-arg'
-      - 'VITE_FIREBASE_PROJECT_ID=${_VITE_FIREBASE_PROJECT_ID}'
-      - '--build-arg'
-      - 'VITE_FIREBASE_STORAGE_BUCKET=${_VITE_FIREBASE_STORAGE_BUCKET}'
-      - '--build-arg'
-      - 'VITE_FIREBASE_MESSAGING_SENDER_ID=${_VITE_FIREBASE_MESSAGING_SENDER_ID}'
-      - '--build-arg'
-      - 'VITE_FIREBASE_APP_ID=${_VITE_FIREBASE_APP_ID}'
       - '-t'
       - 'gcr.io/$PROJECT_ID/brite-stack:latest'
       - '.'
@@ -40,14 +28,9 @@ steps:
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
+      - '--set-env-vars=GOOGLE_CLIENT_ID=${_GOOGLE_CLIENT_ID},GOOGLE_CLIENT_SECRET=${_GOOGLE_CLIENT_SECRET}'
 
 images:
   - 'gcr.io/$PROJECT_ID/brite-stack:latest'
 
-substitutions:
-  _VITE_FIREBASE_API_KEY: ''
-  _VITE_FIREBASE_AUTH_DOMAIN: ''
-  _VITE_FIREBASE_PROJECT_ID: ''
-  _VITE_FIREBASE_STORAGE_BUCKET: ''
-  _VITE_FIREBASE_MESSAGING_SENDER_ID: ''
-  _VITE_FIREBASE_APP_ID: ''
+timeout: '1200s'

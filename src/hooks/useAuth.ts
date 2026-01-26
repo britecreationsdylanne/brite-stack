@@ -1,35 +1,47 @@
 import { useState, useEffect } from 'react';
-import type { User } from 'firebase/auth';
-import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
-import { auth, googleProvider } from '../lib/firebase';
+
+// Define user type for server-side auth
+interface AuthUser {
+  email: string;
+  name: string;
+  picture: string;
+  displayName?: string;  // Alias for name for compatibility
+}
+
+// Extend Window interface for AUTH_USER
+declare global {
+  interface Window {
+    AUTH_USER?: {
+      email: string;
+      name: string;
+      picture: string;
+    };
+  }
+}
 
 export function useAuth() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
+    // Check for server-injected user
+    if (window.AUTH_USER) {
+      setUser({
+        ...window.AUTH_USER,
+        displayName: window.AUTH_USER.name  // Add displayName alias
+      });
+    }
+    setLoading(false);
   }, []);
 
-  const signInWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-    } catch (error) {
-      console.error('Error signing in with Google:', error);
-    }
+  const signInWithGoogle = () => {
+    // Redirect to server OAuth endpoint
+    window.location.href = '/auth/login';
   };
 
-  const logout = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
+  const logout = () => {
+    // Redirect to server logout endpoint
+    window.location.href = '/auth/logout';
   };
 
   return { user, loading, signInWithGoogle, logout };

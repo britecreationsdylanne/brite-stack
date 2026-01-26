@@ -1,4 +1,4 @@
-# Build stage
+# Build stage - Build React app
 FROM node:20-alpine AS build
 
 WORKDIR /app
@@ -12,27 +12,26 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Build args for environment variables
-ARG VITE_FIREBASE_API_KEY
-ARG VITE_FIREBASE_AUTH_DOMAIN
-ARG VITE_FIREBASE_PROJECT_ID
-ARG VITE_FIREBASE_STORAGE_BUCKET
-ARG VITE_FIREBASE_MESSAGING_SENDER_ID
-ARG VITE_FIREBASE_APP_ID
-
-# Build the app
+# Build the React app
 RUN npm run build
 
-# Production stage
-FROM nginx:alpine
+# Production stage - Flask server
+FROM python:3.11-slim
 
-# Copy built files to nginx
-COPY --from=build /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-# Copy nginx config for SPA routing
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy Flask server
+COPY server.py .
+
+# Copy built React app from build stage
+COPY --from=build /app/dist ./dist
 
 # Expose port 8080 (Cloud Run default)
 EXPOSE 8080
 
-CMD ["nginx", "-g", "daemon off;"]
+# Run with gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "1", "--threads", "8", "--timeout", "0", "server:app"]
