@@ -97,9 +97,9 @@ def auth_callback():
 
 @app.route('/auth/logout')
 def auth_logout():
-    """Clear session and redirect to login"""
+    """Clear session and redirect to login screen"""
     session.pop('user', None)
-    return redirect('/auth/login')
+    return redirect('/')
 
 
 @app.route('/api/user')
@@ -117,22 +117,21 @@ def get_user_api():
 
 @app.route('/')
 def serve_index():
-    """Serve the main React app with auth check"""
+    """Serve the main React app - shows login screen if not authenticated"""
     user = get_current_user()
-    if not user:
-        return redirect('/auth/login')
 
-    # Serve the React app's index.html with user info injected
+    # Serve the React app's index.html
     index_path = os.path.join(app.static_folder, 'index.html')
     with open(index_path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    # Inject user info for the React app
-    user_script = f'''<script>
+    # If authenticated, inject user info for the React app
+    if user:
+        user_script = f'''<script>
     window.AUTH_USER = {json.dumps(user)};
     </script>
 </head>'''
-    html = html.replace('</head>', user_script, 1)
+        html = html.replace('</head>', user_script, 1)
 
     return Response(html, mimetype='text/html')
 
@@ -149,10 +148,7 @@ def serve_static(path):
     file_path = os.path.join(app.static_folder, path)
     if os.path.isfile(file_path):
         return send_from_directory(app.static_folder, path)
-    # For SPA routing, return index.html (but require auth)
-    user = get_current_user()
-    if not user:
-        return redirect('/auth/login')
+    # For SPA routing, return index.html (React handles auth display)
     return serve_index()
 
 
