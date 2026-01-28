@@ -1,4 +1,4 @@
-import { Star, Building, FileText, CalendarHeart, Home, Gem, Megaphone, Video, Plus } from 'lucide-react';
+import { Star, Building, FileText, CalendarHeart, Home, Gem, Megaphone, Video, Plus, PenTool } from 'lucide-react';
 import type { Tool } from '../data/tools';
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string; color?: string }>> = {
@@ -8,18 +8,20 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   home: Home,
   gem: Gem,
   megaphone: Megaphone,
+  'pen-tool': PenTool,
   video: Video,
   plus: Plus,
 };
 
 // Icon gradient backgrounds for design 13 - dark navy cards with colorful icon backgrounds
 const iconGradients: Record<string, string> = {
-  'commercial-wizard': 'linear-gradient(135deg, #FC883A, #F97316)',
-  'briteco-brief': 'linear-gradient(135deg, #31D7CA, #14B8A6)',
-  'planner-pulse': 'linear-gradient(135deg, #E91E8C, #DB2777)',
-  'venue-voice': 'linear-gradient(135deg, #3B82F6, #2563EB)',
-  'stay-in-the-loupe': 'linear-gradient(135deg, #8B5CF6, #7C3AED)',
   'ad-generator': 'linear-gradient(135deg, #EF4444, #DC2626)',
+  'briteco-brief': 'linear-gradient(135deg, #31D7CA, #14B8A6)',
+  'ceo-article-generator': 'linear-gradient(135deg, #F59E0B, #D97706)',
+  'commercial-wizard': 'linear-gradient(135deg, #FC883A, #F97316)',
+  'planner-pulse': 'linear-gradient(135deg, #E91E8C, #DB2777)',
+  'stay-in-the-loupe': 'linear-gradient(135deg, #8B5CF6, #7C3AED)',
+  'venue-voice': 'linear-gradient(135deg, #3B82F6, #2563EB)',
   'video-ad-generator': 'linear-gradient(135deg, #10B981, #059669)',
 };
 
