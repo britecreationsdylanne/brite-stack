@@ -26,7 +26,7 @@ export const tools: Tool[] = [
     id: 'ceo-article-generator',
     name: 'CEO Article Generator',
     description: 'Thought leadership articles crafted for Forbes, Entrepreneur & Fast Company',
-    url: 'https://forbes-entrepreneur-fastcompany-deploy-279545860595.us-central1.run.app/',
+    url: 'https://ceo-article-generator-279545860595.us-central1.run.app/',
     icon: 'pen-tool',
   },
   {
