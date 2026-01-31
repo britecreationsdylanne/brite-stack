@@ -37,11 +37,25 @@ export const tools: Tool[] = [
     icon: 'building',
   },
   {
+    id: 'consumer-newsletter',
+    name: 'Consumer Newsletter',
+    description: 'Generate engaging newsletters for consumer audiences',
+    url: 'https://consumer-newsletter-279545860595.us-central1.run.app',
+    icon: 'mail',
+  },
+  {
     id: 'planner-pulse',
     name: 'Planner Pulse',
     description: 'Newsletter vibes that keep planners in the loop',
     url: 'https://planner-pulse-279545860595.us-central1.run.app/',
     icon: 'calendar-heart',
+  },
+  {
+    id: 'reddit-comment-tracker',
+    name: 'Reddit Comment Tracker',
+    description: 'Stay on top of what people are saying on your posts',
+    url: 'https://britepulse-reddit-279545860595.us-central1.run.app',
+    icon: 'message-square',
   },
   {
     id: 'stay-in-the-loupe',
