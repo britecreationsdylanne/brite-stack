@@ -110,4 +110,12 @@ export const tools: Tool[] = [
     icon: 'plus',
     comingSoon: true,
   },
+  {
+    id: 'briteco-tool-5',
+    name: 'New Tool Coming Soon',
+    description: 'Exciting new BriteCo tool in development',
+    url: '#',
+    icon: 'plus',
+    comingSoon: true,
+  },
 ];
