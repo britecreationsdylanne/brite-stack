@@ -42,6 +42,11 @@ body {
   position: relative;
 }
 
+/* Ensure form inputs have readable dark text (fixes BritePulse modal) */
+input, textarea, select {
+  color: var(--color-navy);
+}
+
 #root {
   min-height: 100vh;
   width: 100%;
