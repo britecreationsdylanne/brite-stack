@@ -18,7 +18,7 @@ function App() {
   if (PREVIEW_LOGIN_DESIGNS) {
     return <LoginPreview />;
   }
-  const { user, loading, signInWithGoogle } = useAuth();
+  const { user, loading, signInWithGoogle, logout } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
   const [searchQuery, setSearchQuery] = useState('');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
@@ -58,7 +58,7 @@ function App() {
       <TechBackground />
 
       <div className="relative z-10">
-        <Header user={user} />
+        <Header user={user} onLogout={logout} />
 
         <main style={{ maxWidth: '1150px', margin: '0 auto', padding: '30px 50px 60px' }}>
           {/* Hero Section - BriteStack centered */}
