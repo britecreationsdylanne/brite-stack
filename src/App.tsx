@@ -28,15 +28,15 @@ function App() {
   const [activeTab, setActiveTab] = useState<'tools' | 'ideas' | 'in-progress' | 'completed'>('tools');
 
   const ideasFiltered = useMemo(() => toolRequests.filter((r) =>
-    r.status === 'new'
+    ['new', 'under-review', 'planned'].includes(r.status)
   ), [toolRequests]);
 
   const inProgressFiltered = useMemo(() => toolRequests.filter((r) =>
-    r.status === 'in-progress'
+    ['in-progress', 'building'].includes(r.status)
   ), [toolRequests]);
 
   const completedFiltered = useMemo(() => toolRequests.filter((r) =>
-    r.status === 'completed'
+    ['completed', 'launched', 'declined'].includes(r.status)
   ), [toolRequests]);
 
   const filteredTools = useMemo(() => {

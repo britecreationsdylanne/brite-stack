@@ -6,7 +6,7 @@ export interface ToolRequest {
   description: string;
   requesterName: string;
   requesterEmail: string;
-  status: 'new' | 'in-progress' | 'completed';
+  status: 'new' | 'in-progress' | 'completed' | 'under-review' | 'planned' | 'building' | 'launched' | 'declined';
   createdAt: Timestamp | null;
   upvoteCount: number;
   commentCount: number;
