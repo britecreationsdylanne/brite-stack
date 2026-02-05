@@ -70,15 +70,19 @@ export function useIdeaDetail(requestId: string, userEmail: string) {
     const requestRef = doc(db, 'toolRequests', requestId);
     const upvoteRef = doc(db, 'toolRequests', requestId, 'upvotes', userEmail);
 
-    if (hasUpvoted) {
-      await deleteDoc(upvoteRef);
-      await updateDoc(requestRef, { upvoteCount: increment(-1) });
-    } else {
-      await setDoc(upvoteRef, {
-        userName,
-        createdAt: serverTimestamp(),
-      });
-      await updateDoc(requestRef, { upvoteCount: increment(1) });
+    try {
+      if (hasUpvoted) {
+        await deleteDoc(upvoteRef);
+        await setDoc(requestRef, { upvoteCount: increment(-1) }, { merge: true });
+      } else {
+        await setDoc(upvoteRef, {
+          userName,
+          createdAt: serverTimestamp(),
+        });
+        await setDoc(requestRef, { upvoteCount: increment(1) }, { merge: true });
+      }
+    } catch (err) {
+      console.error('Upvote error:', err);
     }
   };
 

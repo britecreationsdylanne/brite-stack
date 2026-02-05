@@ -68,6 +68,7 @@ export function useToolRequests() {
       });
     } catch (err) {
       console.error('Failed to add tool request to Firestore:', err);
+      throw err; // Re-throw so the form knows it failed
     }
   };
 
