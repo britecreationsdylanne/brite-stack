@@ -44,6 +44,13 @@ export const tools: Tool[] = [
     icon: 'mail',
   },
   {
+    id: 'optic-outreach',
+    name: 'Optic Outreach',
+    description: 'Spot, scrub & serve up sales-ready leads on autopilot',
+    url: 'https://opticoutreach.web.app/',
+    icon: 'target',
+  },
+  {
     id: 'planner-pulse',
     name: 'Planner Pulse',
     description: 'Newsletter vibes that keep planners in the loop',
@@ -104,14 +111,6 @@ export const tools: Tool[] = [
   },
   {
     id: 'briteco-tool-4',
-    name: 'New Tool Coming Soon',
-    description: 'Exciting new BriteCo tool in development',
-    url: '#',
-    icon: 'plus',
-    comingSoon: true,
-  },
-  {
-    id: 'briteco-tool-5',
     name: 'New Tool Coming Soon',
     description: 'Exciting new BriteCo tool in development',
     url: '#',
