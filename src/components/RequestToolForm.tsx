@@ -4,9 +4,15 @@ import { Send, CheckCircle, Plus, AlertCircle } from 'lucide-react';
 interface RequestToolFormProps {
   userEmail?: string;
   userName?: string;
+  onSubmitToFirestore?: (data: {
+    toolName: string;
+    description: string;
+    requesterName: string;
+    requesterEmail: string;
+  }) => Promise<void>;
 }
 
-export function RequestToolForm({ userEmail, userName }: RequestToolFormProps) {
+export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: RequestToolFormProps) {
   const [requesterName, setRequesterName] = useState('');
   const [toolName, setToolName] = useState('');
   const [description, setDescription] = useState('');
@@ -36,6 +42,20 @@ export function RequestToolForm({ userEmail, userName }: RequestToolFormProps) {
       const data = await response.json();
 
       if (response.ok && data.success) {
+        // Also write to Firestore for the Ideas tab
+        if (onSubmitToFirestore) {
+          try {
+            await onSubmitToFirestore({
+              toolName,
+              description,
+              requesterName: requesterName || userName || 'A BriteStack user',
+              requesterEmail: userEmail || 'unknown@brite.co',
+            });
+          } catch (firestoreError) {
+            console.error('Failed to save to Firestore:', firestoreError);
+          }
+        }
+
         setStatus('success');
         setRequesterName('');
         setToolName('');
