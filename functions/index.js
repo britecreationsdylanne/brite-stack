@@ -27,13 +27,13 @@ app.post('/send-tool-request', async (req, res) => {
     const displayName = requesterName || userName || 'A BriteStack user';
 
     const msg = {
-      to: 'dylanne.crugnale@brite.co',
+      to: ['dylanne.crugnale@brite.co', 'dustin.sitar@brite.co'],
       from: {
         email: 'marketing@brite.co',
         name: 'BritePulse'
       },
       subject: `BriteStack Tool Request: ${toolName}`,
-      text: `Hey Dylanne,
+      text: `Hey team,
 
 ${displayName} (${userEmail}) has submitted a new tool request:
 
@@ -46,7 +46,7 @@ ${description}
 Sent from BriteStack`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <p>Hey Dylanne,</p>
+          <p>Hey team,</p>
 
           <p><strong>${displayName}</strong> (<a href="mailto:${userEmail}">${userEmail}</a>) has submitted a new tool request:</p>
 

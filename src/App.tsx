@@ -1,11 +1,13 @@
 import { useState, useMemo } from 'react';
 import { useAuth } from './hooks/useAuth';
 import { useFavorites } from './hooks/useFavorites';
+import { useToolRequests } from './hooks/useToolRequests';
 import { tools } from './data/tools';
 import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
 import { ToolGrid } from './components/ToolGrid';
 import { RequestToolForm } from './components/RequestToolForm';
+import { IdeasPage } from './components/IdeasPage';
 import { LoginScreen } from './components/LoginScreen';
 import { TechBackground } from './components/TechBackground';
 import { LoginPreview } from './components/LoginPreview';
@@ -20,8 +22,10 @@ function App() {
   }
   const { user, loading, signInWithGoogle, logout } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { toolRequests, loading: ideasLoading, error: ideasError, addToolRequest, count: ideasCount } = useToolRequests();
   const [searchQuery, setSearchQuery] = useState('');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [activeTab, setActiveTab] = useState<'tools' | 'ideas'>('tools');
 
   const filteredTools = useMemo(() => {
     return tools.filter((tool) => {
@@ -81,27 +85,114 @@ function App() {
             </p>
           </div>
 
-          {/* Search Bar */}
-          <div style={{ marginBottom: '50px' }}>
-            <SearchBar
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              showFavoritesOnly={showFavoritesOnly}
-              onToggleFavorites={() => setShowFavoritesOnly(!showFavoritesOnly)}
-            />
+          {/* Tab Bar */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '8px',
+            marginBottom: '40px',
+            background: 'rgba(255, 255, 255, 0.15)',
+            borderRadius: '16px',
+            padding: '6px',
+            width: 'fit-content',
+            margin: '0 auto 40px',
+          }}>
+            <button
+              onClick={() => setActiveTab('tools')}
+              style={{
+                padding: '14px 32px',
+                fontSize: '15px',
+                fontWeight: 600,
+                border: 'none',
+                cursor: 'pointer',
+                borderRadius: '12px',
+                transition: 'all 0.2s ease',
+                background: activeTab === 'tools' ? '#272D3F' : 'transparent',
+                color: activeTab === 'tools' ? 'white' : '#272D3F',
+                boxShadow: activeTab === 'tools' ? '0 4px 15px rgba(39, 45, 63, 0.3)' : 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '10px',
+                fontFamily: 'inherit',
+              }}
+            >
+              Tools
+            </button>
+            <button
+              onClick={() => setActiveTab('ideas')}
+              style={{
+                padding: '14px 32px',
+                fontSize: '15px',
+                fontWeight: 600,
+                border: 'none',
+                cursor: 'pointer',
+                borderRadius: '12px',
+                transition: 'all 0.2s ease',
+                background: activeTab === 'ideas' ? '#272D3F' : 'transparent',
+                color: activeTab === 'ideas' ? 'white' : '#272D3F',
+                boxShadow: activeTab === 'ideas' ? '0 4px 15px rgba(39, 45, 63, 0.3)' : 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '10px',
+                fontFamily: 'inherit',
+              }}
+            >
+              Ideas
+              {ideasCount > 0 && (
+                <span style={{
+                  background: '#FC883A',
+                  color: 'white',
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  padding: '2px 8px',
+                  borderRadius: '10px',
+                  minWidth: '24px',
+                  textAlign: 'center',
+                }}>
+                  {ideasCount}
+                </span>
+              )}
+            </button>
           </div>
 
-          {/* Tool Grid */}
-          <div style={{ marginBottom: '60px' }}>
-            <ToolGrid
-              tools={filteredTools}
-              isFavorite={isFavorite}
-              onToggleFavorite={toggleFavorite}
-            />
-          </div>
+          {/* Tab Content */}
+          {activeTab === 'tools' ? (
+            <>
+              {/* Search Bar */}
+              <div style={{ marginBottom: '50px' }}>
+                <SearchBar
+                  searchQuery={searchQuery}
+                  onSearchChange={setSearchQuery}
+                  showFavoritesOnly={showFavoritesOnly}
+                  onToggleFavorites={() => setShowFavoritesOnly(!showFavoritesOnly)}
+                />
+              </div>
 
-          {/* Request Tool Form */}
-          <RequestToolForm userEmail={user.email || undefined} userName={user.name || undefined} />
+              {/* Tool Grid */}
+              <div style={{ marginBottom: '60px' }}>
+                <ToolGrid
+                  tools={filteredTools}
+                  isFavorite={isFavorite}
+                  onToggleFavorite={toggleFavorite}
+                />
+              </div>
+
+              {/* Request Tool Form */}
+              <RequestToolForm
+                userEmail={user.email || undefined}
+                userName={user.name || undefined}
+                onSubmitToFirestore={addToolRequest}
+              />
+            </>
+          ) : (
+            <IdeasPage
+              toolRequests={toolRequests}
+              loading={ideasLoading}
+              error={ideasError}
+              userEmail={user.email || ''}
+              userName={user.name || user.displayName || ''}
+            />
+          )}
         </main>
 
         {/* Footer */}
