@@ -9,7 +9,6 @@ import {
   setDoc,
   deleteDoc,
   updateDoc,
-  runTransaction,
   serverTimestamp,
   increment,
 } from 'firebase/firestore';
@@ -60,17 +59,13 @@ export function useIdeaDetail(requestId: string, userEmail: string) {
 
     if (hasUpvoted) {
       await deleteDoc(upvoteRef);
-      await runTransaction(db, async (transaction) => {
-        transaction.update(requestRef, { upvoteCount: increment(-1) });
-      });
+      await updateDoc(requestRef, { upvoteCount: increment(-1) });
     } else {
       await setDoc(upvoteRef, {
         userName,
         createdAt: serverTimestamp(),
       });
-      await runTransaction(db, async (transaction) => {
-        transaction.update(requestRef, { upvoteCount: increment(1) });
-      });
+      await updateDoc(requestRef, { upvoteCount: increment(1) });
     }
   };
 
@@ -84,9 +79,7 @@ export function useIdeaDetail(requestId: string, userEmail: string) {
       createdAt: serverTimestamp(),
     });
 
-    await runTransaction(db, async (transaction) => {
-      transaction.update(requestRef, { commentCount: increment(1) });
-    });
+    await updateDoc(requestRef, { commentCount: increment(1) });
   };
 
   const updateStatus = async (newStatus: ToolRequest['status']) => {

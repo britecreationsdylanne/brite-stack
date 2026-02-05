@@ -28,15 +28,15 @@ function App() {
   const [activeTab, setActiveTab] = useState<'tools' | 'ideas' | 'in-progress' | 'completed'>('tools');
 
   const ideasFiltered = useMemo(() => toolRequests.filter((r) =>
-    ['new', 'under-review', 'planned'].includes(r.status)
+    r.status === 'new'
   ), [toolRequests]);
 
   const inProgressFiltered = useMemo(() => toolRequests.filter((r) =>
-    r.status === 'building'
+    r.status === 'in-progress'
   ), [toolRequests]);
 
   const completedFiltered = useMemo(() => toolRequests.filter((r) =>
-    ['launched', 'declined'].includes(r.status)
+    r.status === 'completed'
   ), [toolRequests]);
 
   const filteredTools = useMemo(() => {
@@ -131,9 +131,9 @@ function App() {
               Tools
             </button>
             {[
-              { key: 'ideas' as const, label: 'Ideas', count: ideasFiltered.length },
-              { key: 'in-progress' as const, label: 'In Progress', count: inProgressFiltered.length },
-              { key: 'completed' as const, label: 'Completed', count: completedFiltered.length },
+              { key: 'ideas' as const, label: 'Ideas', count: ideasFiltered.length, showCount: true },
+              { key: 'in-progress' as const, label: 'In Progress', count: inProgressFiltered.length, showCount: true },
+              { key: 'completed' as const, label: 'Completed', count: completedFiltered.length, showCount: false },
             ].map((tab) => (
               <button
                 key={tab.key}
@@ -156,7 +156,7 @@ function App() {
                 }}
               >
                 {tab.label}
-                {tab.count > 0 && (
+                {tab.showCount && tab.count > 0 && (
                   <span style={{
                     background: '#FC883A',
                     color: 'white',

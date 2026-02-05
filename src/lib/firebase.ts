@@ -10,8 +10,5 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// Debug: log Firebase config to verify env vars are passed correctly
-console.log('Firebase config:', JSON.stringify({ projectId: firebaseConfig.projectId, hasApiKey: !!firebaseConfig.apiKey, authDomain: firebaseConfig.authDomain }));
-
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);

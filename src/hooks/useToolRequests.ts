@@ -38,7 +38,7 @@ export function useToolRequests() {
           setLoading(false);
         },
         (err) => {
-          console.error('Error fetching tool requests:', err, 'DB project:', (db as any)._databaseId?.projectId, 'DB name:', (db as any)._databaseId?.database);
+          console.error('Error fetching tool requests:', err);
           setError('Failed to load ideas. Please try again later.');
           setLoading(false);
         }
@@ -63,6 +63,8 @@ export function useToolRequests() {
         ...data,
         status: 'new',
         createdAt: serverTimestamp(),
+        upvoteCount: 0,
+        commentCount: 0,
       });
     } catch (err) {
       console.error('Failed to add tool request to Firestore:', err);

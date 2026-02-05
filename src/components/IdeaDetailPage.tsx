@@ -13,12 +13,9 @@ interface IdeaDetailPageProps {
 }
 
 const statusConfig: Record<ToolRequest['status'], { label: string; color: string; bg: string }> = {
-  'new':          { label: 'New',          color: '#31D7CA', bg: 'rgba(49, 215, 202, 0.2)' },
-  'under-review': { label: 'Under Review', color: '#F59E0B', bg: 'rgba(245, 158, 11, 0.2)' },
-  'planned':      { label: 'Planned',      color: '#8B5CF6', bg: 'rgba(139, 92, 246, 0.2)' },
-  'building':     { label: 'Building',     color: '#3B82F6', bg: 'rgba(59, 130, 246, 0.2)' },
-  'launched':     { label: 'Launched',      color: '#10B981', bg: 'rgba(16, 185, 129, 0.2)' },
-  'declined':     { label: 'Declined',      color: '#6B7280', bg: 'rgba(107, 114, 128, 0.2)' },
+  'new':         { label: 'New',         color: '#31D7CA', bg: 'rgba(49, 215, 202, 0.2)' },
+  'in-progress': { label: 'In Progress', color: '#3B82F6', bg: 'rgba(59, 130, 246, 0.2)' },
+  'completed':   { label: 'Completed',   color: '#10B981', bg: 'rgba(16, 185, 129, 0.2)' },
 };
 
 function formatDate(timestamp: { toDate: () => Date } | null): string {
@@ -35,7 +32,7 @@ function getInitial(name: string): string {
   return name.charAt(0).toUpperCase();
 }
 
-const allStatuses: ToolRequest['status'][] = ['new', 'under-review', 'planned', 'building', 'launched', 'declined'];
+const allStatuses: ToolRequest['status'][] = ['new', 'in-progress', 'completed'];
 
 export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDetailPageProps) {
   const { comments, hasUpvoted, loadingComments, toggleUpvote, addComment, updateStatus } = useIdeaDetail(request.id, userEmail);

@@ -25,49 +25,37 @@ export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: Re
     setErrorMessage('');
 
     try {
-      const response = await fetch('https://britestack-email-function-279545860595.us-central1.run.app/send-tool-request', {
+      const formData = {
+        toolName,
+        description,
+        requesterName: requesterName || userName || 'A BriteStack user',
+        requesterEmail: userEmail || 'unknown@brite.co',
+      };
+
+      // Write to Firestore first (primary action)
+      if (onSubmitToFirestore) {
+        await onSubmitToFirestore(formData);
+      }
+
+      // Fire email notification in background (don't block UI)
+      fetch('https://britestack-email-function-279545860595.us-central1.run.app/send-tool-request', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          toolName,
-          description,
-          requesterName: requesterName || userName || 'A BriteStack user',
+          ...formData,
           userName: userName || 'A BriteStack user',
           userEmail: userEmail || 'unknown@brite.co',
         }),
-      });
+      }).catch((err) => console.error('Email notification failed:', err));
 
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        // Also write to Firestore for the Ideas tab
-        if (onSubmitToFirestore) {
-          try {
-            await onSubmitToFirestore({
-              toolName,
-              description,
-              requesterName: requesterName || userName || 'A BriteStack user',
-              requesterEmail: userEmail || 'unknown@brite.co',
-            });
-          } catch (firestoreError) {
-            console.error('Failed to save to Firestore:', firestoreError);
-          }
-        }
-
-        setStatus('success');
-        setRequesterName('');
-        setToolName('');
-        setDescription('');
-      } else {
-        setStatus('error');
-        setErrorMessage(data.error || 'Something went wrong. Please try again.');
-      }
+      setStatus('success');
+      setRequesterName('');
+      setToolName('');
+      setDescription('');
     } catch (error) {
       console.error('Error submitting tool request:', error);
       setStatus('error');
-      setErrorMessage('Failed to connect. Please try again later.');
+      setErrorMessage('Failed to submit. Please try again later.');
     }
   };
 
