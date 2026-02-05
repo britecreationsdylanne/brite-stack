@@ -12,7 +12,9 @@ interface IdeaDetailPageProps {
   onBack: () => void;
 }
 
-const statusConfig: Partial<Record<ToolRequest['status'], { label: string; color: string; bg: string }>> = {
+const defaultStatus = { label: 'New', color: '#31D7CA', bg: 'rgba(49, 215, 202, 0.2)' };
+
+const statusConfig: Record<string, { label: string; color: string; bg: string }> = {
   'new':         { label: 'New',         color: '#31D7CA', bg: 'rgba(49, 215, 202, 0.2)' },
   'in-progress': { label: 'In Progress', color: '#3B82F6', bg: 'rgba(59, 130, 246, 0.2)' },
   'completed':   { label: 'Completed',   color: '#10B981', bg: 'rgba(16, 185, 129, 0.2)' },
@@ -41,7 +43,7 @@ export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDet
   const [showStatusMenu, setShowStatusMenu] = useState(false);
 
   const isAdmin = ADMIN_EMAILS.includes(userEmail);
-  const status = statusConfig[request.status] || statusConfig['new'];
+  const status = statusConfig[request.status] || defaultStatus;
 
   const handleStatusChange = async (newStatus: ToolRequest['status']) => {
     try {
@@ -148,7 +150,7 @@ export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDet
                   border: '1px solid rgba(255, 255, 255, 0.1)',
                 }}>
                   {allStatuses.map((s) => {
-                    const cfg = statusConfig[s];
+                    const cfg = statusConfig[s] || defaultStatus;
                     const isActive = s === request.status;
                     return (
                       <button

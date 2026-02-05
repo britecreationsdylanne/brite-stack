@@ -6,7 +6,9 @@ interface IdeaCardProps {
   onClick?: () => void;
 }
 
-const statusConfig: Partial<Record<ToolRequest['status'], { label: string; color: string; bg: string }>> = {
+const defaultStatus = { label: 'New', color: '#31D7CA', bg: 'rgba(49, 215, 202, 0.2)' };
+
+const statusConfig: Record<string, { label: string; color: string; bg: string }> = {
   'new':         { label: 'New',         color: '#31D7CA', bg: 'rgba(49, 215, 202, 0.2)' },
   'in-progress': { label: 'In Progress', color: '#3B82F6', bg: 'rgba(59, 130, 246, 0.2)' },
   'completed':   { label: 'Completed',   color: '#10B981', bg: 'rgba(16, 185, 129, 0.2)' },
@@ -23,7 +25,7 @@ function formatDate(timestamp: { toDate: () => Date } | null): string {
 }
 
 export function IdeaCard({ request, onClick }: IdeaCardProps) {
-  const status = statusConfig[request.status] || statusConfig['new'];
+  const status = statusConfig[request.status] || defaultStatus;
 
   const cardStyle: React.CSSProperties = {
     background: '#272D3F',
