@@ -65,21 +65,31 @@ export function useIdeaDetail(requestId: string, userEmail: string) {
   }, [requestId, userEmail]);
 
   const toggleUpvote = async (userName: string) => {
-    if (!userEmail) return;
+    if (!userEmail) {
+      console.log('No userEmail, cannot upvote');
+      return;
+    }
 
     const requestRef = doc(db, 'toolRequests', requestId);
     const upvoteRef = doc(db, 'toolRequests', requestId, 'upvotes', userEmail);
 
+    console.log('Toggle upvote:', { requestId, userEmail, hasUpvoted, userName });
+
     try {
       if (hasUpvoted) {
+        console.log('Removing upvote...');
         await deleteDoc(upvoteRef);
         await setDoc(requestRef, { upvoteCount: increment(-1) }, { merge: true });
+        console.log('Upvote removed');
       } else {
+        console.log('Adding upvote...');
         await setDoc(upvoteRef, {
           userName,
           createdAt: serverTimestamp(),
         });
+        console.log('Upvote doc created, now incrementing count...');
         await setDoc(requestRef, { upvoteCount: increment(1) }, { merge: true });
+        console.log('Upvote count incremented');
       }
     } catch (err) {
       console.error('Upvote error:', err);

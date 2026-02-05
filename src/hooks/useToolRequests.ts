@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
   collection,
-  query,
-  orderBy,
   onSnapshot,
   addDoc,
   serverTimestamp,
@@ -17,23 +15,30 @@ export function useToolRequests() {
 
   useEffect(() => {
     try {
-      const q = query(
-        collection(db, 'toolRequests'),
-        orderBy('createdAt', 'desc')
-      );
+      // Simple query without ordering to avoid index requirements
+      const colRef = collection(db, 'toolRequests');
 
       const unsubscribe = onSnapshot(
-        q,
+        colRef,
         (snapshot) => {
+          console.log('Firestore returned', snapshot.docs.length, 'documents');
           const requests: ToolRequest[] = snapshot.docs.map((doc) => {
             const data = doc.data();
+            console.log('Doc:', doc.id, 'status:', data.status, 'toolName:', data.toolName);
             return {
               id: doc.id,
               ...data,
               upvoteCount: data.upvoteCount ?? 0,
               commentCount: data.commentCount ?? 0,
+              status: data.status || 'new', // Default to 'new' if missing
             };
           }) as ToolRequest[];
+          // Sort by createdAt client-side (handles null/missing values)
+          requests.sort((a, b) => {
+            const aTime = a.createdAt?.toMillis() ?? 0;
+            const bTime = b.createdAt?.toMillis() ?? 0;
+            return bTime - aTime;
+          });
           setToolRequests(requests);
           setLoading(false);
         },
