@@ -35,7 +35,7 @@ function getInitial(name: string): string {
 const allStatuses: ToolRequest['status'][] = ['new', 'in-progress', 'completed'];
 
 export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDetailPageProps) {
-  const { comments, hasUpvoted, loadingComments, toggleUpvote, addComment, updateStatus } = useIdeaDetail(request.id, userEmail);
+  const { comments, hasUpvoted, upvoteCount, loadingComments, toggleUpvote, addComment, updateStatus } = useIdeaDetail(request.id, userEmail);
   const [commentText, setCommentText] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [showStatusMenu, setShowStatusMenu] = useState(false);
@@ -279,7 +279,7 @@ export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDet
           {hasUpvoted ? 'Upvoted' : 'Upvote'}
         </button>
         <span style={{ color: '#7DA3AF', fontSize: '14px' }}>
-          {request.upvoteCount} {request.upvoteCount === 1 ? 'person likes' : 'people like'} this idea
+          {upvoteCount} {upvoteCount === 1 ? 'person likes' : 'people like'} this idea
         </span>
       </div>
 

@@ -18,7 +18,20 @@ import type { Comment, ToolRequest } from '../data/toolRequests';
 export function useIdeaDetail(requestId: string, userEmail: string) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [hasUpvoted, setHasUpvoted] = useState(false);
+  const [upvoteCount, setUpvoteCount] = useState(0);
   const [loadingComments, setLoadingComments] = useState(true);
+
+  // Listen to the request document for real-time upvote/comment counts
+  useEffect(() => {
+    const requestRef = doc(db, 'toolRequests', requestId);
+    const unsubscribe = onSnapshot(requestRef, (snapshot) => {
+      const data = snapshot.data();
+      if (data) {
+        setUpvoteCount(data.upvoteCount ?? 0);
+      }
+    });
+    return () => unsubscribe();
+  }, [requestId]);
 
   // Listen to comments subcollection
   useEffect(() => {
@@ -87,5 +100,5 @@ export function useIdeaDetail(requestId: string, userEmail: string) {
     await updateDoc(requestRef, { status: newStatus });
   };
 
-  return { comments, hasUpvoted, loadingComments, toggleUpvote, addComment, updateStatus };
+  return { comments, hasUpvoted, upvoteCount, loadingComments, toggleUpvote, addComment, updateStatus };
 }
