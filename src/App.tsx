@@ -22,10 +22,22 @@ function App() {
   }
   const { user, loading, signInWithGoogle, logout } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
-  const { toolRequests, loading: ideasLoading, error: ideasError, addToolRequest, count: ideasCount } = useToolRequests();
+  const { toolRequests, loading: ideasLoading, error: ideasError, addToolRequest } = useToolRequests();
   const [searchQuery, setSearchQuery] = useState('');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
-  const [activeTab, setActiveTab] = useState<'tools' | 'ideas'>('tools');
+  const [activeTab, setActiveTab] = useState<'tools' | 'ideas' | 'in-progress' | 'completed'>('tools');
+
+  const ideasFiltered = useMemo(() => toolRequests.filter((r) =>
+    ['new', 'under-review', 'planned'].includes(r.status)
+  ), [toolRequests]);
+
+  const inProgressFiltered = useMemo(() => toolRequests.filter((r) =>
+    r.status === 'building'
+  ), [toolRequests]);
+
+  const completedFiltered = useMemo(() => toolRequests.filter((r) =>
+    ['launched', 'declined'].includes(r.status)
+  ), [toolRequests]);
 
   const filteredTools = useMemo(() => {
     return tools.filter((tool) => {
@@ -118,41 +130,48 @@ function App() {
             >
               Tools
             </button>
-            <button
-              onClick={() => setActiveTab('ideas')}
-              style={{
-                padding: '14px 32px',
-                fontSize: '15px',
-                fontWeight: 600,
-                border: 'none',
-                cursor: 'pointer',
-                borderRadius: '12px',
-                transition: 'all 0.2s ease',
-                background: activeTab === 'ideas' ? '#272D3F' : 'transparent',
-                color: activeTab === 'ideas' ? 'white' : '#272D3F',
-                boxShadow: activeTab === 'ideas' ? '0 4px 15px rgba(39, 45, 63, 0.3)' : 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '10px',
-                fontFamily: 'inherit',
-              }}
-            >
-              Ideas
-              {ideasCount > 0 && (
-                <span style={{
-                  background: '#FC883A',
-                  color: 'white',
-                  fontSize: '12px',
-                  fontWeight: 700,
-                  padding: '2px 8px',
-                  borderRadius: '10px',
-                  minWidth: '24px',
-                  textAlign: 'center',
-                }}>
-                  {ideasCount}
-                </span>
-              )}
-            </button>
+            {[
+              { key: 'ideas' as const, label: 'Ideas', count: ideasFiltered.length },
+              { key: 'in-progress' as const, label: 'In Progress', count: inProgressFiltered.length },
+              { key: 'completed' as const, label: 'Completed', count: completedFiltered.length },
+            ].map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                style={{
+                  padding: '14px 32px',
+                  fontSize: '15px',
+                  fontWeight: 600,
+                  border: 'none',
+                  cursor: 'pointer',
+                  borderRadius: '12px',
+                  transition: 'all 0.2s ease',
+                  background: activeTab === tab.key ? '#272D3F' : 'transparent',
+                  color: activeTab === tab.key ? 'white' : '#272D3F',
+                  boxShadow: activeTab === tab.key ? '0 4px 15px rgba(39, 45, 63, 0.3)' : 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  fontFamily: 'inherit',
+                }}
+              >
+                {tab.label}
+                {tab.count > 0 && (
+                  <span style={{
+                    background: '#FC883A',
+                    color: 'white',
+                    fontSize: '12px',
+                    fontWeight: 700,
+                    padding: '2px 8px',
+                    borderRadius: '10px',
+                    minWidth: '24px',
+                    textAlign: 'center',
+                  }}>
+                    {tab.count}
+                  </span>
+                )}
+              </button>
+            ))}
           </div>
 
           {/* Tab Content */}
@@ -186,7 +205,11 @@ function App() {
             </>
           ) : (
             <IdeasPage
-              toolRequests={toolRequests}
+              toolRequests={
+                activeTab === 'ideas' ? ideasFiltered :
+                activeTab === 'in-progress' ? inProgressFiltered :
+                completedFiltered
+              }
               loading={ideasLoading}
               error={ideasError}
               userEmail={user.email || ''}
