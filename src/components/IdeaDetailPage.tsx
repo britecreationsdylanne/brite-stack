@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { ArrowLeft, Lightbulb, Tag, User, Calendar, ThumbsUp, MessageCircle, Send } from 'lucide-react';
+import { ArrowLeft, Lightbulb, Tag, User, Calendar, ThumbsUp, MessageCircle, Send, ChevronDown } from 'lucide-react';
 import { useIdeaDetail } from '../hooks/useIdeaDetail';
 import type { ToolRequest } from '../data/toolRequests';
+
+const ADMIN_EMAILS = ['dylanne.crugnale@brite.co', 'dustin.sitar@brite.co'];
 
 interface IdeaDetailPageProps {
   request: ToolRequest;
@@ -33,12 +35,25 @@ function getInitial(name: string): string {
   return name.charAt(0).toUpperCase();
 }
 
+const allStatuses: ToolRequest['status'][] = ['new', 'under-review', 'planned', 'building', 'launched', 'declined'];
+
 export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDetailPageProps) {
-  const { comments, hasUpvoted, loadingComments, toggleUpvote, addComment } = useIdeaDetail(request.id, userEmail);
+  const { comments, hasUpvoted, loadingComments, toggleUpvote, addComment, updateStatus } = useIdeaDetail(request.id, userEmail);
   const [commentText, setCommentText] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [showStatusMenu, setShowStatusMenu] = useState(false);
 
+  const isAdmin = ADMIN_EMAILS.includes(userEmail);
   const status = statusConfig[request.status] || statusConfig['new'];
+
+  const handleStatusChange = async (newStatus: ToolRequest['status']) => {
+    try {
+      await updateStatus(newStatus);
+      setShowStatusMenu(false);
+    } catch (err) {
+      console.error('Failed to update status:', err);
+    }
+  };
 
   const handleUpvote = async () => {
     try {
@@ -96,23 +111,98 @@ export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDet
         marginBottom: '24px',
         position: 'relative',
       }}>
-        {/* Status Badge */}
-        <div style={{
-          position: 'absolute',
-          top: '24px',
-          right: '24px',
-          background: status.bg,
-          color: status.color,
-          padding: '5px 12px',
-          borderRadius: '8px',
-          fontSize: '11px',
-          fontWeight: 600,
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-        }}>
-          <Tag size={12} />
-          {status.label}
+        {/* Status Badge / Admin Dropdown */}
+        <div style={{ position: 'absolute', top: '24px', right: '24px' }}>
+          {isAdmin ? (
+            <div style={{ position: 'relative' }}>
+              <button
+                onClick={() => setShowStatusMenu(!showStatusMenu)}
+                style={{
+                  background: status.bg,
+                  color: status.color,
+                  padding: '5px 12px',
+                  borderRadius: '8px',
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                }}
+              >
+                <Tag size={12} />
+                {status.label}
+                <ChevronDown size={12} />
+              </button>
+              {showStatusMenu && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  right: 0,
+                  marginTop: '6px',
+                  background: '#1e2433',
+                  borderRadius: '12px',
+                  padding: '6px',
+                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.4)',
+                  zIndex: 50,
+                  minWidth: '160px',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                }}>
+                  {allStatuses.map((s) => {
+                    const cfg = statusConfig[s];
+                    const isActive = s === request.status;
+                    return (
+                      <button
+                        key={s}
+                        onClick={() => handleStatusChange(s)}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          width: '100%',
+                          padding: '8px 12px',
+                          borderRadius: '8px',
+                          border: 'none',
+                          background: isActive ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+                          color: cfg.color,
+                          fontSize: '12px',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                          fontFamily: 'inherit',
+                          textAlign: 'left',
+                        }}
+                      >
+                        <div style={{
+                          width: '8px',
+                          height: '8px',
+                          borderRadius: '50%',
+                          background: cfg.color,
+                        }} />
+                        {cfg.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div style={{
+              background: status.bg,
+              color: status.color,
+              padding: '5px 12px',
+              borderRadius: '8px',
+              fontSize: '11px',
+              fontWeight: 600,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+            }}>
+              <Tag size={12} />
+              {status.label}
+            </div>
+          )}
         </div>
 
         {/* Icon */}

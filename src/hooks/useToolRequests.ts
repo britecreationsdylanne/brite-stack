@@ -16,34 +16,40 @@ export function useToolRequests() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const q = query(
-      collection(db, 'toolRequests'),
-      orderBy('createdAt', 'desc')
-    );
+    try {
+      const q = query(
+        collection(db, 'toolRequests'),
+        orderBy('createdAt', 'desc')
+      );
 
-    const unsubscribe = onSnapshot(
-      q,
-      (snapshot) => {
-        const requests: ToolRequest[] = snapshot.docs.map((doc) => {
-          const data = doc.data();
-          return {
-            id: doc.id,
-            ...data,
-            upvoteCount: data.upvoteCount ?? 0,
-            commentCount: data.commentCount ?? 0,
-          };
-        }) as ToolRequest[];
-        setToolRequests(requests);
-        setLoading(false);
-      },
-      (err) => {
-        console.error('Error fetching tool requests:', err);
-        setError('Failed to load ideas. Please try again later.');
-        setLoading(false);
-      }
-    );
+      const unsubscribe = onSnapshot(
+        q,
+        (snapshot) => {
+          const requests: ToolRequest[] = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            return {
+              id: doc.id,
+              ...data,
+              upvoteCount: data.upvoteCount ?? 0,
+              commentCount: data.commentCount ?? 0,
+            };
+          }) as ToolRequest[];
+          setToolRequests(requests);
+          setLoading(false);
+        },
+        (err) => {
+          console.error('Error fetching tool requests:', err);
+          setError('Failed to load ideas. Please try again later.');
+          setLoading(false);
+        }
+      );
 
-    return () => unsubscribe();
+      return () => unsubscribe();
+    } catch (err) {
+      console.error('Firestore initialization error:', err);
+      setError('Ideas feature is not available yet.');
+      setLoading(false);
+    }
   }, []);
 
   const addToolRequest = async (data: {
@@ -52,11 +58,15 @@ export function useToolRequests() {
     requesterName: string;
     requesterEmail: string;
   }) => {
-    await addDoc(collection(db, 'toolRequests'), {
-      ...data,
-      status: 'new',
-      createdAt: serverTimestamp(),
-    });
+    try {
+      await addDoc(collection(db, 'toolRequests'), {
+        ...data,
+        status: 'new',
+        createdAt: serverTimestamp(),
+      });
+    } catch (err) {
+      console.error('Failed to add tool request to Firestore:', err);
+    }
   };
 
   return { toolRequests, loading, error, addToolRequest, count: toolRequests.length };

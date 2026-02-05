@@ -8,12 +8,13 @@ import {
   addDoc,
   setDoc,
   deleteDoc,
+  updateDoc,
   runTransaction,
   serverTimestamp,
   increment,
 } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import type { Comment } from '../data/toolRequests';
+import type { Comment, ToolRequest } from '../data/toolRequests';
 
 export function useIdeaDetail(requestId: string, userEmail: string) {
   const [comments, setComments] = useState<Comment[]>([]);
@@ -88,5 +89,10 @@ export function useIdeaDetail(requestId: string, userEmail: string) {
     });
   };
 
-  return { comments, hasUpvoted, loadingComments, toggleUpvote, addComment };
+  const updateStatus = async (newStatus: ToolRequest['status']) => {
+    const requestRef = doc(db, 'toolRequests', requestId);
+    await updateDoc(requestRef, { status: newStatus });
+  };
+
+  return { comments, hasUpvoted, loadingComments, toggleUpvote, addComment, updateStatus };
 }
