@@ -38,7 +38,7 @@ export function useToolRequests() {
           setLoading(false);
         },
         (err) => {
-          console.error('Error fetching tool requests:', err);
+          console.error('Error fetching tool requests:', err, 'DB project:', (db as any)._databaseId?.projectId, 'DB name:', (db as any)._databaseId?.database);
           setError('Failed to load ideas. Please try again later.');
           setLoading(false);
         }
