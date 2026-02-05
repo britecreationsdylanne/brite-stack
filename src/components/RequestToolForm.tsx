@@ -32,13 +32,8 @@ export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: Re
         requesterEmail: userEmail || 'unknown@brite.co',
       };
 
-      // Write to Firestore first (primary action)
-      if (onSubmitToFirestore) {
-        await onSubmitToFirestore(formData);
-      }
-
-      // Fire email notification in background (don't block UI)
-      fetch('https://britestack-email-function-279545860595.us-central1.run.app/send-tool-request', {
+      // Send email first (fast, ~1 second)
+      const emailResponse = await fetch('https://britestack-email-function-279545860595.us-central1.run.app/send-tool-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -46,7 +41,18 @@ export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: Re
           userName: userName || 'A BriteStack user',
           userEmail: userEmail || 'unknown@brite.co',
         }),
-      }).catch((err) => console.error('Email notification failed:', err));
+      });
+
+      if (!emailResponse.ok) {
+        throw new Error('Email failed to send');
+      }
+
+      // Write to Firestore in background (don't block success)
+      if (onSubmitToFirestore) {
+        onSubmitToFirestore(formData).catch((err) =>
+          console.error('Failed to save to Firestore:', err)
+        );
+      }
 
       setStatus('success');
       setRequesterName('');
