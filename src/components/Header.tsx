@@ -29,7 +29,7 @@ export function Header({ user, onLogout }: HeaderProps) {
   }, []);
 
   return (
-    <header className="flex justify-end items-center px-4 py-4 sm:px-6 md:px-[50px] md:py-5">
+    <header style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', padding: '20px 50px' }}>
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}

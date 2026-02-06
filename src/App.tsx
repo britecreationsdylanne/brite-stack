@@ -76,36 +76,57 @@ function App() {
       <div className="relative z-10">
         <Header user={user} onLogout={logout} />
 
-        <main className="max-w-[1150px] mx-auto px-4 sm:px-6 md:px-[50px] py-6 md:py-[30px] pb-12 md:pb-[60px]">
+        <main style={{ maxWidth: '1150px', margin: '0 auto', padding: '30px 50px 60px' }}>
           {/* Hero Section - BriteStack centered */}
-          <div className="text-center mb-8 md:mb-[50px]">
-            <div className="flex items-center justify-center gap-3 md:gap-5 mb-4 md:mb-5">
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>
               {/* Techy Icon */}
-              <div className="w-12 h-12 md:w-20 md:h-20 bg-[#272D3F] rounded-xl md:rounded-[20px] flex items-center justify-center shadow-[0_10px_40px_rgba(39,45,63,0.4)]">
-                <svg className="w-7 h-7 md:w-[50px] md:h-[50px] text-[#31D7CA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <div style={{ width: '80px', height: '80px', background: '#272D3F', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 40px rgba(39, 45, 63, 0.4)' }}>
+                <svg style={{ width: '50px', height: '50px', color: '#31D7CA' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M12 2L2 7l10 5 10-5-10-5z"/>
                   <path d="M2 17l10 5 10-5"/>
                   <path d="M2 12l10 5 10-5"/>
                 </svg>
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-[64px] font-extrabold text-[#272D3F] tracking-tight md:tracking-[-2px] m-0">
+              <h1 style={{ fontSize: '64px', fontWeight: 800, color: '#272D3F', letterSpacing: '-2px', margin: 0 }}>
                 BriteStack
               </h1>
             </div>
-            <p className="text-[#272D3F] text-sm sm:text-base md:text-xl font-medium opacity-80 m-0 px-4">
+            <p style={{ color: '#272D3F', fontSize: '20px', fontWeight: 500, opacity: 0.8, margin: 0 }}>
               Find the tools you need. Built to make your world more efficient.
             </p>
           </div>
 
           {/* Tab Bar */}
-          <div className="flex justify-center gap-2 mb-10 bg-white/15 rounded-2xl p-1.5 mx-auto w-fit max-md:w-full max-md:overflow-x-auto max-md:justify-start max-md:mb-6">
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '8px',
+            marginBottom: '40px',
+            background: 'rgba(255, 255, 255, 0.15)',
+            borderRadius: '16px',
+            padding: '6px',
+            width: 'fit-content',
+            margin: '0 auto 40px',
+          }}>
             <button
               onClick={() => setActiveTab('tools')}
-              className={`px-4 py-2.5 md:px-8 md:py-3.5 text-sm md:text-[15px] font-semibold border-none cursor-pointer rounded-xl transition-all duration-200 inline-flex items-center gap-2 whitespace-nowrap ${
-                activeTab === 'tools'
-                  ? 'bg-[#272D3F] text-white shadow-[0_4px_15px_rgba(39,45,63,0.3)]'
-                  : 'bg-transparent text-[#272D3F]'
-              }`}
+              style={{
+                padding: '14px 32px',
+                fontSize: '15px',
+                fontWeight: 600,
+                border: 'none',
+                cursor: 'pointer',
+                borderRadius: '12px',
+                transition: 'all 0.2s ease',
+                background: activeTab === 'tools' ? '#272D3F' : 'transparent',
+                color: activeTab === 'tools' ? 'white' : '#272D3F',
+                boxShadow: activeTab === 'tools' ? '0 4px 15px rgba(39, 45, 63, 0.3)' : 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '10px',
+                fontFamily: 'inherit',
+              }}
             >
               Tools
             </button>
@@ -117,15 +138,35 @@ function App() {
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`px-4 py-2.5 md:px-8 md:py-3.5 text-sm md:text-[15px] font-semibold border-none cursor-pointer rounded-xl transition-all duration-200 inline-flex items-center gap-2 whitespace-nowrap ${
-                  activeTab === tab.key
-                    ? 'bg-[#272D3F] text-white shadow-[0_4px_15px_rgba(39,45,63,0.3)]'
-                    : 'bg-transparent text-[#272D3F]'
-                }`}
+                style={{
+                  padding: '14px 32px',
+                  fontSize: '15px',
+                  fontWeight: 600,
+                  border: 'none',
+                  cursor: 'pointer',
+                  borderRadius: '12px',
+                  transition: 'all 0.2s ease',
+                  background: activeTab === tab.key ? '#272D3F' : 'transparent',
+                  color: activeTab === tab.key ? 'white' : '#272D3F',
+                  boxShadow: activeTab === tab.key ? '0 4px 15px rgba(39, 45, 63, 0.3)' : 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  fontFamily: 'inherit',
+                }}
               >
                 {tab.label}
                 {tab.showCount && tab.count > 0 && (
-                  <span className="bg-[#FC883A] text-white text-xs font-bold px-2 py-0.5 rounded-[10px] min-w-[24px] text-center">
+                  <span style={{
+                    background: '#FC883A',
+                    color: 'white',
+                    fontSize: '12px',
+                    fontWeight: 700,
+                    padding: '2px 8px',
+                    borderRadius: '10px',
+                    minWidth: '24px',
+                    textAlign: 'center',
+                  }}>
                     {tab.count}
                   </span>
                 )}
@@ -137,7 +178,7 @@ function App() {
           {activeTab === 'tools' ? (
             <>
               {/* Search Bar */}
-              <div className="mb-8 md:mb-[50px]">
+              <div style={{ marginBottom: '50px' }}>
                 <SearchBar
                   searchQuery={searchQuery}
                   onSearchChange={setSearchQuery}
@@ -147,7 +188,7 @@ function App() {
               </div>
 
               {/* Tool Grid */}
-              <div className="mb-10 md:mb-[60px]">
+              <div style={{ marginBottom: '60px' }}>
                 <ToolGrid
                   tools={filteredTools}
                   isFavorite={isFavorite}

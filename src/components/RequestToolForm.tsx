@@ -80,7 +80,7 @@ export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: Re
   // Success state
   if (status === 'success') {
     return (
-      <div className="bg-[#272D3F] rounded-3xl p-6 sm:p-8 md:p-[45px] shadow-[0_10px_40px_rgba(39,45,63,0.4)]">
+      <div style={{ background: '#272D3F', borderRadius: '24px', padding: '45px', boxShadow: '0 10px 40px rgba(39, 45, 63, 0.4)' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{
             width: '80px',
@@ -124,8 +124,8 @@ export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: Re
   }
 
   return (
-    <div className="bg-[#272D3F] rounded-3xl p-6 sm:p-8 md:p-[45px] shadow-[0_10px_40px_rgba(39,45,63,0.4)]">
-      <div className="flex items-center gap-3 sm:gap-4 mb-2.5">
+    <div style={{ background: '#272D3F', borderRadius: '24px', padding: '45px', boxShadow: '0 10px 40px rgba(39, 45, 63, 0.4)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '10px' }}>
         <div style={{
           width: '52px',
           height: '52px',
