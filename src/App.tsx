@@ -216,6 +216,7 @@ function App() {
               error={ideasError}
               userEmail={user.email || ''}
               userName={user.name || user.displayName || ''}
+              onAddIdea={activeTab === 'ideas' ? addToolRequest : undefined}
             />
           )}
         </main>
