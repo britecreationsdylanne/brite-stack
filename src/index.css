@@ -481,6 +481,107 @@ input, textarea, select {
   animation-delay: -1s;
 }
 
+/* ========== MOBILE RESPONSIVE OVERRIDES ========== */
+/* Only affects screens below 768px — desktop is untouched */
+
+@media (max-width: 768px) {
+  /* Header: reduce horizontal padding */
+  .app-header {
+    padding: 16px 16px !important;
+  }
+
+  /* Main content: reduce padding */
+  .app-main {
+    padding: 20px 16px 40px !important;
+  }
+
+  /* Hero section */
+  .hero-section {
+    margin-bottom: 30px !important;
+  }
+  .hero-row {
+    gap: 12px !important;
+    margin-bottom: 16px !important;
+  }
+  .hero-icon {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 12px !important;
+  }
+  .hero-icon-svg {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .hero-title {
+    font-size: 32px !important;
+    letter-spacing: -1px !important;
+  }
+  .hero-subtitle {
+    font-size: 14px !important;
+  }
+
+  /* Tab bar: horizontal scroll on mobile */
+  .tab-bar {
+    width: 100% !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    margin: 0 0 24px !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .tab-btn {
+    padding: 10px 20px !important;
+    font-size: 13px !important;
+    white-space: nowrap;
+  }
+
+  /* Tool grid: single column */
+  .tool-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Ideas grid: single column */
+  .ideas-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Search bar: full width */
+  .search-bar {
+    flex-direction: row !important;
+    padding: 0 4px;
+  }
+  .search-input {
+    width: 100% !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+
+  /* Form containers: less padding */
+  .form-container {
+    padding: 24px !important;
+    border-radius: 20px !important;
+  }
+
+  /* Idea detail card */
+  .idea-detail-card {
+    padding: 24px 20px !important;
+  }
+  .idea-detail-card h2 {
+    font-size: 22px !important;
+    padding-right: 60px !important;
+  }
+
+  /* Comments section */
+  .comments-section {
+    padding: 20px !important;
+  }
+}
+
 /* Hexagon pattern */
 .hex-pattern {
   position: fixed;

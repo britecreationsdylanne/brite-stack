@@ -80,7 +80,7 @@ export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: Re
   // Success state
   if (status === 'success') {
     return (
-      <div style={{ background: '#272D3F', borderRadius: '24px', padding: '45px', boxShadow: '0 10px 40px rgba(39, 45, 63, 0.4)' }}>
+      <div className="form-container" style={{ background: '#272D3F', borderRadius: '24px', padding: '45px', boxShadow: '0 10px 40px rgba(39, 45, 63, 0.4)' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{
             width: '80px',
@@ -124,7 +124,7 @@ export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: Re
   }
 
   return (
-    <div style={{ background: '#272D3F', borderRadius: '24px', padding: '45px', boxShadow: '0 10px 40px rgba(39, 45, 63, 0.4)' }}>
+    <div className="form-container" style={{ background: '#272D3F', borderRadius: '24px', padding: '45px', boxShadow: '0 10px 40px rgba(39, 45, 63, 0.4)' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '10px' }}>
         <div style={{
           width: '52px',

@@ -14,12 +14,13 @@ export function SearchBar({
   onToggleFavorites,
 }: SearchBarProps) {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
+    <div className="search-bar" style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
       <input
         type="text"
         placeholder="Search tools..."
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
+        className="search-input"
         style={{
           width: '450px',
           padding: '18px 24px 18px 56px',

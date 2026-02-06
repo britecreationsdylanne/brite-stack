@@ -102,7 +102,7 @@ export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDet
       </button>
 
       {/* Idea Header Card */}
-      <div style={{
+      <div className="idea-detail-card" style={{
         background: '#272D3F',
         borderRadius: '20px',
         padding: '40px 36px',
@@ -286,7 +286,7 @@ export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDet
       </div>
 
       {/* Comments Section */}
-      <div style={{
+      <div className="comments-section" style={{
         background: '#272D3F',
         borderRadius: '20px',
         padding: '36px',

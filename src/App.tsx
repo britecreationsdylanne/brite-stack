@@ -76,29 +76,29 @@ function App() {
       <div className="relative z-10">
         <Header user={user} onLogout={logout} />
 
-        <main style={{ maxWidth: '1150px', margin: '0 auto', padding: '30px 50px 60px' }}>
+        <main className="app-main" style={{ maxWidth: '1150px', margin: '0 auto', padding: '30px 50px 60px' }}>
           {/* Hero Section - BriteStack centered */}
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>
+          <div className="hero-section" style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <div className="hero-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>
               {/* Techy Icon */}
-              <div style={{ width: '80px', height: '80px', background: '#272D3F', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 40px rgba(39, 45, 63, 0.4)' }}>
-                <svg style={{ width: '50px', height: '50px', color: '#31D7CA' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <div className="hero-icon" style={{ width: '80px', height: '80px', background: '#272D3F', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 40px rgba(39, 45, 63, 0.4)' }}>
+                <svg className="hero-icon-svg" style={{ width: '50px', height: '50px', color: '#31D7CA' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M12 2L2 7l10 5 10-5-10-5z"/>
                   <path d="M2 17l10 5 10-5"/>
                   <path d="M2 12l10 5 10-5"/>
                 </svg>
               </div>
-              <h1 style={{ fontSize: '64px', fontWeight: 800, color: '#272D3F', letterSpacing: '-2px', margin: 0 }}>
+              <h1 className="hero-title" style={{ fontSize: '64px', fontWeight: 800, color: '#272D3F', letterSpacing: '-2px', margin: 0 }}>
                 BriteStack
               </h1>
             </div>
-            <p style={{ color: '#272D3F', fontSize: '20px', fontWeight: 500, opacity: 0.8, margin: 0 }}>
+            <p className="hero-subtitle" style={{ color: '#272D3F', fontSize: '20px', fontWeight: 500, opacity: 0.8, margin: 0 }}>
               Find the tools you need. Built to make your world more efficient.
             </p>
           </div>
 
           {/* Tab Bar */}
-          <div style={{
+          <div className="tab-bar" style={{
             display: 'flex',
             justifyContent: 'center',
             gap: '8px',
@@ -110,6 +110,7 @@ function App() {
             margin: '0 auto 40px',
           }}>
             <button
+              className="tab-btn"
               onClick={() => setActiveTab('tools')}
               style={{
                 padding: '14px 32px',
@@ -136,6 +137,7 @@ function App() {
               { key: 'completed' as const, label: 'Completed', count: completedFiltered.length, showCount: false },
             ].map((tab) => (
               <button
+                className="tab-btn"
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
                 style={{

@@ -68,7 +68,7 @@ export function IdeasPage({ toolRequests, loading, error, userEmail, userName }:
 
   // Grid view
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
+    <div className="ideas-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
       {toolRequests.map((request) => (
         <IdeaCard
           key={request.id}
