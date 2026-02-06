@@ -98,7 +98,7 @@ function App() {
           </div>
 
           {/* Tab Bar */}
-          <div className="flex justify-start md:justify-center gap-2 mb-6 md:mb-10 bg-white/15 rounded-2xl p-1.5 mx-auto md:w-fit overflow-x-auto">
+          <div className="flex justify-center gap-2 mb-10 bg-white/15 rounded-2xl p-1.5 mx-auto w-fit max-md:w-full max-md:overflow-x-auto max-md:justify-start max-md:mb-6">
             <button
               onClick={() => setActiveTab('tools')}
               className={`px-4 py-2.5 md:px-8 md:py-3.5 text-sm md:text-[15px] font-semibold border-none cursor-pointer rounded-xl transition-all duration-200 inline-flex items-center gap-2 whitespace-nowrap ${
