@@ -32,22 +32,30 @@ export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: Re
         requesterEmail: userEmail || 'unknown@brite.co',
       };
 
-      // Send email first
-      const emailResponse = await fetch('https://britestack-email-function-279545860595.us-central1.run.app/send-tool-request', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          userName: userName || 'A BriteStack user',
-          userEmail: userEmail || 'unknown@brite.co',
-        }),
-      });
-
-      if (!emailResponse.ok) {
-        throw new Error('Email failed to send');
+      // Send email first (with 10s timeout so it doesn't hang)
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      try {
+        const emailResponse = await fetch('https://britestack-email-function-279545860595.us-central1.run.app/send-tool-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...formData,
+            userName: userName || 'A BriteStack user',
+            userEmail: userEmail || 'unknown@brite.co',
+          }),
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
+        if (!emailResponse.ok) {
+          throw new Error('Email failed to send');
+        }
+      } catch (emailErr) {
+        clearTimeout(timeout);
+        console.error('Email error (continuing with Firestore):', emailErr);
       }
 
-      // Then save to Firestore (so it appears in Ideas tab)
+      // Save to Firestore (so it appears in Ideas tab)
       if (onSubmitToFirestore) {
         await onSubmitToFirestore(formData);
       }
