@@ -32,9 +32,9 @@ export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: Re
         requesterEmail: userEmail || 'unknown@brite.co',
       };
 
-      // Send email first (with 10s timeout so it doesn't hang)
+      // Send email first (with 2s timeout so it doesn't hang)
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 10000);
+      const timeout = setTimeout(() => controller.abort(), 2000);
       try {
         const emailResponse = await fetch('https://britestack-email-function-279545860595.us-central1.run.app/send-tool-request', {
           method: 'POST',
