@@ -22,7 +22,7 @@ export function ToolGrid({ tools, isFavorite, onToggleFavorite }: ToolGridProps)
   }
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
       {tools.map((tool) => (
         <ToolCard
           key={tool.id}

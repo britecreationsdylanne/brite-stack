@@ -102,14 +102,7 @@ export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDet
       </button>
 
       {/* Idea Header Card */}
-      <div style={{
-        background: '#272D3F',
-        borderRadius: '20px',
-        padding: '40px 36px',
-        boxShadow: '0 8px 30px rgba(39, 45, 63, 0.3)',
-        marginBottom: '24px',
-        position: 'relative',
-      }}>
+      <div className="bg-[#272D3F] rounded-[20px] p-6 sm:p-8 md:px-9 md:py-10 shadow-[0_8px_30px_rgba(39,45,63,0.3)] mb-5 md:mb-6 relative">
         {/* Status Badge / Admin Dropdown */}
         <div style={{ position: 'absolute', top: '24px', right: '24px' }}>
           {isAdmin ? (
@@ -248,16 +241,7 @@ export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDet
       </div>
 
       {/* Upvote Bar */}
-      <div style={{
-        background: '#272D3F',
-        borderRadius: '16px',
-        padding: '20px 28px',
-        boxShadow: '0 8px 30px rgba(39, 45, 63, 0.3)',
-        marginBottom: '24px',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '16px',
-      }}>
+      <div className="bg-[#272D3F] rounded-2xl p-4 sm:p-5 md:px-7 md:py-5 shadow-[0_8px_30px_rgba(39,45,63,0.3)] mb-5 md:mb-6 flex flex-wrap items-center gap-3 sm:gap-4">
         <button
           onClick={handleUpvote}
           style={{
@@ -286,12 +270,7 @@ export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDet
       </div>
 
       {/* Comments Section */}
-      <div style={{
-        background: '#272D3F',
-        borderRadius: '20px',
-        padding: '36px',
-        boxShadow: '0 8px 30px rgba(39, 45, 63, 0.3)',
-      }}>
+      <div className="bg-[#272D3F] rounded-[20px] p-5 sm:p-7 md:p-9 shadow-[0_8px_30px_rgba(39,45,63,0.3)]">
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '28px' }}>
           <MessageCircle size={22} color="#31D7CA" />

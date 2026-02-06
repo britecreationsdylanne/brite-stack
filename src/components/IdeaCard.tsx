@@ -27,19 +27,10 @@ function formatDate(timestamp: { toDate: () => Date } | null): string {
 export function IdeaCard({ request, onClick }: IdeaCardProps) {
   const status = statusConfig[request.status] || defaultStatus;
 
-  const cardStyle: React.CSSProperties = {
-    background: '#272D3F',
-    borderRadius: '20px',
-    padding: '32px 28px',
-    position: 'relative',
-    transition: 'all 0.3s ease',
-    boxShadow: '0 8px 30px rgba(39, 45, 63, 0.3)',
-    cursor: onClick ? 'pointer' : 'default',
-  };
-
   return (
     <div
-      style={cardStyle}
+      className="bg-[#272D3F] rounded-[20px] p-5 sm:p-6 md:px-7 md:py-8 relative transition-all duration-300 shadow-[0_8px_30px_rgba(39,45,63,0.3)]"
+      style={{ cursor: onClick ? 'pointer' : 'default' }}
       onClick={onClick}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = 'translateY(-8px)';
