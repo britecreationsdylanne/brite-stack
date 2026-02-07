@@ -18,9 +18,10 @@ interface IdeasPageProps {
     requesterName: string;
     requesterEmail: string;
   }) => Promise<void>;
+  onRefresh?: () => void;
 }
 
-export function IdeasPage({ toolRequests, loading, error, userEmail, userName, onAddIdea }: IdeasPageProps) {
+export function IdeasPage({ toolRequests, loading, error, userEmail, userName, onAddIdea, onRefresh }: IdeasPageProps) {
   const [selectedIdeaId, setSelectedIdeaId] = useState<string | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newToolName, setNewToolName] = useState('');
@@ -63,7 +64,7 @@ export function IdeasPage({ toolRequests, loading, error, userEmail, userName, o
         request={selectedRequest}
         userEmail={userEmail}
         userName={userName}
-        onBack={() => setSelectedIdeaId(null)}
+        onBack={() => { setSelectedIdeaId(null); onRefresh?.(); }}
       />
     );
   }

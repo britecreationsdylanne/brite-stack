@@ -22,7 +22,7 @@ function App() {
   }
   const { user, loading, signInWithGoogle, logout } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
-  const { toolRequests, loading: ideasLoading, error: ideasError, addToolRequest } = useToolRequests();
+  const { toolRequests, loading: ideasLoading, error: ideasError, addToolRequest, refetch: refetchIdeas } = useToolRequests();
   const [searchQuery, setSearchQuery] = useState('');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [activeTab, setActiveTab] = useState<'tools' | 'ideas' | 'in-progress' | 'completed'>('tools');
@@ -217,6 +217,7 @@ function App() {
               userEmail={user.email || ''}
               userName={user.name || user.displayName || ''}
               onAddIdea={activeTab === 'ideas' ? addToolRequest : undefined}
+              onRefresh={refetchIdeas}
             />
           )}
         </main>

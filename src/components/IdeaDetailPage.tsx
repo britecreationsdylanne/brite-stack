@@ -41,16 +41,19 @@ export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDet
   const [commentText, setCommentText] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [showStatusMenu, setShowStatusMenu] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState<ToolRequest['status']>(request.status);
 
   const isAdmin = ADMIN_EMAILS.includes(userEmail);
-  const status = statusConfig[request.status] || defaultStatus;
+  const status = statusConfig[currentStatus] || defaultStatus;
 
   const handleStatusChange = async (newStatus: ToolRequest['status']) => {
     try {
+      setCurrentStatus(newStatus);
       await updateStatus(newStatus);
       setShowStatusMenu(false);
     } catch (err) {
       console.error('Failed to update status:', err);
+      setCurrentStatus(request.status);
     }
   };
 
@@ -151,7 +154,7 @@ export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDet
                 }}>
                   {allStatuses.map((s) => {
                     const cfg = statusConfig[s] || defaultStatus;
-                    const isActive = s === request.status;
+                    const isActive = s === currentStatus;
                     return (
                       <button
                         key={s}
