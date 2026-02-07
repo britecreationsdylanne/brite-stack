@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Lightbulb, Tag, User, Calendar, ThumbsUp, MessageCircle, Send, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Lightbulb, Tag, User, Calendar, ThumbsUp, MessageCircle, Send, ChevronDown, RefreshCw } from 'lucide-react';
 import { useIdeaDetail } from '../hooks/useIdeaDetail';
 import type { ToolRequest } from '../data/toolRequests';
 
@@ -244,6 +244,12 @@ export function IdeaDetailPage({ request, userEmail, userName, onBack }: IdeaDet
             <Calendar size={16} />
             <span>{formatDate(request.createdAt)}</span>
           </div>
+          {request.updateCount > 0 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#7DA3AF', fontSize: '14px' }}>
+              <RefreshCw size={16} />
+              <span>{request.updateCount} {request.updateCount === 1 ? 'update' : 'updates'}</span>
+            </div>
+          )}
         </div>
       </div>
 

@@ -30,6 +30,7 @@ export function useToolRequests() {
               ...data,
               upvoteCount: data.upvoteCount ?? 0,
               commentCount: data.commentCount ?? 0,
+              updateCount: data.updateCount ?? 0,
               status: data.status || 'new', // Default to 'new' if missing
             };
           }) as ToolRequest[];
@@ -57,6 +58,18 @@ export function useToolRequests() {
     }
   }, []);
 
+  const saveIdeaToBucket = async (id: string, ideaData: Record<string, unknown>) => {
+    try {
+      await fetch('https://britestack-email-function-279545860595.us-central1.run.app/save-idea', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, ...ideaData }),
+      });
+    } catch (err) {
+      console.error('GCS backup error (non-blocking):', err);
+    }
+  };
+
   const addToolRequest = async (data: {
     toolName: string;
     description: string;
@@ -64,12 +77,23 @@ export function useToolRequests() {
     requesterEmail: string;
   }) => {
     try {
-      await addDoc(collection(db, 'toolRequests'), {
+      const docRef = await addDoc(collection(db, 'toolRequests'), {
         ...data,
         status: 'new',
         createdAt: serverTimestamp(),
         upvoteCount: 0,
         commentCount: 0,
+        updateCount: 0,
+      });
+
+      // Also save to Google Cloud Storage bucket (fire-and-forget)
+      saveIdeaToBucket(docRef.id, {
+        ...data,
+        status: 'new',
+        createdAt: new Date().toISOString(),
+        upvoteCount: 0,
+        commentCount: 0,
+        updateCount: 0,
       });
     } catch (err) {
       console.error('Failed to add tool request to Firestore:', err);

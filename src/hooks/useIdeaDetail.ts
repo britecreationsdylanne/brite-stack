@@ -111,7 +111,21 @@ export function useIdeaDetail(requestId: string, userEmail: string) {
 
   const updateStatus = async (newStatus: ToolRequest['status']) => {
     const requestRef = doc(db, 'toolRequests', requestId);
-    await updateDoc(requestRef, { status: newStatus });
+    await updateDoc(requestRef, {
+      status: newStatus,
+      updateCount: increment(1),
+    });
+
+    // Sync updated idea to GCS bucket (fire-and-forget)
+    try {
+      fetch('https://britestack-email-function-279545860595.us-central1.run.app/save-idea', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: requestId, status: newStatus }),
+      });
+    } catch (err) {
+      console.error('GCS sync error (non-blocking):', err);
+    }
   };
 
   return { comments, hasUpvoted, upvoteCount, loadingComments, toggleUpvote, addComment, updateStatus };

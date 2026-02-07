@@ -1,4 +1,4 @@
-import { Lightbulb, User, Calendar, Tag, ThumbsUp, MessageCircle } from 'lucide-react';
+import { Lightbulb, User, Calendar, Tag, ThumbsUp, MessageCircle, RefreshCw } from 'lucide-react';
 import type { ToolRequest } from '../data/toolRequests';
 
 interface IdeaCardProps {
@@ -119,6 +119,12 @@ export function IdeaCard({ request, onClick }: IdeaCardProps) {
             <MessageCircle size={14} />
             <span>{request.commentCount}</span>
           </div>
+          {request.updateCount > 0 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#7DA3AF', fontSize: '13px' }}>
+              <RefreshCw size={14} />
+              <span>{request.updateCount}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

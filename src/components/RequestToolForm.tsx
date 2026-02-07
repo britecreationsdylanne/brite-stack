@@ -32,33 +32,23 @@ export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: Re
         requesterEmail: userEmail || 'unknown@brite.co',
       };
 
-      // Send email first (with 2s timeout so it doesn't hang)
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 2000);
-      try {
-        const emailResponse = await fetch('https://britestack-email-function-279545860595.us-central1.run.app/send-tool-request', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...formData,
-            userName: userName || 'A BriteStack user',
-            userEmail: userEmail || 'unknown@brite.co',
-          }),
-          signal: controller.signal,
-        });
-        clearTimeout(timeout);
-        if (!emailResponse.ok) {
-          throw new Error('Email failed to send');
-        }
-      } catch (emailErr) {
-        clearTimeout(timeout);
-        console.error('Email error (continuing with Firestore):', emailErr);
-      }
-
-      // Save to Firestore (so it appears in Ideas tab)
+      // Save to Firestore first (primary storage + Ideas tab)
       if (onSubmitToFirestore) {
         await onSubmitToFirestore(formData);
       }
+
+      // Send email notification (fire-and-forget, don't block success)
+      fetch('https://britestack-email-function-279545860595.us-central1.run.app/send-tool-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          userName: userName || 'A BriteStack user',
+          userEmail: userEmail || 'unknown@brite.co',
+        }),
+      }).catch((emailErr) => {
+        console.error('Email notification error (non-blocking):', emailErr);
+      });
 
       setStatus('success');
       setRequesterName('');

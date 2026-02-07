@@ -10,6 +10,7 @@ export interface ToolRequest {
   createdAt: Timestamp | null;
   upvoteCount: number;
   commentCount: number;
+  updateCount: number;
 }
 
 export interface Comment {

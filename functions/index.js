@@ -1,8 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const sgMail = require('@sendgrid/mail');
+const { Storage } = require('@google-cloud/storage');
 
 const app = express();
+const storage = new Storage();
+const BUCKET_NAME = 'brite-pulse-ideas';
 
 // Enable CORS for all origins (Cloud Run handles auth)
 app.use(cors());
@@ -77,6 +80,57 @@ Sent from BriteStack`,
     res.status(500).json({
       success: false,
       error: 'Failed to send tool request. Please try again later.'
+    });
+  }
+});
+
+// Save idea to Google Cloud Storage bucket
+app.post('/save-idea', async (req, res) => {
+  try {
+    const { id, toolName, description, requesterName, requesterEmail, status, createdAt, upvoteCount, commentCount, updateCount } = req.body;
+
+    if (!id || !toolName) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing required fields: id and toolName are required'
+      });
+    }
+
+    const ideaData = {
+      id,
+      toolName,
+      description: description || '',
+      requesterName: requesterName || 'Unknown',
+      requesterEmail: requesterEmail || 'unknown@brite.co',
+      status: status || 'new',
+      createdAt: createdAt || new Date().toISOString(),
+      upvoteCount: upvoteCount || 0,
+      commentCount: commentCount || 0,
+      updateCount: updateCount || 0,
+      savedAt: new Date().toISOString(),
+    };
+
+    const bucket = storage.bucket(BUCKET_NAME);
+    const fileName = `ideas/${id}.json`;
+    const file = bucket.file(fileName);
+
+    await file.save(JSON.stringify(ideaData, null, 2), {
+      contentType: 'application/json',
+      metadata: {
+        toolName,
+        status: ideaData.status,
+        requesterEmail: ideaData.requesterEmail,
+      },
+    });
+
+    console.log(`Idea saved to GCS: ${fileName}`);
+    res.json({ success: true, message: 'Idea saved to bucket', path: fileName });
+
+  } catch (error) {
+    console.error('GCS Save Error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to save idea to storage.'
     });
   }
 });
