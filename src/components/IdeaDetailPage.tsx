@@ -20,9 +20,9 @@ const statusConfig: Record<string, { label: string; color: string; bg: string }>
   'completed':   { label: 'Completed',   color: '#10B981', bg: 'rgba(16, 185, 129, 0.2)' },
 };
 
-function formatDate(timestamp: { toDate: () => Date } | null): string {
-  if (!timestamp) return 'Just now';
-  const date = timestamp.toDate();
+function formatDate(dateStr: string | null): string {
+  if (!dateStr) return 'Just now';
+  const date = new Date(dateStr);
   return date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',

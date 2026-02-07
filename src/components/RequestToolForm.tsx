@@ -4,7 +4,7 @@ import { Send, CheckCircle, Plus, AlertCircle } from 'lucide-react';
 interface RequestToolFormProps {
   userEmail?: string;
   userName?: string;
-  onSubmitToFirestore?: (data: {
+  onSubmit?: (data: {
     toolName: string;
     description: string;
     requesterName: string;
@@ -12,7 +12,7 @@ interface RequestToolFormProps {
   }) => Promise<void>;
 }
 
-export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: RequestToolFormProps) {
+export function RequestToolForm({ userEmail, userName, onSubmit }: RequestToolFormProps) {
   const [requesterName, setRequesterName] = useState('');
   const [toolName, setToolName] = useState('');
   const [description, setDescription] = useState('');
@@ -32,9 +32,9 @@ export function RequestToolForm({ userEmail, userName, onSubmitToFirestore }: Re
         requesterEmail: userEmail || 'unknown@brite.co',
       };
 
-      // Save to Firestore first (primary storage + Ideas tab)
-      if (onSubmitToFirestore) {
-        await onSubmitToFirestore(formData);
+      // Save to GCS bucket (primary storage + Ideas tab)
+      if (onSubmit) {
+        await onSubmit(formData);
       }
 
       // Send email notification (fire-and-forget, don't block success)

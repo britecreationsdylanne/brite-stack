@@ -202,7 +202,7 @@ function App() {
               <RequestToolForm
                 userEmail={user.email || undefined}
                 userName={user.name || undefined}
-                onSubmitToFirestore={addToolRequest}
+                onSubmit={addToolRequest}
               />
             </>
           ) : (
