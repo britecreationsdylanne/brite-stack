@@ -79,6 +79,13 @@ export const tools: Tool[] = [
     icon: 'gem',
   },
   {
+    id: 'trend-scout',
+    name: 'Trend Scout',
+    description: 'Scour the web for trending topics & spin up timely social media video ideas',
+    url: 'https://trend-scout-279545860595.us-central1.run.app/',
+    icon: 'trending-up',
+  },
+  {
     id: 'venue-voice',
     name: 'Venue Voice',
     description: 'Content that makes every venue feel like the main event',
@@ -91,14 +98,6 @@ export const tools: Tool[] = [
     description: 'Snappy video clips that pack a punch',
     url: 'https://video-ad-generator-279545860595.us-central1.run.app/',
     icon: 'video',
-  },
-  {
-    id: 'briteco-tool-2',
-    name: 'New Tool Coming Soon',
-    description: 'Exciting new BriteCo tool in development',
-    url: '#',
-    icon: 'plus',
-    comingSoon: true,
   },
   {
     id: 'briteco-tool-3',
