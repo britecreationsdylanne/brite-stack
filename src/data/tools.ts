@@ -86,12 +86,11 @@ export const tools: Tool[] = [
     icon: 'video',
   },
   {
-    id: 'briteco-tool-1',
-    name: 'New Tool Coming Soon',
-    description: 'Exciting new BriteCo tool in development',
-    url: '#',
-    icon: 'plus',
-    comingSoon: true,
+    id: 'brite-mail',
+    name: 'BriteMail',
+    description: 'Automated sales emails & smart replies that close deals faster',
+    url: 'https://brite-mail-279545860595.us-central1.run.app/',
+    icon: 'send',
   },
   {
     id: 'briteco-tool-2',
