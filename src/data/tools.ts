@@ -23,6 +23,13 @@ export const tools: Tool[] = [
     icon: 'file-text',
   },
   {
+    id: 'brite-mail',
+    name: 'BriteMail',
+    description: 'Automated sales emails & smart replies that close deals faster',
+    url: 'https://brite-mail-279545860595.us-central1.run.app/',
+    icon: 'send',
+  },
+  {
     id: 'ceo-article-generator',
     name: 'CEO Article Generator',
     description: 'Thought leadership articles crafted for Forbes, Entrepreneur & Fast Company',
@@ -84,13 +91,6 @@ export const tools: Tool[] = [
     description: 'Snappy video clips that pack a punch',
     url: 'https://video-ad-generator-279545860595.us-central1.run.app/',
     icon: 'video',
-  },
-  {
-    id: 'brite-mail',
-    name: 'BriteMail',
-    description: 'Automated sales emails & smart replies that close deals faster',
-    url: 'https://brite-mail-279545860595.us-central1.run.app/',
-    icon: 'send',
   },
   {
     id: 'briteco-tool-2',
