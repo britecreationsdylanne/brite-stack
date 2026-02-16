@@ -190,6 +190,18 @@ app.get('/ideas/:id', async (req, res) => {
   }
 });
 
+// Status display labels for emails
+const STATUS_LABELS = {
+  'new': 'New',
+  'in-progress': 'In Progress',
+  'completed': 'Completed',
+  'under-review': 'Under Review',
+  'planned': 'Planned',
+  'building': 'Building',
+  'launched': 'Launched',
+  'declined': 'Declined',
+};
+
 // PUT /ideas/:id/status - Update idea status
 app.put('/ideas/:id/status', async (req, res) => {
   try {
@@ -203,10 +215,57 @@ app.put('/ideas/:id/status', async (req, res) => {
       return res.status(404).json({ success: false, error: 'Idea not found.' });
     }
 
+    const previousStatus = idea.status;
     idea.status = status;
     idea.updateCount = (idea.updateCount || 0) + 1;
 
     await writeIdea(req.params.id, idea);
+
+    // Email the requester about the status change (fire-and-forget)
+    if (idea.requesterEmail && previousStatus !== status) {
+      const statusLabel = STATUS_LABELS[status] || status;
+      const prevLabel = STATUS_LABELS[previousStatus] || previousStatus;
+
+      const msg = {
+        to: idea.requesterEmail,
+        from: {
+          email: 'marketing@brite.co',
+          name: 'BritePulse'
+        },
+        subject: `Your idea "${idea.toolName}" is now ${statusLabel}`,
+        text: `Hi ${idea.requesterName || 'there'},
+
+Great news! Your tool idea "${idea.toolName}" has been updated.
+
+Status changed: ${prevLabel} → ${statusLabel}
+
+Thanks for contributing to BriteStack!
+
+---
+Sent from BritePulse`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <p>Hi ${idea.requesterName || 'there'},</p>
+
+            <p>Great news! Your tool idea has been updated.</p>
+
+            <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <p style="margin: 0 0 10px 0;"><strong>Idea:</strong> ${idea.toolName}</p>
+              <p style="margin: 0;"><strong>Status:</strong> ${prevLabel} → <strong>${statusLabel}</strong></p>
+            </div>
+
+            <p>Thanks for contributing to BriteStack!</p>
+
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+            <p style="color: #666; font-size: 12px;">Sent from BritePulse</p>
+          </div>
+        `
+      };
+
+      sgMail.send(msg).catch((err) => {
+        console.error('Status update email error (non-blocking):', err);
+      });
+    }
 
     console.log(`Idea ${req.params.id} status updated to: ${status}`);
     res.json({ success: true, idea });

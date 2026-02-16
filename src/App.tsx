@@ -139,7 +139,7 @@ function App() {
               <button
                 className="tab-btn"
                 key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
+                onClick={() => { setActiveTab(tab.key); refetchIdeas(); }}
                 style={{
                   padding: '14px 32px',
                   fontSize: '15px',
@@ -207,6 +207,7 @@ function App() {
             </>
           ) : (
             <IdeasPage
+              key={activeTab}
               toolRequests={
                 activeTab === 'ideas' ? ideasFiltered :
                 activeTab === 'in-progress' ? inProgressFiltered :
