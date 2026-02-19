@@ -30,6 +30,13 @@ export const tools: Tool[] = [
     icon: 'send',
   },
   {
+    id: 'brite-talent',
+    name: 'BriteTalent',
+    description: 'Generate polished job descriptions in a snap',
+    url: 'https://briteroles-279545860595.us-central1.run.app/',
+    icon: 'user-plus',
+  },
+  {
     id: 'ceo-article-generator',
     name: 'CEO Article Generator',
     description: 'Thought leadership articles crafted for Forbes, Entrepreneur & Fast Company',
