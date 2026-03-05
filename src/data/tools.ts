@@ -17,7 +17,7 @@ export const tools: Tool[] = [
   },
   {
     id: 'briteco-brief',
-    name: 'BriteCo Brief',
+    name: 'Agent Newsletter',
     description: 'Your agent newsletter, brewed fresh monthly',
     url: 'https://briteco-brief-279545860595.us-central1.run.app/',
     icon: 'file-text',
