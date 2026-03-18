@@ -65,6 +65,13 @@ export const tools: Tool[] = [
     icon: 'target',
   },
   {
+    id: 'paid-media-dashboard',
+    name: 'Paid Media Dashboard',
+    description: 'Weekly paid social KPIs & insights delivered at lightning speed',
+    url: 'https://paid-socials-reporting-279545860595.us-central1.run.app/',
+    icon: 'bar-chart',
+  },
+  {
     id: 'planner-pulse',
     name: 'Planner Pulse',
     description: 'Newsletter vibes that keep planners in the loop',
@@ -124,14 +131,6 @@ export const tools: Tool[] = [
   },
   {
     id: 'briteco-tool-5',
-    name: 'New Tool Coming Soon',
-    description: 'Exciting new BriteCo tool in development',
-    url: '#',
-    icon: 'plus',
-    comingSoon: true,
-  },
-  {
-    id: 'briteco-tool-6',
     name: 'New Tool Coming Soon',
     description: 'Exciting new BriteCo tool in development',
     url: '#',
