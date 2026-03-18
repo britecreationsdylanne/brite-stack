@@ -1,4 +1,4 @@
-import { Star, Building, FileText, CalendarHeart, Home, Gem, Megaphone, Video, Plus, PenTool, Mail, MessageSquare } from 'lucide-react';
+import { Star, Building, FileText, CalendarHeart, Home, Gem, Megaphone, Video, Plus, PenTool, Mail, MessageSquare, ThumbsUp } from 'lucide-react';
 import type { Tool } from '../data/tools';
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string; color?: string }>> = {
@@ -13,6 +13,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   plus: Plus,
   mail: Mail,
   'message-square': MessageSquare,
+  'thumbs-up': ThumbsUp,
 };
 
 // Icon gradient backgrounds for design 13 - dark navy cards with colorful icon backgrounds
@@ -27,6 +28,7 @@ const iconGradients: Record<string, string> = {
   'video-ad-generator': 'linear-gradient(135deg, #10B981, #059669)',
   'consumer-newsletter': 'linear-gradient(135deg, #6366F1, #4F46E5)',
   'reddit-comment-tracker': 'linear-gradient(135deg, #FF4500, #CC3700)',
+  'paid-media-dashboard': 'linear-gradient(135deg, #0EA5E9, #0284C7)',
 };
 
 interface ToolCardProps {

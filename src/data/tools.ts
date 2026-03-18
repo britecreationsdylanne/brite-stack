@@ -69,7 +69,7 @@ export const tools: Tool[] = [
     name: 'Paid Media Dashboard',
     description: 'Weekly paid social KPIs & insights delivered at lightning speed',
     url: 'https://paid-socials-reporting-279545860595.us-central1.run.app/',
-    icon: 'bar-chart',
+    icon: 'thumbs-up',
   },
   {
     id: 'planner-pulse',
