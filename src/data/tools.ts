@@ -79,6 +79,13 @@ export const tools: Tool[] = [
     icon: 'calendar-heart',
   },
   {
+    id: 'press-copilot',
+    name: 'Press Copilot',
+    description: 'Turn the daily press-query firehose from Featured.com into a shortlist with drafts attached',
+    url: 'https://press-copilot-29820647719.us-central1.run.app/dashboard',
+    icon: 'newspaper',
+  },
+  {
     id: 'reddit-comment-tracker',
     name: 'Reddit Comment Tracker',
     description: 'Stay on top of what people are saying on your posts',
@@ -123,14 +130,6 @@ export const tools: Tool[] = [
   },
   {
     id: 'briteco-tool-4',
-    name: 'New Tool Coming Soon',
-    description: 'Exciting new BriteCo tool in development',
-    url: '#',
-    icon: 'plus',
-    comingSoon: true,
-  },
-  {
-    id: 'briteco-tool-5',
     name: 'New Tool Coming Soon',
     description: 'Exciting new BriteCo tool in development',
     url: '#',
