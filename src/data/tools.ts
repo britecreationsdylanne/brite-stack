@@ -65,6 +65,13 @@ export const tools: Tool[] = [
     icon: 'target',
   },
   {
+    id: 'organic-social-dashboard',
+    name: 'Organic Social Dashboard',
+    description: 'Main KPIs across all your organic social channels, all in one place',
+    url: 'https://organic-social-279545860595.us-central1.run.app/',
+    icon: 'bar-chart-3',
+  },
+  {
     id: 'paid-media-dashboard',
     name: 'Paid Media Dashboard',
     description: 'Weekly paid social KPIs & insights delivered at lightning speed',
@@ -130,6 +137,22 @@ export const tools: Tool[] = [
   },
   {
     id: 'briteco-tool-4',
+    name: 'New Tool Coming Soon',
+    description: 'Exciting new BriteCo tool in development',
+    url: '#',
+    icon: 'plus',
+    comingSoon: true,
+  },
+  {
+    id: 'briteco-tool-5',
+    name: 'New Tool Coming Soon',
+    description: 'Exciting new BriteCo tool in development',
+    url: '#',
+    icon: 'plus',
+    comingSoon: true,
+  },
+  {
+    id: 'briteco-tool-6',
     name: 'New Tool Coming Soon',
     description: 'Exciting new BriteCo tool in development',
     url: '#',
