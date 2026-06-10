@@ -58,6 +58,13 @@ export const tools: Tool[] = [
     icon: 'mail',
   },
   {
+    id: 'content-generator',
+    name: 'Content Generator',
+    description: 'Dig into research and spin it into SEO-optimized briefs & blogs',
+    url: 'https://brite-blog-tool-279545860595.us-central1.run.app/',
+    icon: 'feather',
+  },
+  {
     id: 'optic-outreach',
     name: 'Optic Outreach',
     description: 'Spot, scrub & serve up sales-ready leads on autopilot',
@@ -145,14 +152,6 @@ export const tools: Tool[] = [
   },
   {
     id: 'briteco-tool-5',
-    name: 'New Tool Coming Soon',
-    description: 'Exciting new BriteCo tool in development',
-    url: '#',
-    icon: 'plus',
-    comingSoon: true,
-  },
-  {
-    id: 'briteco-tool-6',
     name: 'New Tool Coming Soon',
     description: 'Exciting new BriteCo tool in development',
     url: '#',
