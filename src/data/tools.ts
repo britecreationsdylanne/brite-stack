@@ -86,6 +86,13 @@ export const tools: Tool[] = [
     icon: 'thumbs-up',
   },
   {
+    id: 'parking',
+    name: 'Parking',
+    description: 'Reserve your office parking spot before someone else grabs it',
+    url: 'https://brite-stack-279545860595.us-central1.run.app/',
+    icon: 'car',
+  },
+  {
     id: 'planner-pulse',
     name: 'Planner Pulse',
     description: 'Newsletter vibes that keep planners in the loop',
@@ -144,14 +151,6 @@ export const tools: Tool[] = [
   },
   {
     id: 'briteco-tool-4',
-    name: 'New Tool Coming Soon',
-    description: 'Exciting new BriteCo tool in development',
-    url: '#',
-    icon: 'plus',
-    comingSoon: true,
-  },
-  {
-    id: 'briteco-tool-5',
     name: 'New Tool Coming Soon',
     description: 'Exciting new BriteCo tool in development',
     url: '#',
