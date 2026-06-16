@@ -89,7 +89,7 @@ export const tools: Tool[] = [
     id: 'parking',
     name: 'Parking',
     description: 'Reserve your office parking spot before someone else grabs it',
-    url: 'https://brite-stack-279545860595.us-central1.run.app/',
+    url: 'https://brite-parking-279545860595.us-central1.run.app/today',
     icon: 'car',
   },
   {

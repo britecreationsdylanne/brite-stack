@@ -33,6 +33,7 @@ const iconGradients: Record<string, string> = {
   'consumer-newsletter': 'linear-gradient(135deg, #6366F1, #4F46E5)',
   'reddit-comment-tracker': 'linear-gradient(135deg, #FF4500, #CC3700)',
   'paid-media-dashboard': 'linear-gradient(135deg, #0EA5E9, #0284C7)',
+  'parking': 'linear-gradient(135deg, #EF4444, #DC2626)',
 };
 
 interface ToolCardProps {
