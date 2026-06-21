@@ -44,6 +44,13 @@ export const tools: Tool[] = [
     icon: 'pen-tool',
   },
   {
+    id: 'claim-advisor',
+    name: 'Claim Advisor',
+    description: 'See every event claim three ways and exactly where it lands',
+    url: 'https://claim-advisor-29820647719.us-central1.run.app/',
+    icon: 'scale',
+  },
+  {
     id: 'commercial-wizard',
     name: 'Commercial Wizard',
     description: 'Conjure up commercial ads that actually convert',
