@@ -30,6 +30,13 @@ export const tools: Tool[] = [
     icon: 'send',
   },
   {
+    id: 'brite-shadow',
+    name: 'BriteShadow',
+    description: 'Job shadowing, tracked and rewarded',
+    url: 'https://brite-shadow-29820647719.us-central1.run.app/',
+    icon: 'footprints',
+  },
+  {
     id: 'brite-talent',
     name: 'BriteTalent',
     description: 'Generate polished job descriptions in a snap',
