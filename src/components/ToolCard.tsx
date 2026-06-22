@@ -1,4 +1,4 @@
-import { Star, Building, FileText, CalendarHeart, Home, Gem, Megaphone, Video, Plus, PenTool, Mail, MessageSquare, ThumbsUp, Newspaper, BarChart3, Feather, Car, Scale } from 'lucide-react';
+import { Star, Building, FileText, CalendarHeart, Home, Gem, Megaphone, Video, Plus, PenTool, Mail, MessageSquare, ThumbsUp, Newspaper, BarChart3, Feather, Car, Scale, Footprints } from 'lucide-react';
 import type { Tool } from '../data/tools';
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string; color?: string }>> = {
@@ -19,6 +19,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   feather: Feather,
   car: Car,
   scale: Scale,
+  footprints: Footprints,
 };
 
 // Icon gradient backgrounds for design 13 - dark navy cards with colorful icon backgrounds
@@ -36,6 +37,7 @@ const iconGradients: Record<string, string> = {
   'paid-media-dashboard': 'linear-gradient(135deg, #0EA5E9, #0284C7)',
   'parking': 'linear-gradient(135deg, #EF4444, #DC2626)',
   'claim-advisor': 'linear-gradient(135deg, #008182, #31D7CA)',
+  'brite-shadow': 'linear-gradient(135deg, #008182, #31D7CA)',
 };
 
 interface ToolCardProps {
