@@ -24,7 +24,7 @@ export const tools: Tool[] = [
   },
   {
     id: 'brite-academy',
-    name: 'Brite Academy',
+    name: 'BriteAcademy',
     description: 'Onboarding, training & learning videos to get the team up to speed',
     url: 'https://brite-academy.web.app/',
     icon: 'graduation-cap',
