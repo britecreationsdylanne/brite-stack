@@ -1,4 +1,4 @@
-import { Star, Building, FileText, CalendarHeart, Home, Gem, Megaphone, Video, Plus, PenTool, Mail, MessageSquare, ThumbsUp, Newspaper, BarChart3, Feather, Car, Scale, Footprints, GraduationCap } from 'lucide-react';
+import { Star, Building, FileText, CalendarHeart, Home, Gem, Megaphone, Video, Plus, PenTool, Mail, MessageSquare, ThumbsUp, Newspaper, BarChart3, Feather, Car, Scale, Footprints, GraduationCap, Diamond } from 'lucide-react';
 import type { Tool } from '../data/tools';
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string; color?: string }>> = {
@@ -21,6 +21,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   scale: Scale,
   footprints: Footprints,
   'graduation-cap': GraduationCap,
+  diamond: Diamond,
 };
 
 // Icon gradient backgrounds for design 13 - dark navy cards with colorful icon backgrounds

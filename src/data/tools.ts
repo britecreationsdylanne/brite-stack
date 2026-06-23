@@ -23,6 +23,13 @@ export const tools: Tool[] = [
     icon: 'file-text',
   },
   {
+    id: 'appraisal-data-research',
+    name: 'Appraisal Data Research',
+    description: 'Get the real facts and data behind jewelry pricing & appraisals',
+    url: 'https://appraisal-data-research-bs2oux2teq-uc.a.run.app',
+    icon: 'diamond',
+  },
+  {
     id: 'brite-academy',
     name: 'BriteAcademy',
     description: 'Onboarding, training & learning videos to get the team up to speed',
@@ -172,6 +179,22 @@ export const tools: Tool[] = [
   },
   {
     id: 'briteco-tool-4',
+    name: 'New Tool Coming Soon',
+    description: 'Exciting new BriteCo tool in development',
+    url: '#',
+    icon: 'plus',
+    comingSoon: true,
+  },
+  {
+    id: 'briteco-tool-5',
+    name: 'New Tool Coming Soon',
+    description: 'Exciting new BriteCo tool in development',
+    url: '#',
+    icon: 'plus',
+    comingSoon: true,
+  },
+  {
+    id: 'briteco-tool-6',
     name: 'New Tool Coming Soon',
     description: 'Exciting new BriteCo tool in development',
     url: '#',
