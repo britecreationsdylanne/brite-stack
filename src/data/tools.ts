@@ -23,6 +23,13 @@ export const tools: Tool[] = [
     icon: 'file-text',
   },
   {
+    id: 'brite-academy',
+    name: 'Brite Academy',
+    description: 'Onboarding, training & learning videos to get the team up to speed',
+    url: 'https://brite-academy.web.app/',
+    icon: 'graduation-cap',
+  },
+  {
     id: 'brite-mail',
     name: 'BriteMail',
     description: 'Automated sales emails & smart replies that close deals faster',
