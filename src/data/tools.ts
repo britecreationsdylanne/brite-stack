@@ -51,6 +51,13 @@ export const tools: Tool[] = [
     icon: 'footprints',
   },
   {
+    id: 'briteside-entry',
+    name: 'BriteSide Entry Form',
+    description: 'Submit your entry to earn Bucks and get featured in the employee newsletter',
+    url: 'https://the-briteside-279545860595.us-central1.run.app/entry',
+    icon: 'clipboard-list',
+  },
+  {
     id: 'brite-talent',
     name: 'BriteTalent',
     description: 'Generate polished job descriptions in a snap',
@@ -187,14 +194,6 @@ export const tools: Tool[] = [
   },
   {
     id: 'briteco-tool-5',
-    name: 'New Tool Coming Soon',
-    description: 'Exciting new BriteCo tool in development',
-    url: '#',
-    icon: 'plus',
-    comingSoon: true,
-  },
-  {
-    id: 'briteco-tool-6',
     name: 'New Tool Coming Soon',
     description: 'Exciting new BriteCo tool in development',
     url: '#',
