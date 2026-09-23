@@ -100,6 +100,13 @@ export const tools: Tool[] = [
     icon: 'feather',
   },
   {
+    id: 'editorial-guide-checker',
+    name: 'Editorial Guide Checker',
+    description: 'Every comma, dash & detail checked against the BriteCo style guide',
+    url: 'https://brite-editorial-bs2oux2teq-uc.a.run.app/',
+    icon: 'spell-check',
+  },
+  {
     id: 'optic-outreach',
     name: 'Optic Outreach',
     description: 'Spot, scrub & serve up sales-ready leads on autopilot',
@@ -149,6 +156,13 @@ export const tools: Tool[] = [
     icon: 'message-square',
   },
   {
+    id: 'seo-dashboard',
+    name: 'SEO Dashboard',
+    description: 'Organic search & site performance metrics, tracked in one clean view',
+    url: 'https://seo-dashboard-29820647719.us-central1.run.app/',
+    icon: 'search-check',
+  },
+  {
     id: 'stay-in-the-loupe',
     name: 'Stay in the Loupe',
     description: 'Sparkling newsletter content for jewelers',
@@ -175,22 +189,6 @@ export const tools: Tool[] = [
     description: 'Snappy video clips that pack a punch',
     url: 'https://video-ad-generator-279545860595.us-central1.run.app/',
     icon: 'video',
-  },
-  {
-    id: 'briteco-tool-3',
-    name: 'New Tool Coming Soon',
-    description: 'Exciting new BriteCo tool in development',
-    url: '#',
-    icon: 'plus',
-    comingSoon: true,
-  },
-  {
-    id: 'briteco-tool-4',
-    name: 'New Tool Coming Soon',
-    description: 'Exciting new BriteCo tool in development',
-    url: '#',
-    icon: 'plus',
-    comingSoon: true,
   },
   {
     id: 'briteco-tool-5',
