@@ -102,7 +102,7 @@ export const tools: Tool[] = [
   {
     id: 'editorial-guide-checker',
     name: 'Editorial Guide Checker',
-    description: 'Every comma, dash & detail checked against the BriteCo style guide',
+    description: 'Every comma, dash, & detail checked against the BriteCo style guide',
     url: 'https://brite-editorial-bs2oux2teq-uc.a.run.app/',
     icon: 'spell-check',
   },
