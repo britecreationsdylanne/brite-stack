@@ -132,6 +132,9 @@ export function AdminPage({ tools, currentEmail }: AdminPageProps) {
               </th>
               <th style={{ ...thStyle, position: 'sticky', top: 0, zIndex: 2, minWidth: '170px', textAlign: 'left' }}>Title</th>
               <th style={{ ...thStyle, position: 'sticky', top: 0, zIndex: 2, minWidth: '92px' }}>Role</th>
+              <th style={{ ...thStyle, position: 'sticky', top: 0, zIndex: 2, minWidth: '96px', borderRight: `1px solid ${BORDER}` }} title="Master switch. Off = this person cannot sign in to BriteStack at all.">
+                BriteStack
+              </th>
               {liveTools.map((t) => {
                 const vis = admin.toolSettings[t.id] ?? 'public';
                 const isPrivate = vis === 'private';
@@ -161,17 +164,19 @@ export function AdminPage({ tools, currentEmail }: AdminPageProps) {
           </thead>
           <tbody>
             {admin.loading && admin.users.length === 0 ? (
-              <tr><td colSpan={3 + liveTools.length} style={{ padding: '40px', textAlign: 'center', color: MUTED }}>Loading people…</td></tr>
+              <tr><td colSpan={4 + liveTools.length} style={{ padding: '40px', textAlign: 'center', color: MUTED }}>Loading people…</td></tr>
             ) : filteredUsers.length === 0 ? (
               <tr>
-                <td colSpan={3 + liveTools.length} style={{ padding: '40px', textAlign: 'center', color: MUTED }}>
+                <td colSpan={4 + liveTools.length} style={{ padding: '40px', textAlign: 'center', color: MUTED }}>
                   {admin.users.length === 0 ? 'No people yet. Hit "Sync from BigQuery" to pull the team in.' : 'No one matches that search.'}
                 </td>
               </tr>
             ) : filteredUsers.map((u) => {
               const inactive = u.status === 'inactive';
+              const switchedOff = !u.access_enabled;
+              const canSwitchOff = !u.seeded_admin && u.email !== currentEmail;
               return (
-                <tr key={u.email} className="admin-row" style={{ opacity: inactive ? 0.55 : 1 }}>
+                <tr key={u.email} className="admin-row" style={{ opacity: inactive || switchedOff ? 0.55 : 1 }}>
                   <td style={{ ...tdStyle, position: 'sticky', left: 0, zIndex: 1, background: 'white', paddingLeft: '16px', width: NAME_COL_WIDTH, minWidth: NAME_COL_WIDTH, boxShadow: `1px 0 0 ${BORDER}` }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', whiteSpace: 'nowrap', overflow: 'hidden' }}>
                       {u.picture ? (
@@ -186,6 +191,9 @@ export function AdminPage({ tools, currentEmail }: AdminPageProps) {
                       </span>
                       {inactive && (
                         <span style={{ fontSize: '10px', fontWeight: 700, padding: '1px 6px', borderRadius: '999px', background: '#EEF3F5', color: MUTED, flexShrink: 0 }}>Inactive</span>
+                      )}
+                      {switchedOff && (
+                        <span style={{ fontSize: '10px', fontWeight: 700, padding: '1px 6px', borderRadius: '999px', background: '#FDECEC', color: '#B3261E', flexShrink: 0 }}>Off</span>
                       )}
                     </div>
                   </td>
@@ -207,6 +215,18 @@ export function AdminPage({ tools, currentEmail }: AdminPageProps) {
                       {u.role === 'admin' ? 'Admin' : 'User'}
                     </button>
                   </td>
+                  <td style={{ ...tdStyle, textAlign: 'center', borderRight: `1px solid ${BORDER}` }}>
+                    <Toggle
+                      checked={u.access_enabled}
+                      disabled={!canSwitchOff}
+                      onChange={() => canSwitchOff && admin.setEnabled(u.email, !u.access_enabled)}
+                      title={
+                        u.seeded_admin ? 'Built-in admins are always on'
+                          : u.email === currentEmail ? 'That is you'
+                          : u.access_enabled ? 'On: can sign in to BriteStack. Click to switch off.' : 'Off: cannot sign in to BriteStack. Click to switch on.'
+                      }
+                    />
+                  </td>
                   {liveTools.map((t) => {
                     const on = isEnabled(u, t.id, admin.toolSettings);
                     const overridden = u.overrides[t.id] !== undefined;
@@ -215,7 +235,8 @@ export function AdminPage({ tools, currentEmail }: AdminPageProps) {
                         <Toggle
                           checked={on}
                           marked={overridden}
-                          onChange={() => admin.toggleAccess(u.email, t.id)}
+                          disabled={switchedOff}
+                          onChange={() => !switchedOff && admin.toggleAccess(u.email, t.id)}
                           title={`${t.name}: ${on ? 'on' : 'off'}${overridden ? ' (set by an admin)' : ' (tool default)'}`}
                         />
                       </td>
@@ -229,7 +250,7 @@ export function AdminPage({ tools, currentEmail }: AdminPageProps) {
       </div>
 
       <p style={{ marginTop: '12px', fontSize: '12px', color: NAVY, opacity: 0.7 }}>
-        Switching a tile off hides it from that person's BriteStack. Public tools are on for everyone until switched off; private tools are off until switched on. An orange dot marks a switch set by hand.
+        The BriteStack switch is the master: off means that person cannot sign in here at all. Tool switches hide tiles from their dashboard. Public tools are on for everyone until switched off; private tools are off until switched on. An orange dot marks a switch set by hand.
       </p>
     </div>
   );

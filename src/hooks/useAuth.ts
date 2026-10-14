@@ -52,13 +52,15 @@ function clearBritePulseUser() {
 
 interface MeResponse {
   authenticated: boolean;
-  user?: { email: string; name: string; picture: string; role: Role };
+  disabled?: boolean;
+  user?: { email: string; name: string; picture: string; role?: Role };
   hidden_tools?: string[];
 }
 
 export function useAuth() {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [hiddenTools, setHiddenTools] = useState<Set<string>>(new Set());
+  const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async () => {
@@ -69,9 +71,15 @@ export function useAuth() {
         return;
       }
       const data: MeResponse = await res.json();
+      if (res.status === 403 && data.disabled) {
+        // Signed in, but an admin switched this person's BriteStack access off
+        setDisabled(true);
+        setUser(data.user ? { ...data.user, role: 'user', displayName: data.user.name } : null);
+        return;
+      }
       if (data.authenticated && data.user) {
         setBritePulseUser(data.user);
-        setUser({ ...data.user, displayName: data.user.name });
+        setUser({ ...data.user, role: data.user.role ?? 'user', displayName: data.user.name });
         setHiddenTools(new Set(data.hidden_tools ?? []));
       } else {
         setUser(null);
@@ -103,5 +111,5 @@ export function useAuth() {
     window.location.href = '/auth/logout';
   };
 
-  return { user, hiddenTools, loading, signInWithGoogle, logout, refresh };
+  return { user, hiddenTools, disabled, loading, signInWithGoogle, logout, refresh };
 }

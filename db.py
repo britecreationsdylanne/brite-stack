@@ -31,8 +31,9 @@ class User(Base):
     title = Column(String(255))
     department = Column(String(255))
     picture = Column(Text)
-    status = Column(String(16), nullable=False, default='active')   # active | inactive
+    status = Column(String(16), nullable=False, default='active')   # active | inactive (from BigQuery)
     role = Column(String(16), nullable=False, default='user')       # user | admin
+    access_enabled = Column(Boolean, nullable=False, default=True)  # admin master switch: False = cannot use BriteStack
     source = Column(String(16), nullable=False, default='login')    # bq | login
     created_at = Column(DateTime(timezone=True), nullable=False, default=utcnow)
     updated_at = Column(DateTime(timezone=True), nullable=False, default=utcnow, onupdate=utcnow)
@@ -85,7 +86,22 @@ def init_db():
         _engine = create_engine(DATABASE_URL, pool_pre_ping=True, pool_size=3, max_overflow=2)
         _Session = sessionmaker(bind=_engine, expire_on_commit=False)
     Base.metadata.create_all(_engine)
+    _ensure_columns(_engine)
     return _engine
+
+
+# Columns added after the first deploy. create_all never alters existing
+# tables, so each one gets an idempotent ADD COLUMN IF NOT EXISTS here.
+_ADDED_COLUMNS = [
+    ('users', 'access_enabled', 'BOOLEAN NOT NULL DEFAULT TRUE'),
+]
+
+
+def _ensure_columns(engine):
+    from sqlalchemy import text
+    with engine.begin() as conn:
+        for table, col, ddl in _ADDED_COLUMNS:
+            conn.execute(text(f'ALTER TABLE {table} ADD COLUMN IF NOT EXISTS {col} {ddl}'))
 
 
 def db_ready() -> bool:

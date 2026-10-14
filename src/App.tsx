@@ -22,7 +22,7 @@ function App() {
   if (PREVIEW_LOGIN_DESIGNS) {
     return <LoginPreview />;
   }
-  const { user, hiddenTools, loading, signInWithGoogle, logout } = useAuth();
+  const { user, hiddenTools, disabled, loading, signInWithGoogle, logout } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
   const { toolRequests, loading: ideasLoading, error: ideasError, addToolRequest, refetch: refetchIdeas } = useToolRequests();
   const [searchQuery, setSearchQuery] = useState('');
@@ -75,6 +75,23 @@ function App() {
     );
   }
 
+  // Signed in, but an admin switched this person's access off
+  if (disabled && user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center relative">
+        <TechBackground />
+        <div className="relative z-10" style={{ background: '#272D3F', color: 'white', borderRadius: '20px', padding: '40px 48px', maxWidth: '460px', textAlign: 'center', boxShadow: '0 20px 60px rgba(39,45,63,0.4)' }}>
+          <h1 style={{ color: '#FC883A', fontSize: '26px', fontWeight: 800, margin: '0 0 12px' }}>Access turned off</h1>
+          <p style={{ color: '#A9C1CB', margin: '0 0 6px', fontSize: '15px' }}>Your BriteStack access has been switched off by an admin.</p>
+          <p style={{ color: '#A9C1CB', margin: '0 0 24px', fontSize: '13px' }}>Signed in as {user.email}</p>
+          <button onClick={logout} style={{ background: '#31D7CA', color: '#272D3F', border: 'none', borderRadius: '10px', padding: '10px 20px', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>
+            Sign out
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Show login screen if not authenticated
   if (!user) {
     return <LoginScreen onSignIn={signInWithGoogle} />;
@@ -87,7 +104,7 @@ function App() {
       <div className="relative z-10">
         <Header user={user} onLogout={logout} />
 
-        <main className="app-main" style={{ maxWidth: '1150px', margin: '0 auto', padding: '30px 50px 60px' }}>
+        <main className="app-main" style={{ maxWidth: activeTab === 'admin' ? '1720px' : '1150px', margin: '0 auto', padding: '30px 50px 60px', transition: 'max-width 0.2s ease' }}>
           {/* Hero Section - BriteStack centered */}
           <div className="hero-section" style={{ textAlign: 'center', marginBottom: '50px' }}>
             <div className="hero-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>

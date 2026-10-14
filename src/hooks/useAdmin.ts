@@ -11,6 +11,7 @@ export interface AdminUser {
   picture: string;
   status: 'active' | 'inactive';
   role: Role;
+  access_enabled: boolean;  // master switch: false = cannot sign in to BriteStack
   seeded_admin: boolean;
   overrides: Record<string, boolean>;  // explicit per-tool overrides only
 }
@@ -117,6 +118,17 @@ export function useAdmin(enabled: boolean) {
     }
   };
 
+  const setEnabled = async (email: string, enabled: boolean) => {
+    const prev = users;
+    setUsers((list) => list.map((u) => (u.email === email ? { ...u, access_enabled: enabled } : u)));
+    try {
+      await putJson(`/api/admin/users/${encodeURIComponent(email)}/enabled`, { enabled });
+    } catch (err) {
+      setUsers(prev);
+      setError(err instanceof Error ? err.message : 'Could not save');
+    }
+  };
+
   const setVisibility = async (toolId: string, visibility: Visibility) => {
     const prev = toolSettings;
     setToolSettings((s) => ({ ...s, [toolId]: visibility }));
@@ -149,6 +161,6 @@ export function useAdmin(enabled: boolean) {
     users, toolSettings, inactiveCount, lastSync,
     includeInactive, setIncludeInactive,
     loading, syncing, error, clearError: () => setError(null),
-    reload: load, toggleAccess, setRole, setVisibility, sync,
+    reload: load, toggleAccess, setRole, setEnabled, setVisibility, sync,
   };
 }

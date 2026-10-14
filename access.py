@@ -61,6 +61,15 @@ def role_for(email: str) -> str:
         return u.role if u else 'user'
 
 
+def is_blocked(email: str) -> bool:
+    """True when an admin switched this person's BriteStack access off."""
+    if email in SEED_ADMINS:
+        return False
+    with session_scope() as s:
+        u = s.get(User, email)
+        return bool(u) and not u.access_enabled
+
+
 def hidden_tools_for(email: str) -> list[str]:
     """Tool ids this user must NOT see."""
     with session_scope() as s:
@@ -74,8 +83,11 @@ def hidden_tools_for(email: str) -> list[str]:
 def require_login(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
-        if not current_email():
+        email = current_email()
+        if not email:
             return jsonify({'error': 'Not signed in'}), 401
+        if is_blocked(email):
+            return jsonify({'error': 'Access turned off'}), 403
         return fn(*args, **kwargs)
     return wrapper
 
@@ -86,7 +98,7 @@ def require_admin(fn):
         email = current_email()
         if not email:
             return jsonify({'error': 'Not signed in'}), 401
-        if role_for(email) != 'admin':
+        if is_blocked(email) or role_for(email) != 'admin':
             return jsonify({'error': 'Admins only'}), 403
         return fn(*args, **kwargs)
     return wrapper
@@ -101,6 +113,7 @@ def _user_dict(u: User, overrides: dict[str, bool]) -> dict:
         'picture': u.picture or '',
         'status': u.status,
         'role': u.role,
+        'access_enabled': bool(u.access_enabled),
         'seeded_admin': u.email in SEED_ADMINS,
         'overrides': overrides,  # {tool_id: bool} explicit only
     }
@@ -116,6 +129,8 @@ def me():
     if not user:
         return jsonify({'authenticated': False}), 401
     email = user['email'].lower()
+    if is_blocked(email):
+        return jsonify({'authenticated': False, 'disabled': True, 'user': {**user, 'email': email}}), 403
     return jsonify({
         'authenticated': True,
         'user': {**user, 'email': email, 'role': role_for(email)},
@@ -205,6 +220,29 @@ def admin_set_role(email: str):
         u.role = role
         u.updated_at = utcnow()
     return jsonify({'ok': True, 'email': email, 'role': role})
+
+
+@api.put('/api/admin/users/<email>/enabled')
+@require_admin
+def admin_set_enabled(email: str):
+    """Master switch. Body {"enabled": bool}. Off = cannot sign in to BriteStack at all."""
+    body = request.get_json(silent=True) or {}
+    enabled = body.get('enabled')
+    if not isinstance(enabled, bool):
+        return jsonify({'error': 'enabled must be true or false'}), 400
+    email = email.lower()
+    if not enabled and email in SEED_ADMINS:
+        return jsonify({'error': 'Built-in admins cannot be switched off'}), 400
+    if not enabled and email == current_email():
+        return jsonify({'error': 'You cannot switch yourself off'}), 400
+    with session_scope() as s:
+        u = s.get(User, email)
+        if u is None:
+            return jsonify({'error': 'Unknown user'}), 404
+        u.access_enabled = enabled
+        u.updated_at = utcnow()
+    log.info('%s set BriteStack access for %s -> %s', current_email(), email, 'on' if enabled else 'off')
+    return jsonify({'ok': True, 'email': email, 'enabled': enabled})
 
 
 @api.put('/api/admin/tools/<tool_id>/visibility')
