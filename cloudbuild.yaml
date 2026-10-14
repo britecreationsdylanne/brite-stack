@@ -5,6 +5,7 @@
 #   _FLASK_SECRET_KEY                           session signing key (stable across deploys)
 #   _DATABASE_URL       postgresql+psycopg://britestack:PASS@/britestack?host=/cloudsql/britecreations:us-central1:brite-shadow-db
 #   _CLOUDSQL_INSTANCE  britecreations:us-central1:brite-shadow-db
+#   _ACCESS_CHECK_KEY   shared secret other apps present to /api/access/check (see integration/)
 #   _VITE_FIREBASE_*    legacy Firebase build args
 
 options:
@@ -46,7 +47,7 @@ steps:
       - 'managed'
       - '--allow-unauthenticated'
       - '--add-cloudsql-instances=${_CLOUDSQL_INSTANCE}'
-      - '--set-env-vars=^@@^GOOGLE_CLIENT_ID=${_GOOGLE_CLIENT_ID}@@GOOGLE_CLIENT_SECRET=${_GOOGLE_CLIENT_SECRET}@@FLASK_SECRET_KEY=${_FLASK_SECRET_KEY}@@DATABASE_URL=${_DATABASE_URL}@@BQ_JOB_PROJECT=$PROJECT_ID'
+      - '--set-env-vars=^@@^GOOGLE_CLIENT_ID=${_GOOGLE_CLIENT_ID}@@GOOGLE_CLIENT_SECRET=${_GOOGLE_CLIENT_SECRET}@@FLASK_SECRET_KEY=${_FLASK_SECRET_KEY}@@DATABASE_URL=${_DATABASE_URL}@@BQ_JOB_PROJECT=$PROJECT_ID@@ACCESS_CHECK_KEY=${_ACCESS_CHECK_KEY}'
 
 images:
   - 'gcr.io/$PROJECT_ID/brite-stack:latest'

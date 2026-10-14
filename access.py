@@ -7,7 +7,9 @@ Effective access for (user, tool):
   otherwise                 -> tool_settings.visibility != 'private'   (no row == public)
 """
 
+import hmac
 import logging
+import os
 from functools import wraps
 
 from flask import Blueprint, jsonify, request, session
@@ -20,6 +22,10 @@ import user_sync
 log = logging.getLogger(__name__)
 
 api = Blueprint('api', __name__)
+
+# Shared secret other BriteCo apps present to ask "may this person use tool X?"
+# Lives in the Cloud Build trigger (_ACCESS_CHECK_KEY). Empty = endpoint disabled.
+ACCESS_CHECK_KEY = os.environ.get('ACCESS_CHECK_KEY', '').strip()
 
 
 # ---------------------------------------------------------------------------
@@ -117,6 +123,42 @@ def _user_dict(u: User, overrides: dict[str, bool]) -> dict:
         'seeded_admin': u.email in SEED_ADMINS,
         'overrides': overrides,  # {tool_id: bool} explicit only
     }
+
+
+# ---------------------------------------------------------------------------
+# App-to-app access check (used by other BriteCo tools to enforce access)
+# ---------------------------------------------------------------------------
+
+def decide_access(email: str, tool_id: str) -> tuple[bool, str]:
+    """Same rules the dashboard uses. Returns (allowed, reason)."""
+    email = (email or '').strip().lower()
+    if not email.endswith('@brite.co'):
+        return False, 'not_brite_email'
+    if is_blocked(email):
+        return False, 'britestack_access_off'
+    if tool_id in hidden_tools_for(email):
+        return False, 'tool_off'
+    return True, 'ok'
+
+
+@api.get('/api/access/check')
+def access_check():
+    """GET /api/access/check?email=...&tool=...  with header X-BriteStack-Key.
+
+    Response: {"allowed": true|false, "reason": "..."}; 401 on a bad key.
+    See integration/README.md for the drop-in helper apps use to call this.
+    """
+    if not ACCESS_CHECK_KEY:
+        return jsonify({'error': 'Access check is not configured on this deployment'}), 503
+    presented = request.headers.get('X-BriteStack-Key', '')
+    if not hmac.compare_digest(presented, ACCESS_CHECK_KEY):
+        return jsonify({'error': 'Bad key'}), 401
+    email = request.args.get('email', '')
+    tool_id = request.args.get('tool', '')
+    if not email or not tool_id:
+        return jsonify({'error': 'email and tool are required'}), 400
+    allowed, reason = decide_access(email, tool_id)
+    return jsonify({'allowed': allowed, 'reason': reason, 'email': email.lower(), 'tool': tool_id})
 
 
 # ---------------------------------------------------------------------------
