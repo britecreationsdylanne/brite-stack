@@ -40,8 +40,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy Flask server
-COPY server.py .
+# Copy Flask server + modules
+COPY server.py db.py access.py user_sync.py ./
 
 # Copy built React app from build stage
 COPY --from=build /app/dist ./dist

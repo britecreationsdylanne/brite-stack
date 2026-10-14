@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useAuth } from './hooks/useAuth';
 import { useFavorites } from './hooks/useFavorites';
 import { useToolRequests } from './hooks/useToolRequests';
@@ -11,6 +11,8 @@ import { IdeasPage } from './components/IdeasPage';
 import { LoginScreen } from './components/LoginScreen';
 import { TechBackground } from './components/TechBackground';
 import { LoginPreview } from './components/LoginPreview';
+import { AdminPage } from './components/AdminPage';
+import { ShieldCheck } from 'lucide-react';
 
 // Set to true to preview login designs, false for normal operation
 const PREVIEW_LOGIN_DESIGNS = false;
@@ -20,12 +22,21 @@ function App() {
   if (PREVIEW_LOGIN_DESIGNS) {
     return <LoginPreview />;
   }
-  const { user, loading, signInWithGoogle, logout } = useAuth();
+  const { user, hiddenTools, loading, signInWithGoogle, logout } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
   const { toolRequests, loading: ideasLoading, error: ideasError, addToolRequest, refetch: refetchIdeas } = useToolRequests();
   const [searchQuery, setSearchQuery] = useState('');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
-  const [activeTab, setActiveTab] = useState<'tools' | 'ideas' | 'in-progress' | 'completed'>('tools');
+  const [activeTab, setActiveTab] = useState<'tools' | 'ideas' | 'in-progress' | 'completed' | 'admin'>('tools');
+  const isAdmin = user?.role === 'admin';
+
+  // Deep link: /#admin opens the Admin tab for admins
+  useEffect(() => {
+    if (isAdmin && window.location.hash === '#admin') setActiveTab('admin');
+  }, [isAdmin]);
+
+  // Tools this person is allowed to see (admins manage access on the Admin tab)
+  const visibleTools = useMemo(() => tools.filter((t) => !hiddenTools.has(t.id)), [hiddenTools]);
 
   const ideasFiltered = useMemo(() => toolRequests.filter((r) =>
     ['new', 'under-review', 'planned'].includes(r.status)
@@ -40,7 +51,7 @@ function App() {
   ), [toolRequests]);
 
   const filteredTools = useMemo(() => {
-    return tools.filter((tool) => {
+    return visibleTools.filter((tool) => {
       const matchesSearch =
         tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tool.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -49,7 +60,7 @@ function App() {
 
       return matchesSearch && matchesFavorite;
     });
-  }, [searchQuery, showFavoritesOnly, isFavorite]);
+  }, [visibleTools, searchQuery, showFavoritesOnly, isFavorite]);
 
   // Show loading state
   if (loading) {
@@ -174,10 +185,37 @@ function App() {
                 )}
               </button>
             ))}
+            {isAdmin && (
+              <button
+                className="tab-btn"
+                onClick={() => setActiveTab('admin')}
+                style={{
+                  padding: '14px 32px',
+                  fontSize: '15px',
+                  fontWeight: 600,
+                  border: 'none',
+                  cursor: 'pointer',
+                  borderRadius: '12px',
+                  transition: 'all 0.2s ease',
+                  background: activeTab === 'admin' ? '#272D3F' : 'transparent',
+                  color: activeTab === 'admin' ? 'white' : '#272D3F',
+                  boxShadow: activeTab === 'admin' ? '0 4px 15px rgba(39, 45, 63, 0.3)' : 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  fontFamily: 'inherit',
+                }}
+              >
+                <ShieldCheck size={16} />
+                Admin
+              </button>
+            )}
           </div>
 
           {/* Tab Content */}
-          {activeTab === 'tools' ? (
+          {activeTab === 'admin' && isAdmin ? (
+            <AdminPage tools={tools} currentEmail={user.email} />
+          ) : activeTab === 'tools' ? (
             <>
               {/* Search Bar */}
               <div style={{ marginBottom: '50px' }}>

@@ -1,5 +1,16 @@
+# Cloud Build -> Cloud Run (ai-tools-484419). Trigger fires on push to main.
+#
+# Trigger substitutions (set in the Cloud Build trigger, never in git):
+#   _GOOGLE_CLIENT_ID / _GOOGLE_CLIENT_SECRET   Google OAuth
+#   _FLASK_SECRET_KEY                           session signing key (stable across deploys)
+#   _DATABASE_URL       postgresql+psycopg://britestack:PASS@/britestack?host=/cloudsql/britecreations:us-central1:brite-shadow-db
+#   _CLOUDSQL_INSTANCE  britecreations:us-central1:brite-shadow-db
+#   _VITE_FIREBASE_*    legacy Firebase build args
+
 options:
   logging: CLOUD_LOGGING_ONLY
+  # Missing substitutions become empty strings instead of failing the build
+  substitution_option: ALLOW_LOOSE
 
 steps:
   # Build the Docker image
@@ -34,7 +45,8 @@ steps:
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
-      - '--set-env-vars=GOOGLE_CLIENT_ID=${_GOOGLE_CLIENT_ID},GOOGLE_CLIENT_SECRET=${_GOOGLE_CLIENT_SECRET}'
+      - '--add-cloudsql-instances=${_CLOUDSQL_INSTANCE}'
+      - '--set-env-vars=^@@^GOOGLE_CLIENT_ID=${_GOOGLE_CLIENT_ID}@@GOOGLE_CLIENT_SECRET=${_GOOGLE_CLIENT_SECRET}@@FLASK_SECRET_KEY=${_FLASK_SECRET_KEY}@@DATABASE_URL=${_DATABASE_URL}@@BQ_JOB_PROJECT=$PROJECT_ID'
 
 images:
   - 'gcr.io/$PROJECT_ID/brite-stack:latest'

@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: brite-stack-db
+    environment:
+      POSTGRES_USER: britestack
+      POSTGRES_PASSWORD: britestack_local
+      POSTGRES_DB: britestack
+    ports:
+      - "5439:5432"
+    volumes:
+      - brite_stack_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U britestack"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  brite_stack_pgdata:

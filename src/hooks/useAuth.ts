@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+
+export type Role = 'user' | 'admin';
 
 // Define user type for server-side auth
-interface AuthUser {
+export interface AuthUser {
   email: string;
   name: string;
   picture: string;
+  role: Role;
   displayName?: string;  // Alias for name for compatibility
 }
 
@@ -47,23 +50,46 @@ function clearBritePulseUser() {
   window.BritePulse?.getInstance()?.setUser(undefined);
 }
 
+interface MeResponse {
+  authenticated: boolean;
+  user?: { email: string; name: string; picture: string; role: Role };
+  hidden_tools?: string[];
+}
+
 export function useAuth() {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [hiddenTools, setHiddenTools] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Check for server-injected user
-    if (window.AUTH_USER) {
-      // Set BritePulse user FIRST before any other operations
-      setBritePulseUser(window.AUTH_USER);
-
-      setUser({
-        ...window.AUTH_USER,
-        displayName: window.AUTH_USER.name  // Add displayName alias
-      });
+  const refresh = useCallback(async () => {
+    try {
+      const res = await fetch('/api/me', { credentials: 'same-origin' });
+      if (res.status === 401) {
+        setUser(null);
+        return;
+      }
+      const data: MeResponse = await res.json();
+      if (data.authenticated && data.user) {
+        setBritePulseUser(data.user);
+        setUser({ ...data.user, displayName: data.user.name });
+        setHiddenTools(new Set(data.hidden_tools ?? []));
+      } else {
+        setUser(null);
+      }
+    } catch (err) {
+      console.error('Error loading /api/me:', err);
+      // Fall back to the server-injected user so the dashboard still renders
+      if (window.AUTH_USER) {
+        setUser({ ...window.AUTH_USER, role: 'user', displayName: window.AUTH_USER.name });
+      }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
 
   const signInWithGoogle = () => {
     // Redirect to server OAuth endpoint
@@ -77,5 +103,5 @@ export function useAuth() {
     window.location.href = '/auth/logout';
   };
 
-  return { user, loading, signInWithGoogle, logout };
+  return { user, hiddenTools, loading, signInWithGoogle, logout, refresh };
 }

@@ -1,18 +1,22 @@
 """
 BriteStack Server
-Flask backend for OAuth and serving the React app
+Flask backend for OAuth, the access/admin API, and serving the React app
 """
 
 import os
 import json
+import logging
 import secrets
-from flask import Flask, request, jsonify, send_from_directory, Response, redirect, session, url_for
+from flask import Flask, jsonify, send_from_directory, Response, redirect, session, url_for
 from flask_cors import CORS
 from authlib.integrations.flask_client import OAuth
 from werkzeug.middleware.proxy_fix import ProxyFix
 from dotenv import load_dotenv
 
 load_dotenv()
+
+logging.basicConfig(level=logging.INFO, format='%(levelname)s %(name)s: %(message)s')
+log = logging.getLogger('britestack')
 
 app = Flask(__name__, static_folder='dist')
 CORS(app)
@@ -21,7 +25,7 @@ CORS(app)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 # Session configuration for OAuth
-app.secret_key = os.environ.get('FLASK_SECRET_KEY', secrets.token_hex(32))
+app.secret_key = os.environ.get('FLASK_SECRET_KEY') or secrets.token_hex(32)
 
 # OAuth configuration
 oauth = OAuth(app)
@@ -35,9 +39,36 @@ google = oauth.register(
 
 ALLOWED_DOMAIN = 'brite.co'
 
+# Local-only shortcut: sign in as this address without Google (see .env.example)
+DEV_LOGIN_EMAIL = os.environ.get('DEV_LOGIN_EMAIL', '').strip().lower()
+
+# ---------------------------------------------------------------------------
+# Database + access API
+# ---------------------------------------------------------------------------
+from db import init_db  # noqa: E402
+from access import api, ensure_user_on_login  # noqa: E402
+
+try:
+    init_db()
+    log.info('Database ready')
+except Exception as e:  # keep the dashboard up even if the DB is unreachable
+    log.error('Database init failed: %s', e)
+
+app.register_blueprint(api)
+
+
 def get_current_user():
     """Get current authenticated user from session"""
     return session.get('user')
+
+
+def _sign_in(email: str, name: str, picture: str):
+    email = email.lower()
+    session['user'] = {'email': email, 'name': name or '', 'picture': picture or ''}
+    try:
+        ensure_user_on_login(email, name, picture)
+    except Exception as e:
+        log.error('Could not upsert user %s: %s', email, e)
 
 
 # ============================================================================
@@ -48,6 +79,9 @@ def get_current_user():
 def auth_login():
     """Redirect to Google OAuth"""
     if get_current_user():
+        return redirect('/')
+    if DEV_LOGIN_EMAIL and DEV_LOGIN_EMAIL.endswith(f'@{ALLOWED_DOMAIN}'):
+        _sign_in(DEV_LOGIN_EMAIL, DEV_LOGIN_EMAIL.split('@')[0].replace('.', ' ').title(), '')
         return redirect('/')
     redirect_uri = url_for('auth_callback', _external=True)
     return google.authorize_redirect(redirect_uri)
@@ -81,17 +115,11 @@ def auth_callback():
             </html>
             ''', 403
 
-        # Store user in session
-        session['user'] = {
-            'email': email,
-            'name': user_info.get('name', ''),
-            'picture': user_info.get('picture', '')
-        }
-
+        _sign_in(email, user_info.get('name', ''), user_info.get('picture', ''))
         return redirect('/')
 
     except Exception as e:
-        print(f"[AUTH ERROR] OAuth callback failed: {e}")
+        log.error('OAuth callback failed: %s', e)
         return f'Authentication failed: {str(e)}', 500
 
 
@@ -104,7 +132,7 @@ def auth_logout():
 
 @app.route('/api/user')
 def get_user_api():
-    """Return current authenticated user info"""
+    """Legacy: current authenticated user info (prefer /api/me)"""
     user = get_current_user()
     if not user:
         return jsonify({'authenticated': False}), 401
@@ -125,7 +153,7 @@ def serve_index():
     with open(index_path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    # If authenticated, inject user info for the React app
+    # If authenticated, inject user info so the first paint is instant
     if user:
         user_script = f'''<script>
     window.AUTH_USER = {json.dumps(user)};
@@ -158,7 +186,7 @@ if __name__ == '__main__':
     print(f"BriteStack Server")
     print(f"{'=' * 60}")
     print(f"Port: {port}")
-    print(f"OAuth: Google (server-side)")
+    print(f"OAuth: {'DEV LOGIN as ' + DEV_LOGIN_EMAIL if DEV_LOGIN_EMAIL else 'Google (server-side)'}")
     print(f"Domain restriction: @{ALLOWED_DOMAIN}")
     print(f"{'=' * 60}\n")
 
